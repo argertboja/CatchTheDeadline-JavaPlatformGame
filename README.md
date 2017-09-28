@@ -16,6 +16,7 @@ Object-Oriented Software Engineering Fall 2017. <hr />
 ### Meetings held
 
 1- Meeting 1 added in wiki.
+2- Meeting 2 added in wiki.
 <hr />
 
 ### Wiki page
@@ -28,7 +29,7 @@ You can find the updates and details about the wiki <a href="https://github.com/
 <p>
 The game will consist of multiple levels and if time permits, we will be adding features, such as a game chat and a multiplayer game.
 <hr />
-### Documents
+###Documents
 <ol>
 *** Coming soon... ***
 </ol>
