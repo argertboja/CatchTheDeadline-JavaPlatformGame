@@ -16,9 +16,12 @@ Object-Oriented Software Engineering Fall 2017. <hr />
 ### Meetings held
 
 1- Meeting 1 added in wiki.
-<hr/>
+<br/>
 2- Meeting 2 added in wiki.
+<br />
+3- Meeting 3 added in wiki
 <hr />
+
 
 ### Wiki page
 You can find the updates and details about the wiki <a href="https://github.com/argertboja/CS319-2D-Group/wiki" >here</a>.
@@ -32,5 +35,5 @@ The game will consist of multiple levels and if time permits, we will be adding 
 <hr />
 ###Documents
 <ol>
-*** Coming soon... ***
+< href="https://github.com/argertboja/CS319-2D-Group/blob/master/First%20Iteration%20Reports/AnalysisReportFirstDraft.pdf"> Analysis Report First Draft </a>
 </ol>
