@@ -1,4 +1,4 @@
-# CS319-2D-Group
+﻿# CS319-2D-Group
 
 <center><img src="https://cdn.shopify.com/s/files/1/1061/1924/files/Hugging_Face_Emoji_2028ce8b-c213-4d45-94aa-21e1a0842b4d_large.png?15202324258887420558" width="150" height="150"></center><br>
 Object-Oriented Software Engineering Fall 2017. <hr />
@@ -37,5 +37,6 @@ The game will consist of multiple levels and if time permits, we will be adding 
 <hr />
 ###Documents
 <ol>
-<a href="https://github.com/argertboja/CS319-2D-Group/blob/master/First%20Iteration%20Reports/AnalysisReportFirstDraft.pdf"> Analysis Report First Draft </a>
+<li> <a href="https://github.com/argertboja/CS319-2D-Group/blob/master/First%20Iteration%20Reports/AnalysisReportFirstDraft.pdf"> Analysis Report First Draft </a> </li>
+<li> <a href="https://github.com/argertboja/CS319-2D-Group/blob/master/First%20Iteration%20Reports/DesignReport1.4.pdf"> Design Report First Draft </a>
 </ol>
