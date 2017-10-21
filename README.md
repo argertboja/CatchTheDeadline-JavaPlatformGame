@@ -7,7 +7,7 @@ Object-Oriented Software Engineering Fall 2017. <hr />
 ### Members:
 <ul>
 <li>Argert Boja</li>
-<li>Bikem Çamli</li>
+<li>Bikem Ã‡amli</li>
 <li>Hareem Larik</li>
 <li>Umut Ak</li>
 </ul>
@@ -19,7 +19,9 @@ Object-Oriented Software Engineering Fall 2017. <hr />
 <br/>
 2- Meeting 2 added in wiki.
 <br />
-3- Meeting 3 added in wiki
+3- Meeting 3 added in wiki.
+<br />
+4- Meeting 4 added in wiki
 <hr />
 
 
