@@ -20,7 +20,11 @@ Object-Oriented Software Engineering Fall 2017. <hr />
 <br />
 3- Meeting 3 added in wiki.
 <br />
-4- Meeting 4 added in wiki
+4- Meeting 4 added in wiki.
+<br />
+5- Meeting 5 added in wiki
+<br />
+6- Meeting 6 added in wiki
 <hr />
 
 
