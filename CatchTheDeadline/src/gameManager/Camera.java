@@ -3,6 +3,9 @@
  */
 package gameManager;
 
+import gameobjects.GameObject;
+import window.GameEngine;
+
 /**
  * @author Hareem Larik
  *
@@ -14,23 +17,28 @@ public class Camera {
 	private float yPos;
 	
 	// constructor
-	public Camera() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public float getxPos() {
-		return xPos;
-	}
-
-	public void setxPos(float xPos) {
+	public Camera( float xPos, float yPos ) {
+		this.xPos = xPos;
 		this.xPos = xPos;
 	}
 
-	public float getyPos() {
+	public void updateFrame( GameObject player ) {
+		xPos = -player.getPosX() + GameEngine.WIDTH/2;
+	}
+	
+	public float getXPos() {
+		return xPos;
+	}
+
+	public void setXPos(float xPos) {
+		this.xPos = xPos;
+	}
+
+	public float getYPos() {
 		return yPos;
 	}
 
-	public void setyPos(float yPos) {
+	public void setYPos(float yPos) {
 		this.yPos = yPos;
 	}
 }

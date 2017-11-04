@@ -1,29 +1,44 @@
 package window;
 
+import gameManager.Animation;
+import gameManager.Camera;
 import gameManager.Handler;
 import gameManager.InputManager;
 import gameobjects.*;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+
+import javax.swing.ImageIcon;
 
 public class GameEngine extends Canvas implements Runnable {
 
     private Thread thread;
     private boolean isRunning = false;
     private Handler handler;
-
+    private Camera cam;
     public static int WIDTH, HEIGHT;
 
+    private ImageIcon level = new ImageIcon(getClass().getResource("/images/level.png"));
+    
     public void init() {
         WIDTH = getWidth();
         HEIGHT = getHeight();
+        
+        //Animation loader = new Animation();
+        //level = loader.loadImage("/images/level.png");
         handler = new Handler();
+        cam = new Camera( 0, 0 );
         handler.addObject( new Player(100, 100, handler,ObjectType.Player) );
         handler.level();
         this.addKeyListener( new InputManager(handler) );
     }
 
+    public void loadImageLevel( BufferedImage img ) {
+    	
+    }
+    
     public synchronized void start() {
         if(isRunning) {
             return;
@@ -68,6 +83,10 @@ public class GameEngine extends Canvas implements Runnable {
     // Update frames
     private void updateFrame() {
         handler.updateFrame();
+        for( int i = 0; i < handler.objectLinkedList.size(); i++ ) {
+        	if( handler.objectLinkedList.get(i).getType() == ObjectType.Player )
+        		cam.updateFrame( handler.objectLinkedList.get(i));
+        }
     }
 
     // Render Images as fast as a computer can
@@ -80,12 +99,18 @@ public class GameEngine extends Canvas implements Runnable {
             return;
         }
         Graphics graphics = bufferStrategy.getDrawGraphics();
-
+        Graphics2D g2d = (Graphics2D) graphics;
+        
         /////////////////////////////////////////////////////////////////////////////
         // Graphics of the game
-        graphics.setColor(Color.BLACK);
-        graphics.fillRect(0,0, getWidth(), getHeight());
+        //graphics.setColor(Color.BLACK);
+        //graphics.fillRect(0,0, getWidth(), getHeight());
+    	graphics.drawImage(level.getImage(), 0, 0, null);
+    	
+    	
+        g2d.translate(cam.getXPos(), cam.getYPos() ); // begin of cam
         handler.render(graphics);
+        g2d.translate(cam.getXPos(), -cam.getYPos() ); //end of cam
         /////////////////////////////////////////////////////////////////////////////
 
         graphics.dispose();

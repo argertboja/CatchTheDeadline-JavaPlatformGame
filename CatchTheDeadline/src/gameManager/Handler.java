@@ -5,6 +5,7 @@ import window.GameEngine;
 import gameobjects.*;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 public class Handler {
@@ -36,8 +37,13 @@ public class Handler {
     }
 
     public void level() {
-        for (int i = 0; i < GameEngine.WIDTH + 38; i+= 38) {
+    	
+        for (int i = 0; i < GameEngine.WIDTH*2; i+= 38) {
             addObject(new Block(i, GameEngine.HEIGHT - 38, ObjectType.Block));
         }
+        for (int i = 0; i < GameEngine.WIDTH + 200; i+= 200) {
+            addObject(new Block(i, GameEngine.HEIGHT - 96, ObjectType.Block));
+        }
+        
     }
 }

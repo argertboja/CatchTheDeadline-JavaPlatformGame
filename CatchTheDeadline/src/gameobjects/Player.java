@@ -4,14 +4,15 @@
 
 package gameobjects;
 
-import gameManager.*;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 
+import javax.swing.ImageIcon;
+
+import gameManager.*;
 
 /**
  * @author Hareem Larik
@@ -34,6 +35,8 @@ public class Player extends GameObject {
 	private final float MAX_SPEED = 10;
 	private Handler handler;
 	
+	ImageIcon player = new ImageIcon(getClass().getResource("/images/player.png"));
+	
 	// constructor
 	public Player(float x, float y, Handler handler, ObjectType type) {
 		super(x, y, type);
@@ -45,7 +48,7 @@ public class Player extends GameObject {
 	
 		for( int i = 0; i < handler.objectLinkedList.size(); i++ ) {
 			GameObject temp = handler.objectLinkedList.get(i);
-
+			
 			if( temp.getType() == ObjectType.Block )
 			{
 				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
@@ -66,7 +69,6 @@ public class Player extends GameObject {
 				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
 					posX = temp.getPosX() + width;
 				}
-				
 			}
 		}
 	}
@@ -115,8 +117,11 @@ public class Player extends GameObject {
 
 	@Override
 	public void render(Graphics graphics) {
+		
 		graphics.setColor(Color.blue); 
 		graphics.fillRect((int)posX, (int)posY, (int)width, (int)height );
+		
+		//graphics.drawImage(player.getImage(), 0, 0, null);
 		
 		Graphics2D g2d = (Graphics2D) graphics;
 		graphics.setColor(Color.red);
@@ -124,6 +129,9 @@ public class Player extends GameObject {
 		g2d.draw(objectBoundsRight());
 		g2d.draw(objectBoundsLeft());
 		g2d.draw(objectBoundsTop());
+		
+		
+		
 	}
 
 	@Override
