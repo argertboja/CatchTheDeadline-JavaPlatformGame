@@ -1,5 +1,10 @@
 package window;
 
+import gameManager.GameObject;
+import gameManager.Handler;
+import gameManager.ObjectType;
+import gameobjects.Block;
+
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
@@ -7,6 +12,16 @@ public class GameEngine extends Canvas implements Runnable {
 
     private Thread thread;
     private boolean isRunning = false;
+    private Handler handler;
+
+    public static int WIDTH, HEIGHT;
+
+    public void init() {
+        WIDTH = getWidth();
+        HEIGHT = getHeight();
+        handler = new Handler();
+        handler.level();
+    }
 
     public synchronized void start() {
         if(isRunning) {
@@ -19,6 +34,8 @@ public class GameEngine extends Canvas implements Runnable {
     }
 
     public void run() {
+        init();
+        this.requestFocus();
         long lastTime = System.nanoTime();
         double fps = 60.0;
         double ns = 1000000000 / fps;
@@ -49,7 +66,7 @@ public class GameEngine extends Canvas implements Runnable {
 
     // Update frames
     private void updateFrame() {
-
+        handler.updateFrame();
     }
 
     // Render Images as fast as a computer can
@@ -67,6 +84,7 @@ public class GameEngine extends Canvas implements Runnable {
         // Graphichs of the game
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0,0, getWidth(), getHeight());
+        handler.render(graphics);
         /////////////////////////////////////////////////////////////////////////////
 
         graphics.dispose();
