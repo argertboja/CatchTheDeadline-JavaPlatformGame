@@ -26,20 +26,46 @@ public class Player extends GameObject {
 	private Eraser eraser;
 	private PaintSpray paintSpray;
 	
-	private float gravity = 0.5f;
-	private float width = 32, height = 64;
+	private float gravity = 0.1f;
+	private float width = 64, height = 96;
 	private final float MAX_SPEED = 10;
+	private Handler handler;
 	
 	// constructor
-	public Player(float x, float y, ObjectType type) {
+	public Player(float x, float y, Handler handler, ObjectType type) {
 		super(x, y, type);
+		this.handler = handler;
 	}
 	
 	// methods
-	public boolean collisions( LinkedList<PowerUps> objects, LinkedList<Enemy> enemies) {
+	public void collisions( LinkedList<GameObject> objects ) {
 	
-		boolean hasCollided = false;		
-		return hasCollided;
+		for( int i = 0; i < handler.objectLinkedList.size(); i++ ) {
+			GameObject temp = handler.objectLinkedList.get(i);
+			
+			if( temp.getType() == ObjectType.Block )
+			{
+				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
+					posY = temp.getPosY() + (height/2);
+					velocityY = 0;
+				}
+				if( objectBounds().intersects( temp.objectBounds() ) ) {
+					posY = temp.getPosY() - height;
+					velocityY = 0;
+					falling = false;
+					jumping = false;
+				}
+				else
+					falling = true;
+				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
+					posX = temp.getPosX() - width;
+				}
+				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
+					posX = temp.getPosX() + width;
+				}
+				
+			}
+		}
 	}
 
 	public void walkAnimation( Animation anim ) {
@@ -70,21 +96,18 @@ public class Player extends GameObject {
 		this.gravity = gravity;
 	}
 
-	public void tick( LinkedList<GameObject> objects ) {
+	@Override
+	public void collisionDetector(LinkedList<GameObject> objects ) {
 		posX += velocityX;
-		posY -= velocityY;
+		posY += velocityY;
 		
 		if ( falling || jumping ) {
 			velocityY += gravity;
+			
+			if ( velocityY > MAX_SPEED )
+				velocityY = MAX_SPEED;
 		}
-		if ( velocityY > MAX_SPEED )
-			velocityY = MAX_SPEED;
-	}
-	
-	@Override
-	public void collisionDetector(LinkedList<GameObject> objects) {
-		 
-		
+		collisions( objects );
 	}
 
 	@Override
@@ -93,7 +116,7 @@ public class Player extends GameObject {
 		graphics.fillRect((int)posX, (int)posY, (int)width, (int)height );
 		
 		Graphics2D g2d = (Graphics2D) graphics;
-		
+		graphics.setColor(Color.red);
 		g2d.draw(objectBounds());
 		g2d.draw(objectBoundsRight());
 		g2d.draw(objectBoundsLeft());
@@ -102,19 +125,21 @@ public class Player extends GameObject {
 
 	@Override
 	public Rectangle objectBounds() {
-		return new Rectangle( (int)posX, (int) ((int)posY+(height/2)), (int)width, (int)height/2 );
-	}
-	
-	public Rectangle objectBoundsRight() {
-		return new Rectangle( (int)posX, (int)posY, (int)width, (int)height/2 );
-	}
-	
-	public Rectangle objectBoundsLeft() {
-		return new Rectangle( (int)posX, (int)posY, (int)width, (int)height );
+		return new Rectangle( (int) ((int)posX+(width/2)-((width/2)/2)), (int) ((int)posY+(height/2)), (int)width/2, (int)height/2 );
 	}
 	
 	public Rectangle objectBoundsTop() {
-		return new Rectangle( (int)posX, (int)posY, (int)width, (int)height );
+		return new Rectangle( (int) ((int)posX+(width/2)-((width/2)/2)), (int)posY, (int)width/2, (int)height/2 );
 	}
+	
+	public Rectangle objectBoundsRight() {
+		return new Rectangle( (int) ((int)posX+width-5), (int)posY+5, (int)5, (int)height-10 );
+	}
+	
+	public Rectangle objectBoundsLeft() {
+		return new Rectangle( (int)posX, (int)posY+5, (int)5, (int)height-10 );
+	}
+	
+	
 	
 }

@@ -2,7 +2,9 @@ package window;
 
 import gameManager.GameObject;
 import gameManager.Handler;
+import gameManager.InputManager;
 import gameManager.ObjectType;
+import gameManager.Player;
 import gameobjects.Block;
 
 import java.awt.*;
@@ -20,7 +22,9 @@ public class GameEngine extends Canvas implements Runnable {
         WIDTH = getWidth();
         HEIGHT = getHeight();
         handler = new Handler();
+        handler.addObject( new Player(100, 100, handler,ObjectType.Player) );
         handler.level();
+        this.addKeyListener( new InputManager(handler) );
     }
 
     public synchronized void start() {
