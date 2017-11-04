@@ -2,6 +2,7 @@ package accessManager;
 
 // Import
 import database.DBInterface;
+import userinterface.MainMenu;
 import window.GameEngine;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class LogIn extends JFrame implements ActionListener {
     private JButton login, register, playAsGuest;
     private DBInterface db;
     private GameEngine gameEngine;
+    private MainMenu mainMenu;
 
     // Constructor
     public LogIn() {
@@ -188,15 +190,14 @@ public class LogIn extends JFrame implements ActionListener {
             dispose();
         }
         if (e.getSource().equals(playAsGuest)) {
-            try {
+            /*try {
                 guestGame();
             } catch (SQLException e1) {
                 e1.printStackTrace();
             } catch (ClassNotFoundException e1) {
                 e1.printStackTrace();
-            }
-            gameEngine = new GameEngine();
-            gameEngine.startTheGame();
+            }*/
+            mainMenu = new MainMenu();
             dispose();
         }
     }
