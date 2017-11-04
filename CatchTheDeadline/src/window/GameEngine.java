@@ -81,7 +81,7 @@ public class GameEngine extends Canvas implements Runnable {
         Graphics graphics = bufferStrategy.getDrawGraphics();
 
         /////////////////////////////////////////////////////////////////////////////
-        // Graphichs of the game
+        // Graphics of the game
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0,0, getWidth(), getHeight());
         handler.render(graphics);

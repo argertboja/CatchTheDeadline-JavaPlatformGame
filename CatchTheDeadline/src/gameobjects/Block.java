@@ -12,7 +12,7 @@ public class Block extends GameObject {
         super(x, y, type);
     }
 
-    @Override
+    @Override  
     public void collisionDetector(LinkedList<GameObject> objects) {
 
     }
