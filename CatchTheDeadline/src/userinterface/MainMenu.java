@@ -125,6 +125,18 @@ public class MainMenu extends  JFrame {
                 settingsMenu = new SettingsMenu();
                 dispose();
             }
+            else if (source == help) {
+                new Help();
+                dispose();
+            }
+            else if (source == credits) {
+                new Credits();
+                dispose();
+            }
+            else if (source == highScores) {
+                new HighScores();
+                dispose();
+            }
         }
 
         @Override
