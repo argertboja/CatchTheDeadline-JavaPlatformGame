@@ -4,7 +4,7 @@
 package gameManager;
 
 /**
- * @author HP_PC
+ * @author Hareem Larik
  *
  */
 public class Enemy {
