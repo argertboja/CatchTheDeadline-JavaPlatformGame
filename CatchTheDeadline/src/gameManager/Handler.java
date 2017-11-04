@@ -2,6 +2,7 @@ package gameManager;
 
 import gameobjects.Block;
 import window.GameEngine;
+import gameobjects.*;
 
 import java.awt.*;
 import java.util.LinkedList;

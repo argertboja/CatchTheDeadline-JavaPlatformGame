@@ -1,4 +1,4 @@
-package gameManager;
+package gameobjects;
 public class Homework {} /*extends Enemy{
       
       private int power;

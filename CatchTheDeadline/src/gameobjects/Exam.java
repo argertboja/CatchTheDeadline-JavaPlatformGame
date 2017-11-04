@@ -1,5 +1,5 @@
-
-public class Exam extends Enemy{
+package gameobjects;
+public class Exam {}/*extends Enemy{
       
         private int power;
       
@@ -9,3 +9,4 @@ public class Exam extends Enemy{
       }
       
 }
+*/

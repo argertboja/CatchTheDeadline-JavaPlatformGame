@@ -1,8 +1,5 @@
 package gameobjects;
 
-import gameManager.GameObject;
-import gameManager.ObjectType;
-
 import java.awt.*;
 import java.util.LinkedList;
 
@@ -12,7 +9,7 @@ public class Block extends GameObject {
         super(x, y, type);
     }
 
-    @Override  
+    @Override
     public void collisionDetector(LinkedList<GameObject> objects) {
 
     }
@@ -25,6 +22,6 @@ public class Block extends GameObject {
 
     @Override
     public Rectangle objectBounds() {
-        return new Rectangle((int) posY, (int) posY, 38, 38);
+        return new Rectangle((int) posX, (int) posY, 38, 38);
     }
 }

@@ -1,4 +1,4 @@
-package gameManager;
+package gameobjects;
 
 import java.awt.*;
 import java.util.LinkedList;

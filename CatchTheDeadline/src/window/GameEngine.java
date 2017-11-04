@@ -1,11 +1,8 @@
 package window;
 
-import gameManager.GameObject;
 import gameManager.Handler;
 import gameManager.InputManager;
-import gameManager.ObjectType;
-import gameManager.Player;
-import gameobjects.Block;
+import gameobjects.*;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;

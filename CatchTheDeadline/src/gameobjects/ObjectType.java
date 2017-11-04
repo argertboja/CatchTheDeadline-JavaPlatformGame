@@ -1,4 +1,4 @@
-package gameManager;
+package gameobjects;
 
 public enum ObjectType {
     Player(),

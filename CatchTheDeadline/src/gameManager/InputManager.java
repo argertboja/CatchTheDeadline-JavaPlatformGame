@@ -2,6 +2,7 @@ package gameManager;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import gameobjects.*;
 
 public class InputManager extends KeyAdapter {
 	
