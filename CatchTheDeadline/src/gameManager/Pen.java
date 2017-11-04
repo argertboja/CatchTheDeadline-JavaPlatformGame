@@ -1,19 +1,9 @@
-/**
- * 
- */
-package gameManager;
 
-/**
- * @author Hareem Larik
- *
- */
-public class Pen {
+public class Pen extends Weapon {
 
-	/**
-	 * 
-	 */
-	public Pen() {
-		// TODO Auto-generated constructor stub
-	}
-
+      private shootingPower;
+      public Pen(int shootingPower){
+      
+      }
 }
+

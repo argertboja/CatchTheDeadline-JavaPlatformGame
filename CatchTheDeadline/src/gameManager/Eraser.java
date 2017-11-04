@@ -1,9 +1,7 @@
-package gameManager;
 
-public class Eraser {
-
-	public Eraser() {
-		// TODO Auto-generated constructor stub
-	}
-
+public class Eraser extends Weapon {
+       private shootingPower;
+       public Eraser(int shootingPower){
+      
+      }
 }

@@ -1,9 +1,9 @@
-package gameManager;
 
-public class PaintSpray {
-
-	public PaintSpray() {
-		// TODO Auto-generated constructor stub
-	}
-
+public class PaintSpray extends Weapon {
+      
+      private shootingPower;
+      public PaintSpray(int shootingPower){
+      
+      }
+      
 }

@@ -1,19 +1,9 @@
-/**
- * 
- */
-package gameManager;
 
-/**
- * @author Hareem Larik
- *
- */
-public class PowerUps {
-
-	/**
-	 * 
-	 */
-	public PowerUps() {
-		// TODO Auto-generated constructor stub
-	}
-
+public class PowerUps extends GameObject {
+      
+      private int value;
+      
+      public PowerUps(int value){
+      
+      }
 }
