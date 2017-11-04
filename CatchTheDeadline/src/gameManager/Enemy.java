@@ -1,19 +1,16 @@
-/**
- * 
- */
-package gameManager;
 
-/**
- * @author Hareem Larik
- *
- */
-public class Enemy {
+public class Enemy extends GameObject {
+      
+      private int power;
+      private int gravity;
 
-	/**
-	 * 
-	 */
-	public Enemy() {
-		// TODO Auto-generated constructor stub
-	}
-
+      private Animation walkAnim;
+      
+      
+      public walkAnim(Animation anim){
+      
+      }
+      
+      public shootAnim(Animation anim){
+      }
 }
