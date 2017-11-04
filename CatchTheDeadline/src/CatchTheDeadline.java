@@ -35,8 +35,8 @@
  *
  */
 
-import window.Game;
-import window.Window;
+import accessManager.LogIn;
+import window.GameEngine;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -47,6 +47,12 @@ public class CatchTheDeadline extends Frame implements ActionListener {
         final SplashScreen splash = SplashScreen.getSplashScreen();
         if (splash == null) {
             System.out.println("SplashScreen.getSplashScreen() returned null");
+
+            // remove this part before building the artifact
+            LogIn logIn = new LogIn();
+            //logIn.startLogInFrame();
+            // until here
+
             return;
         }
         Graphics2D g = splash.createGraphics();
@@ -63,8 +69,7 @@ public class CatchTheDeadline extends Frame implements ActionListener {
             }
         }
         splash.close();
-        Game game = new Game();
-        game.createWindow();
+        LogIn logIn = new LogIn();
         toFront();
     }
     public void actionPerformed(ActionEvent ae) {
