@@ -1,4 +1,8 @@
 package gameobjects;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.util.LinkedList;
+
 public class PowerUps extends GameObject {
       
       private int value=0 ;

@@ -4,14 +4,16 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 
-public class Coins extends PowerUps {
-      private int value=0;
+public class Exam extends Enemy{
       
-      public Coins (float x, float y, ObjectType type,int value){
-            super(x, y, type);
-            value=this.value;
+      private int power=5;
+      private int speed=2;
+      
+      public Exam (float x, float y, ObjectType type, float gravity, int speed, int power){
+            super(x, y, type, gravity);
+            power=this.power;
+            speed=this.speed;
       }
-      
       @Override
       public void collisionDetector(LinkedList<GameObject> objects) {
             // TODO Auto-generated method stub
@@ -29,4 +31,12 @@ public class Coins extends PowerUps {
             // TODO Auto-generated method stub
             return null;
       }
+      /*
+       public  void walkAnim(Animation anim){
+       
+       }
+       
+       public  void shootAnim(Animation anim){
+       }
+       */
 }

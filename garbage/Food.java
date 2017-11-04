@@ -1,13 +1,18 @@
 package gameobjects;
+
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.util.LinkedList;
+
 public class Food extends PowerUps {
       
       private int value=3;
-       
+      
       public Food(float x, float y, ObjectType type,int value){
             super(x, y, type);
             value=this.value;
       }
-            
+      
       @Override
       public void collisionDetector(LinkedList<GameObject> objects) {
             // TODO Auto-generated method stub
