@@ -196,7 +196,7 @@ public class LogIn extends JFrame implements ActionListener {
                 e1.printStackTrace();
             }
             gameEngine = new GameEngine();
-            //gameEngine.createWindow();
+            gameEngine.startTheGame();
             dispose();
         }
     }
