@@ -31,7 +31,6 @@ public class InputManager extends KeyAdapter {
 					temp.setVelocityX(-5);
 			}
 		}
-		
 		if( key == KeyEvent.VK_ESCAPE ) {
 			System.exit(1);
 		}
@@ -45,7 +44,7 @@ public class InputManager extends KeyAdapter {
 			
 			if( temp.getType() == ObjectType.Player ){
 				//if( key == KeyEvent.VK_SPACE || key == KeyEvent.VK_UP )
-					//temp.setVelocityY(-10);
+					//temp.setVelocityY(0);
 				if( key == KeyEvent.VK_DOWN )
 					temp.setVelocityY(0);
 				if( key == KeyEvent.VK_RIGHT )

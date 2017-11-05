@@ -21,7 +21,6 @@ import gameManager.*;
 public class Player extends GameObject {
 
 	// properties
-	private Camera cam;
 	private int speed;
 	private Animation playerWalk;
 	private Animation playerRun;
@@ -29,13 +28,20 @@ public class Player extends GameObject {
 	private Pen pen;
 	private Eraser eraser;
 	private PaintSpray paintSpray;
-	
-	private float gravity = 0.1f;
-	private float width = 64, height = 96;
+
 	private final float MAX_SPEED = 10;
 	private Handler handler;
+	private Camera cam;
 	
 	ImageIcon player = new ImageIcon(getClass().getResource("/images/player.png"));
+	ImageIcon RunSlowGIF = new ImageIcon(getClass().getResource("/images/RunSlowGIF.gif"));
+	ImageIcon RunFastGIF = new ImageIcon(getClass().getResource("/images/RunFastGIF.gif"));
+	ImageIcon RollJumpGIF = new ImageIcon(getClass().getResource("/images/RollJumpGIF.gif"));
+	ImageIcon JumpGIF = new ImageIcon(getClass().getResource("/images/JumpGIF.gif"));
+	ImageIcon KO_GIF = new ImageIcon(getClass().getResource("/images/KO_GIF.gif"));
+	
+	private float gravity = 0.1f;
+	private float width = player.getIconWidth(), height = player.getIconHeight();
 	
 	// constructor
 	public Player(float x, float y, Handler handler, ObjectType type) {
@@ -118,20 +124,22 @@ public class Player extends GameObject {
 	@Override
 	public void render(Graphics graphics) {
 		
-		graphics.setColor(Color.blue); 
-		graphics.fillRect((int)posX, (int)posY, (int)width, (int)height );
-		
-		//graphics.drawImage(player.getImage(), 0, 0, null);
-		
-		Graphics2D g2d = (Graphics2D) graphics;
-		graphics.setColor(Color.red);
-		g2d.draw(objectBounds());
-		g2d.draw(objectBoundsRight());
-		g2d.draw(objectBoundsLeft());
-		g2d.draw(objectBoundsTop());
-		
-		
-		
+		//graphics.fillRect((int)posX, (int)posY, (int)width, (int)height );
+
+		Graphics2D graphics2d = (Graphics2D) graphics;
+		graphics2d.drawImage( RunSlowGIF.getImage(), (int) posX, (int) posY, null );
+		/*if( jumping ) {
+			graphics2d.dispose();
+			graphics2d.drawImage( JumpGIF.getImage(), (int) posX, (int) posY, null );
+		}*/
+		//graphics2d.drawImage( player.getImage(), (int) posX+10, (int) posY+10, null );
+		//graphics.setColor(Color.red);
+		//Color myColour = new Color(255, 0, 0, 0); // for making the lines transparent
+        //graphics.setColor(myColour);
+		//g2d.draw(objectBounds());
+		//g2d.draw(objectBoundsRight());
+		//g2d.draw(objectBoundsLeft());
+		//g2d.draw(objectBoundsTop());
 	}
 
 	@Override
@@ -150,7 +158,5 @@ public class Player extends GameObject {
 	public Rectangle objectBoundsLeft() {
 		return new Rectangle( (int)posX, (int)posY+5, (int)5, (int)height-10 );
 	}
-	
-	
 	
 }
