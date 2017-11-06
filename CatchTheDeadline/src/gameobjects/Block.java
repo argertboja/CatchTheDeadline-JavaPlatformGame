@@ -5,9 +5,14 @@ import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
+import gameManager.Texture;
+import window.GameEngine;
+
 public class Block extends GameObject {
 
+	Texture texture = GameEngine.getInstance();
 	ImageIcon ground = new ImageIcon(getClass().getResource("/images/on.png"));
+	
 	
     public Block(float x, float y, ObjectType type) {
         super(x, y, type);

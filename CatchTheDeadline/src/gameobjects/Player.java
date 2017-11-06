@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import javax.swing.ImageIcon;
 
 import gameManager.*;
+import window.GameEngine;
 
 /**
  * @author Hareem Larik
@@ -32,6 +33,7 @@ public class Player extends GameObject {
 	private final float MAX_SPEED = 10;
 	private Handler handler;
 	private Camera cam;
+	Texture texture = GameEngine.getInstance();
 	
 	ImageIcon player = new ImageIcon(getClass().getResource("/images/player.png"));
 	ImageIcon RunSlowGIF = new ImageIcon(getClass().getResource("/images/RunSlowGIF.gif"));
@@ -126,13 +128,12 @@ public class Player extends GameObject {
 		
 		//graphics.fillRect((int)posX, (int)posY, (int)width, (int)height );
 
-		Graphics2D graphics2d = (Graphics2D) graphics;
+		Graphics2D graphics2d = (Graphics2D) graphics; // gif animation
 		graphics2d.drawImage( RunSlowGIF.getImage(), (int) posX, (int) posY, null );
-		/*if( jumping ) {
-			graphics2d.dispose();
-			graphics2d.drawImage( JumpGIF.getImage(), (int) posX, (int) posY, null );
-		}*/
+		
 		//graphics2d.drawImage( player.getImage(), (int) posX+10, (int) posY+10, null );
+		
+		///////////~FOR CHECKING BOUNDS~///////////////////////////
 		//graphics.setColor(Color.red);
 		//Color myColour = new Color(255, 0, 0, 0); // for making the lines transparent
         //graphics.setColor(myColour);
@@ -140,6 +141,7 @@ public class Player extends GameObject {
 		//g2d.draw(objectBoundsRight());
 		//g2d.draw(objectBoundsLeft());
 		//g2d.draw(objectBoundsTop());
+		////////////////////////////////////////
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import gameManager.Animation;
 import gameManager.Camera;
 import gameManager.Handler;
 import gameManager.InputManager;
+import gameManager.Texture;
 import gameobjects.*;
 
 import java.awt.*;
@@ -18,6 +19,7 @@ public class GameEngine extends Canvas implements Runnable {
     private boolean isRunning = false;
     private Handler handler;
     private Camera cam;
+    static Texture texture;
     public static int WIDTH, HEIGHT;
 
     private ImageIcon level = new ImageIcon(getClass().getResource("/images/level.png"));
@@ -25,9 +27,8 @@ public class GameEngine extends Canvas implements Runnable {
     public void init() {
         WIDTH = getWidth();
         HEIGHT = getHeight();
-        
-        //Animation loader = new Animation();
-        //level = loader.loadImage("/images/level.png");
+             
+        texture = new Texture();
         handler = new Handler();
         cam = new Camera( 0, 0 );
         handler.addObject( new Player(100, 100, handler,ObjectType.Player) );
@@ -106,8 +107,7 @@ public class GameEngine extends Canvas implements Runnable {
         //graphics.setColor(Color.BLACK);
         //graphics.fillRect(0,0, getWidth(), getHeight());
     	graphics.drawImage(level.getImage(), 0, 0, null);
-    	
-    	
+    	    	
         g2d.translate(cam.getXPos(), cam.getYPos() ); // begin of cam
         handler.render(graphics);
         g2d.translate(cam.getXPos(), -cam.getYPos() ); //end of cam
@@ -117,6 +117,11 @@ public class GameEngine extends Canvas implements Runnable {
         bufferStrategy.show();
     }
 
+    public static Texture getInstance() {
+    	return texture;
+    }
+    
+    
     public void startTheGame() {
         new Window(1000, 500, "Catch The Deadline", new GameEngine());
     }
