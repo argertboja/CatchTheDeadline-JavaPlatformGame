@@ -42,7 +42,7 @@ public class Player extends GameObject {
 	ImageIcon JumpGIF = new ImageIcon(getClass().getResource("/images/JumpGIF.gif"));
 	ImageIcon KO_GIF = new ImageIcon(getClass().getResource("/images/KO_GIF.gif"));
 	
-	private float gravity = 0.1f;
+	private float gravity = 0.2f;
 	private float width = player.getIconWidth(), height = player.getIconHeight();
 	
 	// constructor
@@ -75,7 +75,9 @@ public class Player extends GameObject {
 					posX = temp.getPosX() - width;
 				}
 				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
-					posX = temp.getPosX() + width;
+					posX = temp.getPosX() + 40;
+					// DEBUG
+					//System.out.println(width);
 				}
 			}
 		}
@@ -133,7 +135,7 @@ public class Player extends GameObject {
 		
 		//graphics2d.drawImage( player.getImage(), (int) posX+10, (int) posY+10, null );
 		
-		///////////~FOR CHECKING BOUNDS~///////////////////////////
+		///////////~FOR CHECKING BOUNDS ON DEBUG MODE~///////////////////////////
 		//graphics.setColor(Color.red);
 		//Color myColour = new Color(255, 0, 0, 0); // for making the lines transparent
         //graphics.setColor(myColour);

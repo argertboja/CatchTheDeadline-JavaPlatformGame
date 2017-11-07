@@ -1,10 +1,6 @@
 package window;
 
-import gameManager.Animation;
-import gameManager.Camera;
-import gameManager.Handler;
-import gameManager.InputManager;
-import gameManager.Texture;
+import gameManager.*;
 import gameobjects.*;
 
 import java.awt.*;
@@ -22,22 +18,47 @@ public class GameEngine extends Canvas implements Runnable {
     static Texture texture;
     public static int WIDTH, HEIGHT;
 
+    private BufferedImage level1 = null;
+
     private ImageIcon level = new ImageIcon(getClass().getResource("/images/level.png"));
     
     public void init() {
         WIDTH = getWidth();
         HEIGHT = getHeight();
-             
+
+        BufferedImageLoader bufferedImageLoader = new BufferedImageLoader();
+        level1 = bufferedImageLoader.loadImg("/images/level1.png");
+
         texture = new Texture();
         handler = new Handler();
         cam = new Camera( 0, 0 );
-        handler.addObject( new Player(100, 100, handler,ObjectType.Player) );
-        handler.level();
+
+        //handler.addObject( new Player(100, 100, handler,ObjectType.Player) );
+        //handler.level();
+        createLevel(level1);
+
         this.addKeyListener( new InputManager(handler) );
     }
 
-    public void loadImageLevel( BufferedImage img ) {
-    	
+    public void createLevel( BufferedImage img ) {
+    	int width = img.getWidth();
+    	int height = img.getHeight();
+    	for (int i = 0; i < height; i++) {
+    	    for (int j = 0; j < width; j++) {
+    	        int pixel = img.getRGB(i, j);
+    	        int red = (pixel >> 16) & 0xff;
+    	        int green = (pixel >> 8) & 0xff;
+    	        int blue = (pixel) & 0xff;
+
+    	        if (red == 255 && green == 255 && blue == 255) {
+                    handler.addObject( new Block( i * 38, j * 38, ObjectType.Block) );
+                }
+                if (red == 0 && green == 0 && blue == 255) {
+                    handler.addObject( new Player(i + 200, j + 100, handler,ObjectType.Player) );
+                }
+
+            }
+        }
     }
     
     public synchronized void start() {
