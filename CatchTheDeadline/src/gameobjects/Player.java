@@ -15,10 +15,7 @@ import javax.swing.ImageIcon;
 import gameManager.*;
 import window.GameEngine;
 
-/**
- * @author Hareem Larik
- *
- */
+
 public class Player extends GameObject {
 
 	// properties

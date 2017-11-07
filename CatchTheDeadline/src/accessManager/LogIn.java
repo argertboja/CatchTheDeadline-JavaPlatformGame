@@ -161,7 +161,7 @@ public class LogIn extends JFrame implements ActionListener {
         if (e.getSource().equals(login)) {
             try {
                 if (checkPasw()){
-                    gameEngine = new GameEngine();
+                    gameEngine = new GameEngine(1);
                     gameEngine.startTheGame();
                     dispose();
                 }
@@ -185,7 +185,7 @@ public class LogIn extends JFrame implements ActionListener {
             } catch (ClassNotFoundException e1) {
                 e1.printStackTrace();
             }
-            gameEngine = new GameEngine();
+            gameEngine = new GameEngine(1);
             gameEngine.startTheGame();
             dispose();
         }

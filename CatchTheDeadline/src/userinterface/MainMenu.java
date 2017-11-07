@@ -117,8 +117,10 @@ public class MainMenu extends  JFrame {
         public void mouseClicked(MouseEvent e) {
             JLabel source = (JLabel) e.getSource();
             if (source == play) {
-                gameEngine = new GameEngine();
+                /*gameEngine = new GameEngine();
                 gameEngine.startTheGame();
+                */
+                new ChooseLevel();
                 dispose();
             }
             else if (source == settings) {

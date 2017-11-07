@@ -11,6 +11,8 @@ import javax.swing.ImageIcon;
 
 public class GameEngine extends Canvas implements Runnable {
 
+
+
     private Thread thread;
     private boolean isRunning = false;
     private Handler handler;
@@ -18,9 +20,15 @@ public class GameEngine extends Canvas implements Runnable {
     static Texture texture;
     public static int WIDTH, HEIGHT;
 
-    private BufferedImage level1 = null;
+    private BufferedImage level1 = null, level2 = null, level3 = null;
 
     private ImageIcon level = new ImageIcon(getClass().getResource("/images/level.png"));
+
+    private int levelNo = 1;
+
+    public GameEngine(int levelNo) {
+        this.levelNo = levelNo;
+    }
     
     public void init() {
         WIDTH = getWidth();
@@ -28,6 +36,8 @@ public class GameEngine extends Canvas implements Runnable {
 
         BufferedImageLoader bufferedImageLoader = new BufferedImageLoader();
         level1 = bufferedImageLoader.loadImg("/images/level1.png");
+        level2 = bufferedImageLoader.loadImg("/images/level2.png");
+        level3 = bufferedImageLoader.loadImg("/images/level3.png");
 
         texture = new Texture();
         handler = new Handler();
@@ -35,7 +45,12 @@ public class GameEngine extends Canvas implements Runnable {
 
         //handler.addObject( new Player(100, 100, handler,ObjectType.Player) );
         //handler.level();
-        createLevel(level1);
+        if (levelNo == 1)
+            createLevel(level1);
+        else if (levelNo == 2)
+            createLevel(level2);
+        else if (levelNo == 3)
+            createLevel(level3);
 
         this.addKeyListener( new InputManager(handler) );
     }
@@ -148,6 +163,6 @@ public class GameEngine extends Canvas implements Runnable {
     }
     
     public void startTheGame() {
-        new Window(1000, 510, "Catch The Deadline", new GameEngine());
+        new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
     }
 }
