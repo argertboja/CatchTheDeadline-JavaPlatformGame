@@ -50,13 +50,15 @@ public class GameEngine extends Canvas implements Runnable {
     	        int green = (pixel >> 8) & 0xff;
     	        int blue = (pixel) & 0xff;
 
-    	        if (red == 255 && green == 255 && blue == 255) {
-                    handler.addObject( new Block( i * 38 - 340, j * 38, ObjectType.Block) );
+    	        if (red == 255 && green == 255 && blue == 255) { // if the pixel is white 
+                    handler.addObject( new Block( i * 32 - 400, j * 32 + 72, 1, ObjectType.Block) );
                 }
-                if (red == 0 && green == 0 && blue == 255) {
+                if (red == 0 && green == 0 && blue == 255) { // if the pixel is blue
                     handler.addObject( new Player(i + 200, j + 100, handler,ObjectType.Player) );
                 }
-
+                if (red == 127 && green == 127 && blue == 127) { // if the pixel is grey 
+                    handler.addObject( new Block( i * 32 - 400, j * 32 + 72, 2, ObjectType.Block) );
+                }
             }
         }
     }
@@ -142,10 +144,7 @@ public class GameEngine extends Canvas implements Runnable {
     	return texture;
     }
     
-    
     public void startTheGame() {
         new Window(1000, 510, "Catch The Deadline", new GameEngine());
     }
-
-
 }

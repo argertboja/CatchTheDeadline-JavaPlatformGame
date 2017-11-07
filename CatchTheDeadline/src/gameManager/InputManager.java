@@ -53,11 +53,8 @@ public class InputManager extends KeyAdapter {
 					temp.setVelocityX(0);
 			}
 		}
-		
 		if( key == KeyEvent.VK_ESCAPE ) {
 			System.exit(1);
 		}
-	}
-	
-	
+	}	
 }

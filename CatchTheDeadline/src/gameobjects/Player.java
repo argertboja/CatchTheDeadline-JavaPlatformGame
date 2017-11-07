@@ -125,8 +125,8 @@ public class Player extends GameObject {
 				velocityY = MAX_SPEED;
 		}
 		collisions( objects );
-		playerWalk.runAnimation();
-		playerWalkM.runAnimation();
+		playerWalk.runAnimation(); // generate animation for player running towards right
+		playerWalkM.runAnimation(); // generate animation for player running towards left
 	}
 
 	@Override
@@ -171,5 +171,4 @@ public class Player extends GameObject {
 	public Rectangle objectBoundsLeft() {
 		return new Rectangle( (int)posX, (int)posY+5, (int)5, (int)height-10 );
 	}
-	
 }

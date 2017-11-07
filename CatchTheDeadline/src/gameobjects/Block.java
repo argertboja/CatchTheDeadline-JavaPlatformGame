@@ -11,29 +11,33 @@ import window.GameEngine;
 public class Block extends GameObject {
 
 	Texture texture = GameEngine.getInstance();
-	ImageIcon ground = new ImageIcon(getClass().getResource("/images/on.png"));
+	ImageIcon books = new ImageIcon(getClass().getResource("/images/books.png"));
+	int blockType;
 	
-	
-    public Block(float x, float y, ObjectType type) {
+    public Block(float x, float y, int blockType, ObjectType type) {
         super(x, y, type);
+        this.blockType = blockType;
     }
 
     @Override
-    public void collisionDetector(LinkedList<GameObject> objects) {
-
-    }
+    public void collisionDetector(LinkedList<GameObject> objects) {}
 
     @Override
     public void render(Graphics graphics) {
-    	//Color myColour = new Color(255, 0, 0, 0);
-        //graphics.setColor(myColour);
-        graphics.setColor(Color.BLUE);
-        graphics.drawRect((int) posX, (int) posY, 38, 38);
-        //graphics.drawImage(ground.getImage(), 0, 0, null);
+    	
+    	if( blockType == 1 ) {
+    		Color myColour = new Color(255, 0, 0, 0);
+            graphics.setColor(myColour);
+            //graphics.setColor(Color.BLUE);
+            graphics.drawRect((int) posX, (int) posY, 32, 32);
+    	}
+    	if( blockType == 2 ) {
+    		graphics.drawImage( books.getImage(), (int) posX, (int) posY, null );
+        }
     }
 
     @Override
     public Rectangle objectBounds() {
-        return new Rectangle((int) posX, (int) posY, 38, 38);
+        return new Rectangle((int) posX, (int) posY, 32, 32);
     }
 }

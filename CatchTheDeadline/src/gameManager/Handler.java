@@ -38,17 +38,17 @@ public class Handler {
 
     public void level() {
     	
-        for (int i = 0; i < GameEngine.WIDTH*10; i+= 38) {
-            addObject(new Block(i, GameEngine.HEIGHT - 38, ObjectType.Block));
+        for (int i = 0; i < GameEngine.WIDTH*10; i+= 32) {
+            addObject(new Block(i, GameEngine.HEIGHT - 32, 1, ObjectType.Block));
         }
         for (int i = 0; i < GameEngine.WIDTH + 400; i+= 200) {
-            addObject(new Block(i, GameEngine.HEIGHT - 96, ObjectType.Block));
+            addObject(new Block(i, GameEngine.HEIGHT - 96, 1, ObjectType.Block));
         }
-        for (int i = 0; i < GameEngine.HEIGHT; i+= 38) { // right wall
-            addObject(new Block(GameEngine.WIDTH*3, i, ObjectType.Block));
+        for (int i = 0; i < GameEngine.HEIGHT; i+= 32) { // right wall
+            addObject(new Block(GameEngine.WIDTH*3, i, 1, ObjectType.Block));
         }
-        for (int i = 0; i < GameEngine.HEIGHT; i+= 38) { // left wall
-            addObject(new Block(0, i, ObjectType.Block));
+        for (int i = 0; i < GameEngine.HEIGHT; i+= 32) { // left wall
+            addObject(new Block(0, i, 1, ObjectType.Block));
         }
     }
 }
