@@ -12,7 +12,7 @@ public class Texture {
 	private BufferedImage playerRunSprite = null, playerRunSpriteM = null;
 	public BufferedImage[] playerRun = new BufferedImage[42];
 	public BufferedImage[] playerRunM = new BufferedImage[42];
-	int x1 = 100, y1 = 169;
+	int x1 = 75, y1 = 127;
 	SpriteSheet ps, psM;
 	
 	public Texture() {

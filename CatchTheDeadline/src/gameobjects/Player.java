@@ -49,8 +49,8 @@ public class Player extends GameObject {
 	public Player(float x, float y, Handler handler, ObjectType type) {
 		super(x, y, type);
 		this.handler = handler;
-		playerWalk = new Animation( 5, texture.playerRun ); 
-		playerWalkM = new Animation( 5, texture.playerRunM ); 
+		playerWalk = new Animation( 1, texture.playerRun ); 
+		playerWalkM = new Animation( 1, texture.playerRunM );
 	}
 	
 	// methods
@@ -132,27 +132,26 @@ public class Player extends GameObject {
 	@Override
 	public void render(Graphics graphics) {
 		
-		//graphics.fillRect((int)posX, (int)posY, (int)width, (int)height );
-
-		//Graphics2D graphics2d = (Graphics2D) graphics; 
 		if( velocityX > 0 )
 			playerWalk.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) height);
 		else if( velocityX < 0 )
 			playerWalkM.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) height);
 		else
 			graphics.drawImage( player.getImage(), (int) posX, (int) posY, (int) width, (int) height, null );
-		//graphics2d.drawImage( RunSlowGIF.getImage(), (int) posX, (int) posY, null );// gif animation
 		
+		//graphics.fillRect((int)posX, (int)posY, (int)width, (int)height );
+		//graphics2d.drawImage( RunSlowGIF.getImage(), (int) posX, (int) posY, null );// gif animation
 		//graphics2d.drawImage( player.getImage(), (int) posX+10, (int) posY+10, null );
 		
 		///////////~FOR CHECKING BOUNDS ON DEBUG MODE~///////////////////////////
-		//graphics.setColor(Color.red);
+		//Graphics2D graphics2d = (Graphics2D) graphics; 
+		//graphics2d.setColor(Color.red);
 		//Color myColour = new Color(255, 0, 0, 0); // for making the lines transparent
         //graphics.setColor(myColour);
-		//g2d.draw(objectBounds());
-		//g2d.draw(objectBoundsRight());
-		//g2d.draw(objectBoundsLeft());
-		//g2d.draw(objectBoundsTop());
+		//graphics2d.draw(objectBounds());
+		//graphics2d.draw(objectBoundsRight());
+		//graphics2d.draw(objectBoundsLeft());
+		//graphics2d.draw(objectBoundsTop());
 		////////////////////////////////////////
 	}
 
