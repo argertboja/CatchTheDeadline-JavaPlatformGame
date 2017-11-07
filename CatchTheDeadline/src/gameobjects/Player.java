@@ -36,6 +36,7 @@ public class Player extends GameObject {
 	Texture texture = GameEngine.getInstance();
 	
 	ImageIcon player = new ImageIcon(getClass().getResource("/images/player.png"));
+	ImageIcon playerLeftLooking = new ImageIcon(getClass().getResource("/images/playerLeftLooking.png"));
 	/*ImageIcon RunSlowGIF = new ImageIcon(getClass().getResource("/images/RunSlowGIF.gif"));
 	ImageIcon RunFastGIF = new ImageIcon(getClass().getResource("/images/RunFastGIF.gif"));
 	ImageIcon RollJumpGIF = new ImageIcon(getClass().getResource("/images/RollJumpGIF.gif"));
@@ -57,9 +58,15 @@ public class Player extends GameObject {
 	public void collisions( LinkedList<GameObject> objects ) {
 	
 		for( int i = 0; i < handler.objectLinkedList.size(); i++ ) {
-			GameObject temp = handler.objectLinkedList.get(i);
-			
-			if( temp.getType() == ObjectType.Block )
+			GameObject temp = null;
+			try {
+				temp = handler.objectLinkedList.get(i);
+			}
+			catch (Exception e) {
+
+
+			}
+			if( temp != null && temp.getType() == ObjectType.Block )
 			{
 				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
 					posY = temp.getPosY() + (height/2);
@@ -117,6 +124,11 @@ public class Player extends GameObject {
 	public void collisionDetector(LinkedList<GameObject> objects ) {
 		posX += velocityX;
 		posY += velocityY;
+
+		if (velocityX > 0)
+			facing = 1;
+		else if (velocityX < 0)
+			facing = -1;
 		
 		if ( falling || jumping ) {
 			velocityY += gravity;
@@ -136,8 +148,10 @@ public class Player extends GameObject {
 			playerWalk.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) height);
 		else if( velocityX < 0 )
 			playerWalkM.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) height);
-		else
+		else if (facing == 1)
 			graphics.drawImage( player.getImage(), (int) posX, (int) posY, (int) width, (int) height, null );
+		else
+			graphics.drawImage( playerLeftLooking.getImage(), (int) posX, (int) posY, (int) width, (int) height, null );
 		
 		//graphics.fillRect((int)posX, (int)posY, (int)width, (int)height );
 		//graphics2d.drawImage( RunSlowGIF.getImage(), (int) posX, (int) posY, null );// gif animation

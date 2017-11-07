@@ -11,6 +11,7 @@ public abstract class GameObject {
     protected ObjectType type;
     protected boolean falling = true;
     protected boolean jumping = false;
+    protected int facing = 1;
 
     public GameObject(float x, float y, ObjectType type) {
         posX = x;
@@ -68,4 +69,8 @@ public abstract class GameObject {
 	public void setJumping(boolean jumping) {
 		this.jumping = jumping;
 	}
+
+	public int getFacing() {
+        return facing;
+    }
 }

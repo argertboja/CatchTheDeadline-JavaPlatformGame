@@ -51,6 +51,13 @@ public class InputManager extends KeyAdapter {
 					temp.setVelocityX(0);
 				if( key == KeyEvent.VK_LEFT )
 					temp.setVelocityX(0);
+				if (key == KeyEvent.VK_A) {
+					if (temp.getFacing() == 1)
+						handler.addObject(new Pen(temp.getPosX() +38, temp.getPosY() + 88, ObjectType.Pen, temp.getFacing() * 5));
+					else
+						handler.addObject(new Pen(temp.getPosX(), temp.getPosY() + 88, ObjectType.Pen, temp.getFacing() * 5));
+				}
+
 			}
 		}
 		if( key == KeyEvent.VK_ESCAPE ) {
