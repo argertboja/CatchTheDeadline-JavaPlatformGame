@@ -69,8 +69,8 @@ public abstract class GameObject {
 	public void setJumping(boolean jumping) {
 		this.jumping = jumping;
 	}
-
+	
 	public int getFacing() {
-        return facing;
-    }
+	       return facing;
+	}
 }

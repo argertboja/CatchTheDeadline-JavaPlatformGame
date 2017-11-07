@@ -6,7 +6,6 @@ import gameobjects.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 import javax.swing.ImageIcon;
 
@@ -22,8 +21,7 @@ public class GameEngine extends Canvas implements Runnable {
     private BufferedImage level1 = null;
 
     private ImageIcon level = new ImageIcon(getClass().getResource("/images/level.png"));
-    private ImageIcon clouds = new ImageIcon(getClass().getResource("/images/clouds.png"));
-
+    
     public void init() {
         WIDTH = getWidth();
         HEIGHT = getHeight();
@@ -60,6 +58,9 @@ public class GameEngine extends Canvas implements Runnable {
                 }
                 if (red == 127 && green == 127 && blue == 127) { // if the pixel is grey 
                     handler.addObject( new Block( i * 32 - 400, j * 32 + 72, 2, ObjectType.Block) );
+                }
+                if (red == 237 && green == 28 && blue == 36) { // if the pixel is red 
+                    handler.addObject( new Food( i * 32 - 400, j * 32 + 72, ObjectType.PowerUp, 3) );
                 }
             }
         }
@@ -99,6 +100,7 @@ public class GameEngine extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer > 1000){
                 timer += 1000;
+                System.out.println("FPS: " + frames + " TICKS: " + updates);
                 frames = 0;
                 updates = 0;
             }
@@ -133,9 +135,6 @@ public class GameEngine extends Canvas implements Runnable {
     	graphics.drawImage(level.getImage(), 0, 0, null);
     	    	
         g2d.translate(cam.getXPos(), cam.getYPos() ); // begin of cam
-        for (int i = 0; i < clouds.getImage().getWidth(null) * 10; i += clouds.getImage().getWidth(null)) {
-            graphics.drawImage(clouds.getImage(), i*3, 0, this);
-        }
         handler.render(graphics);
         g2d.translate(cam.getXPos(), -cam.getYPos() ); //end of cam
         /////////////////////////////////////////////////////////////////////////////

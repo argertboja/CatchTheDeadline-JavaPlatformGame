@@ -1,41 +1,34 @@
-/**
- * 
- */
 package gameobjects;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 
-/**
- * @author Hareem Larik
- *
- */
-public class PowerUps {} /*extends GameObject  {
-
-	/**
-	 * 
-
-	public PowerUps(float x, float y, ObjectType type) {
-		super(x, y, type);
-	}
+public abstract class PowerUps extends GameObject {
+		
+	int value;
 	
-	@Override
-	public void collisionDetector(LinkedList<GameObject> objects) {
-		// TODO Auto-generated method stub
-		
+	public PowerUps( float x, float y, ObjectType type, int value ) {
+		super( x, y, type );
+		this.value = value;
 	}
-
+	  
 	@Override
-	public void render(Graphics graphics) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void collisionDetector(LinkedList<GameObject> objects) {}
+	  
+	@Override
+	public void render(Graphics graphics) {}
+	  
 	@Override
 	public Rectangle objectBounds() {
-		// TODO Auto-generated method stub
-		return null;
+		 return null;
 	}
 
-}*/
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+}

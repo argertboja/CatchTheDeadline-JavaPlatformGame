@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 
 public class Texture {
 
-	private BufferedImage playerRunSprite = null, playerRunSpriteM = null,penSpin = null;
+	private BufferedImage playerRunSprite = null, playerRunSpriteM = null, penSpin = null;
 	public BufferedImage[] playerRun = new BufferedImage[42];
 	public BufferedImage[] playerRunM = new BufferedImage[42];
 	public BufferedImage[] penSpinning = new BufferedImage[24];
@@ -21,7 +21,7 @@ public class Texture {
 		BufferedImageLoader bufferedImageLoader = new BufferedImageLoader();
 		playerRunSprite = bufferedImageLoader.loadImg("/images/runSlowSprite.png"); // loads the 'forward running sprite sheet of player'
 		playerRunSpriteM = bufferedImageLoader.loadImg("/images/runSlowSpriteM.png"); // loads the 'backward running sprite sheet of player'
-		penSpin = bufferedImageLoader.loadImg("/images/penSprite.png"); // loads the 'backward running sprite sheet of player'
+		penSpin = bufferedImageLoader.loadImg("/images/penSprite.png");
 		ps = new SpriteSheet(playerRunSprite);
 		psM = new SpriteSheet(playerRunSpriteM);
 		penSprite = new SpriteSheet(penSpin);

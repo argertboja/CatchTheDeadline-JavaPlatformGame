@@ -29,6 +29,7 @@ public class Player extends GameObject {
 	private Pen pen;
 	private Eraser eraser;
 	private PaintSpray paintSpray;
+	private Food food;
 
 	private final float MAX_SPEED = 10;
 	private Handler handler;
@@ -47,7 +48,7 @@ public class Player extends GameObject {
 	private float width = player.getIconWidth(), height = player.getIconHeight();
 	
 	// constructor
-	public Player(float x, float y, Handler handler, ObjectType type) {
+	public Player( float x, float y, Handler handler, ObjectType type ) {
 		super(x, y, type);
 		this.handler = handler;
 		playerWalk = new Animation( 1, texture.playerRun ); 
@@ -59,15 +60,13 @@ public class Player extends GameObject {
 	
 		for( int i = 0; i < handler.objectLinkedList.size(); i++ ) {
 			GameObject temp = null;
-			try {
-				temp = handler.objectLinkedList.get(i);
-			}
-			catch (Exception e) {
-
-
-			}
-			if( temp != null && temp.getType() == ObjectType.Block )
-			{
+			 try {
+			 	temp = handler.objectLinkedList.get(i);
+			 }
+			 catch (Exception e) {
+			 }
+			 if( temp != null && temp.getType() == ObjectType.Block )
+			 {
 				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
 					posY = temp.getPosY() + (height/2);
 					velocityY = 0;
@@ -87,6 +86,13 @@ public class Player extends GameObject {
 					posX = temp.getPosX() + 40;
 					// DEBUG
 					//System.out.println(width);
+				}
+			}
+			if( temp.getType() == ObjectType.PowerUp )
+			{ 
+				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
+					food.setValue( food.getValue() + 1 );
+					//System.out.println( food.getValue() );
 				}
 			}
 		}
@@ -124,7 +130,7 @@ public class Player extends GameObject {
 	public void collisionDetector(LinkedList<GameObject> objects ) {
 		posX += velocityX;
 		posY += velocityY;
-
+		
 		if (velocityX > 0)
 			facing = 1;
 		else if (velocityX < 0)

@@ -24,6 +24,13 @@ public class Block extends GameObject {
 
     @Override
     public void render(Graphics graphics) {
+    	
+    	if( blockType == 1 ) {
+    		Color myColour = new Color(255, 0, 0, 0);
+            graphics.setColor(myColour);
+            //graphics.setColor(Color.BLUE);
+            graphics.drawRect((int) posX, (int) posY, 32, 32);
+    	}
     	if( blockType == 2 ) {
     		graphics.drawImage( books.getImage(), (int) posX, (int) posY, null );
         }
