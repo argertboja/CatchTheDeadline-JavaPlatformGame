@@ -23,7 +23,7 @@ public class Camera {
 	}
 
 	public void updateFrame( GameObject player ) {
-		xPos = -player.getPosX() + GameEngine.WIDTH/2;
+		xPos = -player.getPosX() + GameEngine.WIDTH / 2;
 	}
 	
 	public float getXPos() {

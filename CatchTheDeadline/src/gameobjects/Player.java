@@ -15,10 +15,7 @@ import javax.swing.ImageIcon;
 import gameManager.*;
 import window.GameEngine;
 
-/**
- * @author Hareem Larik
- *
- */
+
 public class Player extends GameObject {
 
 	// properties
@@ -42,7 +39,7 @@ public class Player extends GameObject {
 	ImageIcon JumpGIF = new ImageIcon(getClass().getResource("/images/JumpGIF.gif"));
 	ImageIcon KO_GIF = new ImageIcon(getClass().getResource("/images/KO_GIF.gif"));
 	
-	private float gravity = 0.2f;
+	private float gravity = 0.15f;
 	private float width = player.getIconWidth(), height = player.getIconHeight();
 	
 	// constructor
@@ -131,7 +128,7 @@ public class Player extends GameObject {
 		//graphics.fillRect((int)posX, (int)posY, (int)width, (int)height );
 
 		Graphics2D graphics2d = (Graphics2D) graphics; // gif animation
-		graphics2d.drawImage( RunSlowGIF.getImage(), (int) posX, (int) posY, null );
+		graphics2d.drawImage( RunSlowGIF.getImage(), (int) posX , (int) posY, null );
 		
 		//graphics2d.drawImage( player.getImage(), (int) posX+10, (int) posY+10, null );
 		
