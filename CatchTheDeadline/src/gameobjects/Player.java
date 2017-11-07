@@ -15,12 +15,15 @@ import javax.swing.ImageIcon;
 import gameManager.*;
 import window.GameEngine;
 
-
+/**
+ * @author Hareem Larik
+ *
+ */
 public class Player extends GameObject {
 
 	// properties
 	private int speed;
-	private Animation playerWalk;
+	private Animation playerWalk, playerWalkM;
 	private Animation playerRun;
 	private Animation playerShoot;
 	private Pen pen;
@@ -33,12 +36,12 @@ public class Player extends GameObject {
 	Texture texture = GameEngine.getInstance();
 	
 	ImageIcon player = new ImageIcon(getClass().getResource("/images/player.png"));
-	ImageIcon RunSlowGIF = new ImageIcon(getClass().getResource("/images/RunSlowGIF.gif"));
+	/*ImageIcon RunSlowGIF = new ImageIcon(getClass().getResource("/images/RunSlowGIF.gif"));
 	ImageIcon RunFastGIF = new ImageIcon(getClass().getResource("/images/RunFastGIF.gif"));
 	ImageIcon RollJumpGIF = new ImageIcon(getClass().getResource("/images/RollJumpGIF.gif"));
 	ImageIcon JumpGIF = new ImageIcon(getClass().getResource("/images/JumpGIF.gif"));
 	ImageIcon KO_GIF = new ImageIcon(getClass().getResource("/images/KO_GIF.gif"));
-	
+	*/
 	private float gravity = 0.15f;
 	private float width = player.getIconWidth(), height = player.getIconHeight();
 	
@@ -46,6 +49,8 @@ public class Player extends GameObject {
 	public Player(float x, float y, Handler handler, ObjectType type) {
 		super(x, y, type);
 		this.handler = handler;
+		playerWalk = new Animation( 5, texture.playerRun ); 
+		playerWalkM = new Animation( 5, texture.playerRunM ); 
 	}
 	
 	// methods
@@ -120,6 +125,8 @@ public class Player extends GameObject {
 				velocityY = MAX_SPEED;
 		}
 		collisions( objects );
+		playerWalk.runAnimation();
+		playerWalkM.runAnimation();
 	}
 
 	@Override
@@ -127,8 +134,14 @@ public class Player extends GameObject {
 		
 		//graphics.fillRect((int)posX, (int)posY, (int)width, (int)height );
 
-		Graphics2D graphics2d = (Graphics2D) graphics; // gif animation
-		graphics2d.drawImage( RunSlowGIF.getImage(), (int) posX , (int) posY, null );
+		//Graphics2D graphics2d = (Graphics2D) graphics; 
+		if( velocityX > 0 )
+			playerWalk.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) height);
+		else if( velocityX < 0 )
+			playerWalkM.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) height);
+		else
+			graphics.drawImage( player.getImage(), (int) posX, (int) posY, (int) width, (int) height, null );
+		//graphics2d.drawImage( RunSlowGIF.getImage(), (int) posX, (int) posY, null );// gif animation
 		
 		//graphics2d.drawImage( player.getImage(), (int) posX+10, (int) posY+10, null );
 		

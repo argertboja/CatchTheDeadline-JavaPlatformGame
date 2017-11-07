@@ -51,7 +51,7 @@ public class GameEngine extends Canvas implements Runnable {
     	        int blue = (pixel) & 0xff;
 
     	        if (red == 255 && green == 255 && blue == 255) {
-                    handler.addObject( new Block( i * 38 -340 , j * 38, ObjectType.Block) );
+                    handler.addObject( new Block( i * 38 - 340, j * 38, ObjectType.Block) );
                 }
                 if (red == 0 && green == 0 && blue == 255) {
                     handler.addObject( new Player(i + 200, j + 100, handler,ObjectType.Player) );

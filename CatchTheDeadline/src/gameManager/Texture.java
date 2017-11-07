@@ -9,33 +9,40 @@ import javax.swing.ImageIcon;
 
 public class Texture {
 
-	private BufferedImage playerRunSprite = null;
-	private BufferedImage[] player = new BufferedImage[5];
-
-	SpriteSheet ss;
+	private BufferedImage playerRunSprite = null, playerRunSpriteM = null;
+	public BufferedImage[] playerRun = new BufferedImage[42];
+	public BufferedImage[] playerRunM = new BufferedImage[42];
+	int x1 = 100, y1 = 169;
+	SpriteSheet ps, psM;
 	
 	public Texture() {
 
-		try {
-			playerRunSprite = ImageIO.read(new File("/images/runSlowSprite.png"));
-		} catch (IOException e) {
-		}
-		ss = new SpriteSheet(playerRunSprite);
+		BufferedImageLoader bufferedImageLoader = new BufferedImageLoader();
+		playerRunSprite = bufferedImageLoader.loadImg("/images/runSlowSprite.png");
+		playerRunSpriteM = bufferedImageLoader.loadImg("/images/runSlowSpriteM.png");
+		ps = new SpriteSheet(playerRunSprite);
+		psM = new SpriteSheet(playerRunSpriteM);
 		generateTextures();
 	}
-	
-	ImageIcon player1 = new ImageIcon(getClass().getResource("/images/player.png"));
 
-	int x = player1.getIconWidth();
-	int y = player1.getIconHeight();
-	
-	
 	public void generateTextures() {
-		//player[0] = ss.divideImage( 0, 0, x, y ); // player's running animation
+		int count = 0;
+		for( int i = 1; i <= 7; i++ ) {
+			for( int j = 1; j <= 6; j++ ) {
+				playerRun[count] = ps.divideImage( i, j, x1, y1 );// player's running animation
+				count++;
+				if( count >= 42 )
+					break;
+			}
+		}
+		count = 0;
+		for( int i = 1; i <= 7; i++ ) {
+			for( int j = 1; j <= 6; j++ ) {
+				playerRunM[count] = psM.divideImage( i, j, x1, y1 );// player's running animation
+				count++;
+				if( count >= 42 )
+					break;
+			}
+		}
 	}
-
-	/*public BufferedImage divideImage( int row, int col, int width, int height, BufferedImage image ) {
-		BufferedImage img = image.getSubimage( (col * width)-width, (col * height)-height, width, height);
-		return img;
-	}*/
 }
