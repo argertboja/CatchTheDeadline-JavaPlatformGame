@@ -3,6 +3,7 @@ package gameManager;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import gameobjects.*;
+import window.GameEngine;
 
 public class InputManager extends KeyAdapter {
 	
@@ -41,7 +42,7 @@ public class InputManager extends KeyAdapter {
 		
 		for( int i = 0; i < handler.objectLinkedList.size(); i++ ) {
 			GameObject temp = handler.objectLinkedList.get(i);
-			
+
 			if( temp.getType() == ObjectType.Player ){
 				//if( key == KeyEvent.VK_SPACE || key == KeyEvent.VK_UP )
 					//temp.setVelocityY(0);

@@ -188,4 +188,8 @@ public class Player extends GameObject {
 	public Rectangle objectBoundsLeft() {
 		return new Rectangle( (int)posX, (int)posY+5, (int)5, (int)height-10 );
 	}
+
+	public Handler getHandler() {
+		return handler;
+	}
 }

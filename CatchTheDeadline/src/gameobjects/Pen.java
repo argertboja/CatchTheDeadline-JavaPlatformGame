@@ -6,6 +6,7 @@ package gameobjects;
 
 import gameManager.Animation;
 import gameManager.BufferedImageLoader;
+import gameManager.Handler;
 import gameManager.Texture;
 import window.GameEngine;
 
@@ -21,6 +22,7 @@ public class Pen extends GameObject {
 	
 	private Animation animation;
 	private Texture texture = GameEngine.getInstance();
+	public boolean touched = false;
 	
 	public Pen(float x, float y, ObjectType type, int velX) {
   		super(x, y, type);
@@ -32,7 +34,20 @@ public class Pen extends GameObject {
 	@Override
 	public void collisionDetector(LinkedList<GameObject> objects) {
 		animation.runAnimation();
-		posX += velocityX;		
+		posX += velocityX;
+
+		/*for( int i = 0; i < handler.objectLinkedList.size(); i++ ) {
+			GameObject temp = null;
+			try {
+				temp = handler.objectLinkedList.get(i);
+			} catch (Exception e) {
+			}
+			if (temp != null && temp.getType() == ObjectType.Block) {
+				if (objectBounds().intersects(temp.objectBounds())) {
+					touched = true;
+				}
+			}
+		}*/
 	}
 
 	@Override
