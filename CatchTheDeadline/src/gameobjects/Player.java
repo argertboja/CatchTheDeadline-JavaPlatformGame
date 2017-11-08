@@ -1,7 +1,3 @@
-/**
- * 
- */
-
 package gameobjects;
 
 import java.awt.Color;
@@ -19,28 +15,16 @@ import window.GameEngine;
 public class Player extends GameObject {
 
 	// properties
-	private int speed;
-	private Animation playerWalk, playerWalkM;
-	private Animation playerRun;
-	private Animation playerShoot;
-	private Pen pen;
-	private Eraser eraser;
-	private PaintSpray paintSpray;
-	private Food food;
+	private Animation playerWalk, playerWalkM, playerJump, playerJumpM;
+	private int powerUp = 3;
 
 	private final float MAX_SPEED = 10;
 	private Handler handler;
-	private Camera cam;
 	Texture texture = GameEngine.getInstance();
 	
 	ImageIcon player = new ImageIcon(getClass().getResource("/images/player.png"));
 	ImageIcon playerLeftLooking = new ImageIcon(getClass().getResource("/images/playerLeftLooking.png"));
-	/*ImageIcon RunSlowGIF = new ImageIcon(getClass().getResource("/images/RunSlowGIF.gif"));
-	ImageIcon RunFastGIF = new ImageIcon(getClass().getResource("/images/RunFastGIF.gif"));
-	ImageIcon RollJumpGIF = new ImageIcon(getClass().getResource("/images/RollJumpGIF.gif"));
-	ImageIcon JumpGIF = new ImageIcon(getClass().getResource("/images/JumpGIF.gif"));
-	ImageIcon KO_GIF = new ImageIcon(getClass().getResource("/images/KO_GIF.gif"));
-	*/
+	
 	private float gravity = 0.15f;
 	private float width = player.getIconWidth(), height = player.getIconHeight();
 	
@@ -50,6 +34,8 @@ public class Player extends GameObject {
 		this.handler = handler;
 		playerWalk = new Animation( 1, texture.playerRun ); 
 		playerWalkM = new Animation( 1, texture.playerRunM );
+		playerJump = new Animation( 1, texture.playerJump );
+		playerJumpM = new Animation( 1, texture.playerJumpM );
 	}
 	
 	// methods
@@ -62,7 +48,7 @@ public class Player extends GameObject {
 			 }
 			 catch (Exception e) {
 			 }
-			 if( temp != null && temp.getType() == ObjectType.Block )
+			 if( temp.getType() == ObjectType.Block )
 			 {
 				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
 					posY = temp.getPosY() + (height/2);
@@ -86,10 +72,20 @@ public class Player extends GameObject {
 				}
 			}
 			if( temp.getType() == ObjectType.PowerUp )
-			{ 
-				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
-					food.setValue( food.getValue() + 1 );
-					//System.out.println( food.getValue() );
+			{
+				if( objectBounds().intersects( temp.objectBounds() ) ) {
+					powerUp++;
+					handler.objectLinkedList.remove( temp );
+				}
+
+				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
+					powerUp++;
+					handler.objectLinkedList.remove( temp );
+				}
+				
+				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
+					powerUp++;
+					handler.objectLinkedList.remove( temp );
 				}
 			}
 		}
@@ -105,14 +101,6 @@ public class Player extends GameObject {
 	
 	public void shootAnimation( Animation shoot ) {
 		
-	}
-
-	public int getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(int speed) {
-		this.speed = speed;
 	}
 
 	public float getGravity() {
@@ -142,16 +130,23 @@ public class Player extends GameObject {
 		collisions( objects );
 		playerWalk.runAnimation(); // generate animation for player running towards right
 		playerWalkM.runAnimation(); // generate animation for player running towards left
+		playerJump.runAnimation(); // generate animation for player jumping towards right
+		playerJumpM.runAnimation(); // generate animation for player jumping towards left
 	}
 
 	@Override
 	public void render(Graphics graphics) {
 		
-		if( velocityX > 0 )
+		
+		if( ( velocityY < 0 || jumping == true ) && facing == 1 )
+			playerJump.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) 115 );
+		else if( ( velocityY < 0 || jumping == true ) && facing == -1 )
+			playerJumpM.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) 100 );
+		else if( velocityX > 0 )
 			playerWalk.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) height);
 		else if( velocityX < 0 )
 			playerWalkM.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) height);
-		else if (facing == 1)
+		else if ( facing == 1 )
 			graphics.drawImage( player.getImage(), (int) posX, (int) posY, (int) width, (int) height, null );
 		else
 			graphics.drawImage( playerLeftLooking.getImage(), (int) posX, (int) posY, (int) width, (int) height, null );
@@ -188,8 +183,8 @@ public class Player extends GameObject {
 	public Rectangle objectBoundsLeft() {
 		return new Rectangle( (int)posX, (int)posY+5, (int)5, (int)height-10 );
 	}
-
+	
 	public Handler getHandler() {
-		return handler;
+		 return handler;
 	}
 }

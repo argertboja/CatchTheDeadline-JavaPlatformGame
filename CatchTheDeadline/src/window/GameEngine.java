@@ -6,12 +6,11 @@ import gameobjects.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 
 public class GameEngine extends Canvas implements Runnable {
-
-
 
     private Thread thread;
     private boolean isRunning = false;
@@ -24,9 +23,9 @@ public class GameEngine extends Canvas implements Runnable {
 
     private ImageIcon level = new ImageIcon(getClass().getResource("/images/level.png"));
     private ImageIcon clouds = new ImageIcon(getClass().getResource("/images/clouds.png"));
-
+    
     private int levelNo = 1;
-
+    
     public GameEngine(int levelNo) {
         this.levelNo = levelNo;
     }
@@ -39,19 +38,17 @@ public class GameEngine extends Canvas implements Runnable {
         level1 = bufferedImageLoader.loadImg("/images/level1.png");
         level2 = bufferedImageLoader.loadImg("/images/level2.png");
         level3 = bufferedImageLoader.loadImg("/images/level3.png");
-
+        
         texture = new Texture();
         handler = new Handler();
         cam = new Camera( 0, 0 );
 
-        //handler.addObject( new Player(100, 100, handler,ObjectType.Player) );
-        //handler.level();
         if (levelNo == 1)
-            createLevel(level1);
+        	createLevel(level1);
         else if (levelNo == 2)
-            createLevel(level2);
+        	createLevel(level2);
         else if (levelNo == 3)
-            createLevel(level3);
+        	createLevel(level3);
 
         this.addKeyListener( new InputManager(handler) );
     }
@@ -151,10 +148,13 @@ public class GameEngine extends Canvas implements Runnable {
     	    	
         g2d.translate(cam.getXPos(), cam.getYPos() ); // begin of cam
         for (int i = 0; i < clouds.getImage().getWidth(null) * 10; i += clouds.getImage().getWidth(null)) {
-            graphics.drawImage(clouds.getImage(), i*3, 0, this);
+        	 graphics.drawImage(clouds.getImage(), i*3, 0, this);
         }
         handler.render(graphics);
         g2d.translate(cam.getXPos(), -cam.getYPos() ); //end of cam
+        for (int i = 0; i < clouds.getImage().getWidth(null) * 10; i += clouds.getImage().getWidth(null)) {
+        	graphics.drawImage(clouds.getImage(), i*3, 0, this);
+        }
         /////////////////////////////////////////////////////////////////////////////
 
         graphics.dispose();
@@ -166,6 +166,6 @@ public class GameEngine extends Canvas implements Runnable {
     }
     
     public void startTheGame() {
-        new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
+    	new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
     }
 }

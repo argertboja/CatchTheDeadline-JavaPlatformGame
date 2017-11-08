@@ -6,7 +6,6 @@ package gameobjects;
 
 import gameManager.Animation;
 import gameManager.BufferedImageLoader;
-import gameManager.Handler;
 import gameManager.Texture;
 import window.GameEngine;
 
@@ -15,7 +14,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;	
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
-
 
 public class Pen extends GameObject {
 
@@ -29,7 +27,6 @@ public class Pen extends GameObject {
   		this.velocityX = velX;
 		animation = new Animation(1, texture.penSpinning);
   	}
-
 
 	@Override
 	public void collisionDetector(LinkedList<GameObject> objects) {
@@ -47,7 +44,7 @@ public class Pen extends GameObject {
 					touched = true;
 				}
 			}
-		}*/
+		}*/	
 	}
 
 	@Override

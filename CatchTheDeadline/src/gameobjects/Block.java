@@ -1,14 +1,14 @@
 package gameobjects;
 
 import java.awt.*;
+
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
-import gameManager.Handler;
 import gameManager.Texture;
 import window.GameEngine;
-
+import gameManager.Handler;
 public class Block extends GameObject {
 
 	Texture texture = GameEngine.getInstance();
@@ -22,17 +22,16 @@ public class Block extends GameObject {
         this.handler = handler;
     }
 
-    public void collisions( LinkedList<GameObject> objects ) {
-    }
-
-
+    public void collisions( LinkedList<GameObject> objects ) {}
+    
     @Override
     public void collisionDetector(LinkedList<GameObject> objects) {
-        collisions(objects);
+    	collisions(objects);
     }
 
     @Override
     public void render(Graphics graphics) {
+    	
     	if( blockType == 2 ) {
     		graphics.drawImage( books.getImage(), (int) posX, (int) posY, null );
         }
