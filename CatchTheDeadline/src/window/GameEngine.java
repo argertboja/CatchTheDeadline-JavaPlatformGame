@@ -152,9 +152,6 @@ public class GameEngine extends Canvas implements Runnable {
         }
         handler.render(graphics);
         g2d.translate(cam.getXPos(), -cam.getYPos() ); //end of cam
-        for (int i = 0; i < clouds.getImage().getWidth(null) * 10; i += clouds.getImage().getWidth(null)) {
-        	graphics.drawImage(clouds.getImage(), i*3, 0, this);
-        }
         /////////////////////////////////////////////////////////////////////////////
 
         graphics.dispose();
