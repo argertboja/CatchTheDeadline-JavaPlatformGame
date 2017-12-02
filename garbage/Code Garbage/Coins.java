@@ -4,29 +4,40 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 
-public class Coins extends PowerUps {
-      private int value=0;
-      
-      public Coins (float x, float y, ObjectType type,int value){
+import javax.swing.ImageIcon;
+
+public class Coins extends Powerups 
+{
+       private int value=0;
+       
+       ImageIcon coin = new ImageIcon(getClass().getResource("/images/coin.png"));
+ 
+      public Coins (float x, float y, ObjectType type,int value)
+      {
             super(x, y, type);
             value=this.value;
       }
       
+    
+      
       @Override
-      public void collisionDetector(LinkedList<GameObject> objects) {
+      public void collisionDetector(LinkedList<GameObject> objects) 
+      {
             // TODO Auto-generated method stub
             
       }
       
       @Override
-      public void render(Graphics graphics) {
-            // TODO Auto-generated method stub
+      public void render(Graphics graphics) 
+      {
+            graphics.drawImage( coin.getImage(), (int) posX, (int) posY, null );
             
       }
       
       @Override
-      public Rectangle objectBounds() {
+      public Rectangle objectBounds() 
+      {
             // TODO Auto-generated method stub
-            return null;
+          return new Rectangle((int) posX, (int) posY, 32, 32);
       }
 }
