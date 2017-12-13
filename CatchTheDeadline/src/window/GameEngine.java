@@ -6,9 +6,8 @@ import gameobjects.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 public class GameEngine extends Canvas implements Runnable {
 
@@ -22,12 +21,15 @@ public class GameEngine extends Canvas implements Runnable {
     private BufferedImage level1 = null, level2 = null, level3 = null;
 
     private ImageIcon level = new ImageIcon(getClass().getResource("/images/level.png"));
+    private ImageIcon timeIcon = new ImageIcon(getClass().getResource("/images/time.png"));
+    private ImageIcon settingsIcon = new ImageIcon(getClass().getResource("/images/settingsIcon.png"));
     private ImageIcon clouds = new ImageIcon(getClass().getResource("/images/clouds.png"));
     
     private int levelNo = 1;
     
     public GameEngine(int levelNo) {
         this.levelNo = levelNo;
+        JLabel settingsLabel = new JLabel(settingsIcon);
     }
     
     public void init() {
@@ -74,6 +76,9 @@ public class GameEngine extends Canvas implements Runnable {
                 }
                 if (red == 237 && green == 28 && blue == 36) { // if the pixel is red 
                     handler.addObject( new Food( i * 32 - 400, j * 32 + 72, ObjectType.PowerUp, 3) );
+                }
+                if (red == 0 && green == 255 && blue == 0) { // if the pixel is green
+                    handler.addObject( new Exam( i+800, j + 100,handler, ObjectType.Exam) );
                 }
             }
         }
@@ -145,6 +150,8 @@ public class GameEngine extends Canvas implements Runnable {
         //graphics.setColor(Color.BLACK);
         //graphics.fillRect(0,0, getWidth(), getHeight());
     	graphics.drawImage(level.getImage(), 0, 0, null);
+        graphics.drawImage(timeIcon.getImage(), 20, 470, null);
+
     	    	
         g2d.translate(cam.getXPos(), cam.getYPos() ); // begin of cam
         for (int i = 0; i < clouds.getImage().getWidth(null) * 10; i += clouds.getImage().getWidth(null)) {
