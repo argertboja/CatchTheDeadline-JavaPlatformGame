@@ -11,7 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ChooseLevel extends JFrame {
-
+	
     private MyMouseHandler mouseHandler;
     private JLabel bg, back, primary, high, univer;
     private ImageIcon backImg, hoverBackImg, primarySchool, highSchool, university,primaryHover, highHover, uniHover;

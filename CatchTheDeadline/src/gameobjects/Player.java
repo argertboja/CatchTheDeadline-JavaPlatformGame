@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import gameManager.*;
 import window.GameEngine;
@@ -16,7 +17,7 @@ public class Player extends GameObject {
 
 	// properties
 	private Animation playerWalk, playerWalkM, playerJump, playerJumpM;
-	private int powerUp = 3;
+	private int foodCount = 3, sleepCount = 3, coinCount = 0;
 
 	private final float MAX_SPEED = 10;
 	private Handler handler;
@@ -64,6 +65,11 @@ public class Player extends GameObject {
 					falling = true;
 				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
 					posX = temp.getPosX() - width;
+					if( ((Block) temp).getBlockType() == 3 ) {
+						// exit from level here	
+						JOptionPane.showMessageDialog(null, "You have finished this level! \nKeep up the good work", "Congratulations", JOptionPane.PLAIN_MESSAGE);
+						// return back to level menu ????
+					}
 				}
 				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
 					posX = temp.getPosX() + 40;
@@ -71,20 +77,54 @@ public class Player extends GameObject {
 					//System.out.println(width);
 				}
 			}
-			if( temp.getType() == ObjectType.PowerUp )
+			if( temp.getType() == ObjectType.Food )
 			{
 				if( objectBounds().intersects( temp.objectBounds() ) ) {
-					powerUp++;
+					foodCount++;
 					handler.objectLinkedList.remove( temp );
 				}
 
 				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
-					powerUp++;
+					foodCount++;
 					handler.objectLinkedList.remove( temp );
 				}
 				
 				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
-					powerUp++;
+					foodCount++;
+					handler.objectLinkedList.remove( temp );
+				}
+			}
+			if( temp.getType() == ObjectType.Sleep )
+			{
+				if( objectBounds().intersects( temp.objectBounds() ) ) {
+					sleepCount++;
+					handler.objectLinkedList.remove( temp );
+				}
+
+				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
+					sleepCount++;
+					handler.objectLinkedList.remove( temp );
+				}
+				
+				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
+					sleepCount++;
+					handler.objectLinkedList.remove( temp );
+				}
+			}
+			if( temp.getType() == ObjectType.Coin )
+			{
+				if( objectBounds().intersects( temp.objectBounds() ) ) {
+					coinCount++;
+					handler.objectLinkedList.remove( temp );
+				}
+
+				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
+					coinCount++;
+					handler.objectLinkedList.remove( temp );
+				}
+				
+				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
+					coinCount++;
 					handler.objectLinkedList.remove( temp );
 				}
 			}
@@ -135,9 +175,7 @@ public class Player extends GameObject {
 	}
 
 	@Override
-	public void render(Graphics graphics) {
-		
-		
+	public void render(Graphics graphics) {	
 		if( ( velocityY < 0 || jumping == true ) && facing == 1 )
 			playerJump.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) 115 );
 		else if( ( velocityY < 0 || jumping == true ) && facing == -1 )
@@ -186,5 +224,29 @@ public class Player extends GameObject {
 	
 	public Handler getHandler() {
 		 return handler;
+	}
+
+	public int getFoodCount() {
+		return foodCount;
+	}
+
+	public int getCoinCount() {
+		return coinCount;
+	}
+
+	public int getSleepCount() {
+		return sleepCount;
+	}
+
+	public void setFoodCount(int foodCount) {
+		this.foodCount = foodCount;
+	}
+
+	public void setSleepCount(int sleepCount) {
+		this.sleepCount = sleepCount;
+	}
+
+	public void setCoinCount(int coinCount) {
+		this.coinCount = coinCount;
 	}
 }

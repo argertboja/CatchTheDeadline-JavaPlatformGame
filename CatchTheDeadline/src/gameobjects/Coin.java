@@ -6,11 +6,11 @@ import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
-public class Sleep extends PowerUps {
+public class Coin extends PowerUps {
 	
-ImageIcon sleep = new ImageIcon(getClass().getResource("/images/sleep.png"));
+ImageIcon coin = new ImageIcon(getClass().getResource("/images/coin.png"));
 	
-    public Sleep( float x, float y, ObjectType type, int value ){
+    public Coin( float x, float y, ObjectType type, int value ){
           super( x, y, type, value );
           this.value = value;
     }
@@ -20,11 +20,11 @@ ImageIcon sleep = new ImageIcon(getClass().getResource("/images/sleep.png"));
      
     @Override
     public void render(Graphics graphics) {
-    	graphics.drawImage( sleep.getImage(), (int) posX-18, (int) posY-18, null );
+    	graphics.drawImage( coin.getImage(), (int) posX, (int) posY, null );
     }
       
     @Override
     public Rectangle objectBounds() {
-    	return new Rectangle((int) posX, (int) posY, 50, 50 );
+    	return new Rectangle((int) posX, (int) posY, 32, 32);
     }
 }

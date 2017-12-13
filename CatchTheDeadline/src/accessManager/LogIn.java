@@ -82,7 +82,7 @@ public class LogIn extends JFrame implements ActionListener {
         });
         add(username);
 
-        // Pasword Field
+        // Password Field
         pasw = new JPasswordField();
         pasw.setText("Password");
         pasw.setBounds(200, 338, 150, 30);

@@ -21,7 +21,7 @@ public class InputManager extends KeyAdapter {
 			
 			if( temp.getType() == ObjectType.Player ){
 				if( (key == KeyEvent.VK_SPACE || key == KeyEvent.VK_UP) && !temp.isJumping() ) {
-					temp.setVelocityY(-7);
+					temp.setVelocityY(-5);
 					temp.setJumping(true);
 				}
 				if( key == KeyEvent.VK_DOWN )
