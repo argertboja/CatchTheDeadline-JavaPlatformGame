@@ -1,17 +1,20 @@
 package userinterface;
 
 import javax.swing.*;
+
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class WeaponStore extends JFrame {
 
     private MyMouseHandler mouseHandler;
-    private JLabel bg, buyEraser, buyPaintSpray, back;
-    private ImageIcon buy, buyHover, backImg, hoverBackImg;
+    private JLabel bg, buyEraser, buyPaintSpray, back, coinCount;
+    private ImageIcon buy, buy20, buy30, backImg, hoverBackImg;
     private String from;
+    private int coins;
 
-    public WeaponStore( String from ) {
+    public WeaponStore( String from, int coins ) {
         setTitle("Catch The Deadline - Weapon Store");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -19,7 +22,8 @@ public class WeaponStore extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         this.from = from;
-
+        this.coins = coins;
+        
         if (from.equalsIgnoreCase("game")) {
             setUndecorated(true);
         }
@@ -38,28 +42,36 @@ public class WeaponStore extends JFrame {
 
         // buy and back Images
         buy = new ImageIcon(getClass().getResource("/images/buy.png"));
-        buyHover = new ImageIcon(getClass().getResource("/images/buyHover.png"));
+        buy20 = new ImageIcon(getClass().getResource("/images/buy20.png"));
+        buy30 = new ImageIcon(getClass().getResource("/images/buy30.png"));
         backImg = new ImageIcon(getClass().getResource("/images/back.png"));
         hoverBackImg = new ImageIcon(getClass().getResource("/images/hoverback.png"));
 
         // buyEraser Label
         buyEraser = new JLabel ();
         buyEraser.setIcon(buy);
-        buyEraser.setBounds(750, 140, 160, 40);
+        buyEraser.setBounds(730, 250, 160, 40);
         buyEraser.addMouseListener(mouseHandler);
         bg.add(buyEraser);
 
         // buyPaintSpray Label
         buyPaintSpray = new JLabel ();
         buyPaintSpray.setIcon(buy);
-        buyPaintSpray.setBounds(750, 250, 160, 40);
+        buyPaintSpray.setBounds(730, 300, 160, 40);
         buyPaintSpray.addMouseListener(mouseHandler);
         bg.add(buyPaintSpray);
 
+        // coins label
+        Font font = new Font("Brush Script MT", Font.BOLD, 40);
+        coinCount = new JLabel( String.valueOf(coins) );
+        coinCount.setFont(font);
+        coinCount.setBounds(720, 140, 160, 40);
+        bg.add(coinCount);
+        
         // Back Label
         back = new JLabel ();
         back.setIcon(backImg);
-        back.setBounds(620, 350, 206, 70);
+        back.setBounds(600, 360, 206, 70);
         back.addMouseListener(mouseHandler);
         bg.add(back);
 
@@ -72,12 +84,14 @@ public class WeaponStore extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
             JLabel source = (JLabel) e.getSource();
-            if (source == buyPaintSpray) {
-                // decrement coins
-            	//get paintSpray
-            } else if (source == buyEraser) {
-            	// decrement coins
-            	//get eraser
+            if (source == buyPaintSpray && coins >= 30 ) {
+            	coins = coins - 30;   // decrement coins
+            	coinCount.setText( String.valueOf(coins) );
+            	//activate paintSpray
+            } else if (source == buyEraser && coins >= 20 ) {
+            	coins = coins - 20;   // decrement coins
+            	coinCount.setText( String.valueOf(coins) );
+            	//activate eraser
             } else if (source == back) {
                 new MainMenu();
                 dispose();
@@ -91,10 +105,10 @@ public class WeaponStore extends JFrame {
                 back.setIcon(hoverBackImg);
             }
             if (source == buyEraser) {
-            	buyEraser.setIcon(buyHover);
+            	buyEraser.setIcon(buy20);
             }
             if (source == buyPaintSpray) {
-            	buyPaintSpray.setIcon(buyHover);
+            	buyPaintSpray.setIcon(buy30);
             }
         }
 

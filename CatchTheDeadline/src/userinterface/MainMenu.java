@@ -121,7 +121,7 @@ public class MainMenu extends  JFrame {
                 dispose();
             }
             else if (source == settings) {
-                new SettingsMenu("menu");
+                new WeaponStore("menu", 50);
                 dispose();
             }
             else if (source == help) {
