@@ -4,28 +4,36 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.LinkedList;
 
+import gameManager.Animation;
+import gameManager.Texture;
+import window.GameEngine;
+
 public class Eraser extends GameObject {
 
-	public Eraser(float x, float y, ObjectType type) {
-		super(x, y, type);
-	}
+	
+	private Animation animation;
+	private Texture texture = GameEngine.getInstance();
+	public boolean touched = false;
+	
+	public Eraser( float x, float y, ObjectType type, int velX ) {
+  		super(x, y, type);
+  		this.velocityX = velX;
+		animation = new Animation( 1, texture.eraserSpinning );
+  	}
 
 	@Override
 	public void collisionDetector(LinkedList<GameObject> objects) {
-		// TODO Auto-generated method stub
-		
+		animation.runAnimation();
+		posX += velocityX;
 	}
 
 	@Override
 	public void render(Graphics graphics) {
-		// TODO Auto-generated method stub
-		
+		animation.drawAnimation(graphics, (int) posX, (int) posY, 30, 30);
 	}
 
 	@Override
 	public Rectangle objectBounds() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Rectangle((int) posX, (int) posY, 30, 30);		
 	}
-
 }

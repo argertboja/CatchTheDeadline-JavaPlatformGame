@@ -5,6 +5,7 @@ public enum ObjectType {
     Block(),
     Exam(),
     Pen(),
+    Eraser(),
     Food(),
     Sleep(),
     Coin();

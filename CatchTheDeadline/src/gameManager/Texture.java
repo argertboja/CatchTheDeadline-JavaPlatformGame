@@ -9,14 +9,15 @@ import javax.swing.ImageIcon;
 
 public class Texture {
 
-	private BufferedImage playerRunSprite = null, playerRunSpriteM = null, playerJumpSprite = null, playerJumpSpriteM = null, penSpin = null;
+	private BufferedImage playerRunSprite = null, playerRunSpriteM = null, playerJumpSprite = null, playerJumpSpriteM = null, penSpin = null, eraserSpin = null;
 	public BufferedImage[] playerRun = new BufferedImage[42];
 	public BufferedImage[] playerRunM = new BufferedImage[42];
 	public BufferedImage[] playerJump = new BufferedImage[24];
 	public BufferedImage[] playerJumpM = new BufferedImage[24];
 	public BufferedImage[] penSpinning = new BufferedImage[24];
+	public BufferedImage[] eraserSpinning = new BufferedImage[24];
 	private final int width = 75, height = 127; // dimensions of sub image of player
-	private SpriteSheet ps, psM, pj, pjM, penSprite;
+	private SpriteSheet ps, psM, pj, pjM, penSprite, eraserSprite;
 	
 	public Texture() {
 
@@ -26,11 +27,13 @@ public class Texture {
 		playerJumpSprite = bufferedImageLoader.loadImg("/images/jumpSprite.png"); // loads the 'forward jumping sprite sheet of player'
 		playerJumpSpriteM = bufferedImageLoader.loadImg("/images/jumpSpriteM.png"); // loads the 'backward jumping sprite sheet of player'
 		penSpin = bufferedImageLoader.loadImg("/images/penSprite.png");
+		eraserSpin = bufferedImageLoader.loadImg("/images/eraserSprite.png");
 		ps = new SpriteSheet(playerRunSprite);
 		psM = new SpriteSheet(playerRunSpriteM);
 		pj = new SpriteSheet(playerJumpSprite);
 		pjM = new SpriteSheet(playerJumpSpriteM);
 		penSprite = new SpriteSheet(penSpin);
+		eraserSprite = new SpriteSheet(eraserSpin);
 		generateTextures();
 	}
 
@@ -80,5 +83,12 @@ public class Texture {
 					break;
 			}
 		}
+		/*count = 0;
+		for( int i = 1; i <= 24; i++ ) { 
+			eraserSpinning[count] = eraserSprite.divideImage( i, 1, 20, 20 ); // saving each sub-image as a single image onto the array
+			count++;
+			if( count >= 24 )
+				break;
+		}*/
 	}
 }
