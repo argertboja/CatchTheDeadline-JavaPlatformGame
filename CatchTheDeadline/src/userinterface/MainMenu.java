@@ -13,9 +13,6 @@ import java.util.List;
 public class MainMenu extends  JFrame {
 
     private JLabel bg, play, settings, help, highScores, credits;
-    private GameEngine gameEngine;
-    private SettingsMenu settingsMenu;
-    private List<JLabel> labels = new ArrayList<JLabel>();
     private ImageIcon hoveredPlayImage, playImage, settingsImage, hoveredSettingsImage, helpImage, hoveredHelpImage;
     private ImageIcon highScoresImage, hoveredHighScoresImage, creditsImage, hoveredCreditsImage;
     private MyMouseHandler mouseHandler;
@@ -124,11 +121,11 @@ public class MainMenu extends  JFrame {
                 dispose();
             }
             else if (source == settings) {
-                settingsMenu = new SettingsMenu();
+                new SettingsMenu("menu");
                 dispose();
             }
             else if (source == help) {
-                new Help();
+                new Help("menu");
                 dispose();
             }
             else if (source == credits) {

@@ -10,14 +10,20 @@ public class SettingsMenu extends JFrame {
     private JLabel bg, music, sound, back;
     private ImageIcon on, off, backImg, hoverBackImg;
     private boolean musicOn = true, soundOn = true;
+    private String from;
 
-    public SettingsMenu() {
+    public SettingsMenu(String from) {
         setTitle("Catch The Deadline - Settings Menu");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
         setSize(1000, 500);
         setLocationRelativeTo(null);
         setResizable(false);
+        this.from = from;
+
+        if (from.equalsIgnoreCase("game")) {
+            setUndecorated(true);
+        }
 
         // Initialize mouse handler
         mouseHandler = new MyMouseHandler();
@@ -80,8 +86,12 @@ public class SettingsMenu extends JFrame {
                 sound.setIcon(on);
                 soundOn = true;
             } else if (source == back) {
-                new MainMenu();
-                dispose();
+                if (from.equalsIgnoreCase("menu")) {
+                    new MainMenu();
+                    dispose();
+                }
+                else
+                    dispose();
             }
         }
 

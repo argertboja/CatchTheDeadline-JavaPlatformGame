@@ -9,14 +9,19 @@ public class Help extends JFrame {
     private MyMouseHandler mouseHandler;
     private JLabel bg, back;
     private ImageIcon backImg, hoverBackImg;
+    private String from;
 
-    public Help() {
+    public Help(String from) {
         setTitle("Catch The Deadline - Help");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
         setSize(1000, 500);
         setLocationRelativeTo(null);
         setResizable(false);
+        this.from = from;
+        if (from.equalsIgnoreCase("game")) {
+            setUndecorated(true);
+        }
 
         // Initialize mouse handler
         mouseHandler = new MyMouseHandler();
@@ -51,8 +56,12 @@ public class Help extends JFrame {
         public void mouseClicked(MouseEvent e) {
             JLabel source = (JLabel) e.getSource();
             if (source == back) {
-                new MainMenu();
-                dispose();
+                if (from.equalsIgnoreCase("menu")) {
+                    new MainMenu();
+                    dispose();
+                }
+                else
+                    dispose();
             }
         }
 

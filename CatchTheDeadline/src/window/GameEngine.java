@@ -16,13 +16,14 @@ public class GameEngine extends Canvas implements Runnable {
 
     private Thread thread, timer;
     private Player player;
-    private boolean isRunning = false;
+    private boolean isRunning = false, playing = true;
     private Handler handler;
     private Camera cam;
     static Texture texture;
     public static int WIDTH, HEIGHT;
-    private String countDown = "Time: 1:30";
-    Font font = new Font("Cooper Black", Font.BOLD, 28);
+    private String countDown = "Time Left: 1:30";
+    Font font1 = new Font("Cooper Black", Font.BOLD, 24);
+    Font font2 = new Font("Cooper Black", Font.BOLD, 28);
     
     private BufferedImage level1 = null, level2 = null, level3 = null;
 
@@ -91,6 +92,9 @@ public class GameEngine extends Canvas implements Runnable {
                 if (red == 34 && green == 177 && blue == 76) { // if the pixel is green 
                     handler.addObject( new Block( i * 32 - 400, j * 32 + 72, 3, ObjectType.Block, handler) );
                 }
+                if (red == 0 && green == 255 && blue == 0) { // if the pixel is green
+                    handler.addObject( new Exam( i*32-400, j + 100,handler, ObjectType.Exam) );
+                }
             }
         }
     }
@@ -131,9 +135,9 @@ public class GameEngine extends Canvas implements Runnable {
             if(System.currentTimeMillis() - timer > 1000){
                 timer += 1000;
                 if( sec < 10 ) {
-                	countDown = "Time: " + min + ":0" + (sec);
+                	countDown = "Time Left: " + min + ":0" + (sec);
                 }else {
-                	countDown = "Time: " + min + ":" + (sec);
+                	countDown = "Time Left: " + min + ":" + (sec);
                 } 
                 if( min == 0 && sec == 0 ) {
                 	JOptionPane.showMessageDialog(null, "The Deadline Has Passed, \nBetter Luck Next Time!", "You Fail!", JOptionPane.PLAIN_MESSAGE);
@@ -150,7 +154,9 @@ public class GameEngine extends Canvas implements Runnable {
                 		//exit from level here
                 	count = 0;
                 }
-                sec--;
+                if (playing) {
+                    sec--;
+                }
                 count++;
                 //frames = 0;
                 //updates = 0;
@@ -179,12 +185,12 @@ public class GameEngine extends Canvas implements Runnable {
         }
         Graphics graphics = bufferStrategy.getDrawGraphics();
         Graphics2D g2d = (Graphics2D) graphics;
-        g2d.setFont(font);
+        g2d.setFont(font1);
         /////////////////////////////////////////////////////////////////////////////
         // Graphics of the game
         //graphics.setColor(Color.BLACK);
         //graphics.fillRect(0,0, getWidth(), getHeight());
-    	graphics.drawImage(level.getImage(), 0, 0, null);    	
+    	graphics.drawImage(level.getImage(), 0, 0, null);
         g2d.translate(cam.getXPos(), cam.getYPos() ); // begin of cam
         for (int i = 0; i < clouds.getImage().getWidth(null) * 10; i += clouds.getImage().getWidth(null)) {
         	 graphics.drawImage(clouds.getImage(), i*3, 0, this);
@@ -194,11 +200,15 @@ public class GameEngine extends Canvas implements Runnable {
         //graphics.fillRoundRect((int) (-cam.getXPos())+40, 25, 75, 35, 20, 20);
         //graphics.setColor(Color.BLACK);
         //graphics.drawRoundRect((int) (-cam.getXPos())+40, 25, 75, 35, 20, 20);
-        g2d.setColor(Color.WHITE);
-        g2d.drawString( countDown, -cam.getXPos()+30, 30 ); 
-        g2d.drawString( "Food:  " + player.getFoodCount(), -cam.getXPos()+30, 55 ); 
-        g2d.drawString( "Sleep: " + player.getSleepCount(), -cam.getXPos()+30, 80 ); 
-        g2d.drawString( "Coins: " + player.getCoinCount(), -cam.getXPos()+30, 105 ); 
+
+        g2d.setColor(new Color(53, 159, 196));
+        g2d.drawString( countDown, -cam.getXPos()+80, 500 );
+        g2d.setFont(font2);
+        g2d.setColor(new Color(247, 223, 176));
+        g2d.drawString( "" + player.getFoodCount(), -cam.getXPos() + 560, 500 );
+        g2d.setColor(new Color(250, 204, 33));
+        g2d.drawString( "" + player.getSleepCount(), -cam.getXPos() + 720, 500 );
+        g2d.drawString( "" + player.getCoinCount(), -cam.getXPos() + 390, 500 );
         //graphics.drawImage(food.getImage(), (int) (-cam.getXPos()+30), 40, null);  
         g2d.translate(cam.getXPos(), -cam.getYPos() ); //end of cam
         /////////////////////////////////////////////////////////////////////////////
@@ -213,5 +223,9 @@ public class GameEngine extends Canvas implements Runnable {
     
     public void startTheGame() {
     	new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
+    }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
     }
 }

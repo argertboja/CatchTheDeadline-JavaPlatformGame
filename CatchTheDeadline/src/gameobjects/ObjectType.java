@@ -3,7 +3,7 @@ package gameobjects;
 public enum ObjectType {
     Player(),
     Block(),
-    Enemy(),
+    Exam(),
     Pen(),
     Food(),
     Sleep(),
