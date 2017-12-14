@@ -32,9 +32,11 @@ public class GameEngine extends Canvas implements Runnable {
     private ImageIcon food = new ImageIcon(getClass().getResource("/images/food.png"));
     
     private int levelNo = 1;
+    SoundManager sound = new SoundManager();
     
     public GameEngine(int levelNo) {
         this.levelNo = levelNo;
+        sound.start();
     }
     
     public void init(){
@@ -212,7 +214,6 @@ public class GameEngine extends Canvas implements Runnable {
         //graphics.drawImage(food.getImage(), (int) (-cam.getXPos()+30), 40, null);  
         g2d.translate(cam.getXPos(), -cam.getYPos() ); //end of cam
         /////////////////////////////////////////////////////////////////////////////
-
         graphics.dispose();
         bufferStrategy.show();
     }
