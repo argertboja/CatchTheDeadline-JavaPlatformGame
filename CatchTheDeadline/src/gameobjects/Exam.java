@@ -45,7 +45,7 @@ public class Exam extends GameObject {
 			 }
 			 if( temp.getType() == ObjectType.Block )
 			 {
-				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
+				/*if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
 					posY = temp.getPosY() + (height/2);
 					velocityY = 0;
 				}
@@ -56,7 +56,7 @@ public class Exam extends GameObject {
 					jumping = false;
 				}
 				else
-					falling = true;
+					falling = true;*/
 				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
 					posX = temp.getPosX() - width;
 					setVelocityX(-5);

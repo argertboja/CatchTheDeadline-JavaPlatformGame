@@ -97,6 +97,9 @@ public class GameEngine extends Canvas implements Runnable {
                 if (red == 0 && green == 255 && blue == 0) { // if the pixel is green
                     handler.addObject( new Exam( i * 32 - 400, j + 100, handler, ObjectType.Exam ) );
                 }
+                if (red == 255 && green == 242 && blue == 0) { // if the pixel is bright yellow
+                    handler.addObject( new BlankSheet( i * 32 - 400, j * 32, handler, ObjectType.BlankSheet ) );
+                }
             }
         }
     }

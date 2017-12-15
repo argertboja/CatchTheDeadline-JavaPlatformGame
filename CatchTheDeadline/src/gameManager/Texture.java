@@ -9,7 +9,8 @@ import javax.swing.ImageIcon;
 
 public class Texture {
 
-	private BufferedImage playerRunSprite = null, playerRunSpriteM = null, playerJumpSprite = null, playerJumpSpriteM = null, penSpin = null, eraserSpin = null, paintSpraySpin = null, examAnim = null, examAnimM = null;
+	private BufferedImage playerRunSprite = null, playerRunSpriteM = null, playerJumpSprite = null, playerJumpSpriteM = null, 
+			penSpin = null, eraserSpin = null, paintSpraySpin = null, examAnim = null, examAnimM = null, blankSheetFlip = null;
 	public BufferedImage[] playerRun = new BufferedImage[42];
 	public BufferedImage[] playerRunM = new BufferedImage[42];
 	public BufferedImage[] playerJump = new BufferedImage[24];
@@ -19,8 +20,9 @@ public class Texture {
 	public BufferedImage[] paintSpraySpinning = new BufferedImage[24];
 	public BufferedImage[] examAnimation = new BufferedImage[18];
 	public BufferedImage[] examAnimationM = new BufferedImage[18];
+	public BufferedImage[] blankSheetFlipping = new BufferedImage[17];
 	private final int width = 75, height = 127; // dimensions of sub image of player
-	private SpriteSheet ps, psM, pj, pjM, penSprite, eraserSprite, paintSpraySprite, examSprite, examSpriteM;
+	private SpriteSheet ps, psM, pj, pjM, penSprite, eraserSprite, paintSpraySprite, examSprite, examSpriteM, blankSheetSprite;
 	
 	public Texture() {
 
@@ -36,6 +38,7 @@ public class Texture {
 		
 		examAnim = bufferedImageLoader.loadImg("/images/examSpriteM.png"); 
 		examAnimM = bufferedImageLoader.loadImg("/images/examSprite.png"); 
+		blankSheetFlip = bufferedImageLoader.loadImg("/images/blankSheetSprite.png"); 
 		
 		ps = new SpriteSheet(playerRunSprite);
 		psM = new SpriteSheet(playerRunSpriteM);
@@ -48,6 +51,7 @@ public class Texture {
 		
 		examSprite = new SpriteSheet(examAnim);
 		examSpriteM = new SpriteSheet(examAnimM);
+		blankSheetSprite = new SpriteSheet(blankSheetFlip);
 		
 		generateTextures();
 	}
@@ -124,6 +128,14 @@ public class Texture {
 			examAnimationM[count] = examSpriteM.divideImage( 1, i, 95, 113 ); // saving each sub-image as a single image onto the array
 			count++;
 			if( count >= 18 )
+				break;
+		
+		}
+		count = 0;
+		for( int i = 1; i <= 17; i++ ) { 
+			blankSheetFlipping[count] = blankSheetSprite.divideImage( 1, i, 126, 192 ); // saving each sub-image as a single image onto the array
+			count++;
+			if( count >= 17 )
 				break;
 		}
 	}
