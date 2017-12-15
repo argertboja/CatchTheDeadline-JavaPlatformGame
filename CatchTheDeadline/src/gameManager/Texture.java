@@ -9,15 +9,18 @@ import javax.swing.ImageIcon;
 
 public class Texture {
 
-	private BufferedImage playerRunSprite = null, playerRunSpriteM = null, playerJumpSprite = null, playerJumpSpriteM = null, penSpin = null, eraserSpin = null;
+	private BufferedImage playerRunSprite = null, playerRunSpriteM = null, playerJumpSprite = null, playerJumpSpriteM = null, penSpin = null, eraserSpin = null, paintSpraySpin = null, examAnim = null, examAnimM = null;
 	public BufferedImage[] playerRun = new BufferedImage[42];
 	public BufferedImage[] playerRunM = new BufferedImage[42];
 	public BufferedImage[] playerJump = new BufferedImage[24];
 	public BufferedImage[] playerJumpM = new BufferedImage[24];
 	public BufferedImage[] penSpinning = new BufferedImage[24];
 	public BufferedImage[] eraserSpinning = new BufferedImage[24];
+	public BufferedImage[] paintSpraySpinning = new BufferedImage[24];
+	public BufferedImage[] examAnimation = new BufferedImage[18];
+	public BufferedImage[] examAnimationM = new BufferedImage[18];
 	private final int width = 75, height = 127; // dimensions of sub image of player
-	private SpriteSheet ps, psM, pj, pjM, penSprite, eraserSprite;
+	private SpriteSheet ps, psM, pj, pjM, penSprite, eraserSprite, paintSpraySprite, examSprite, examSpriteM;
 	
 	public Texture() {
 
@@ -26,14 +29,26 @@ public class Texture {
 		playerRunSpriteM = bufferedImageLoader.loadImg("/images/runSlowSpriteM.png"); // loads the 'backward running sprite sheet of player'
 		playerJumpSprite = bufferedImageLoader.loadImg("/images/jumpSprite.png"); // loads the 'forward jumping sprite sheet of player'
 		playerJumpSpriteM = bufferedImageLoader.loadImg("/images/jumpSpriteM.png"); // loads the 'backward jumping sprite sheet of player'
+		
 		penSpin = bufferedImageLoader.loadImg("/images/penSprite.png");
 		eraserSpin = bufferedImageLoader.loadImg("/images/eraserSprite.png");
+		paintSpraySpin = bufferedImageLoader.loadImg("/images/PaintSpraySprite.png");
+		
+		examAnim = bufferedImageLoader.loadImg("/images/examSpriteM.png"); 
+		examAnimM = bufferedImageLoader.loadImg("/images/examSprite.png"); 
+		
 		ps = new SpriteSheet(playerRunSprite);
 		psM = new SpriteSheet(playerRunSpriteM);
 		pj = new SpriteSheet(playerJumpSprite);
 		pjM = new SpriteSheet(playerJumpSpriteM);
+		
 		penSprite = new SpriteSheet(penSpin);
 		eraserSprite = new SpriteSheet(eraserSpin);
+		paintSpraySprite = new SpriteSheet(paintSpraySpin);
+		
+		examSprite = new SpriteSheet(examAnim);
+		examSpriteM = new SpriteSheet(examAnimM);
+		
 		generateTextures();
 	}
 
@@ -83,12 +98,33 @@ public class Texture {
 					break;
 			}
 		}
-		/*count = 0;
+		count = 0;
 		for( int i = 1; i <= 24; i++ ) { 
-			eraserSpinning[count] = eraserSprite.divideImage( i, 1, 20, 20 ); // saving each sub-image as a single image onto the array
+			eraserSpinning[count] = eraserSprite.divideImage( 1, i, 20, 20 ); // saving each sub-image as a single image onto the array
 			count++;
 			if( count >= 24 )
 				break;
-		}*/
+		}
+		count = 0;
+		for( int i = 1; i <= 24; i++ ) { 
+			paintSpraySpinning[count] = paintSpraySprite.divideImage( 1, i, 24, 24 ); // saving each sub-image as a single image onto the array
+			count++;
+			if( count >= 24 )
+				break;
+		}
+		count = 0;
+		for( int i = 1; i <= 18; i++ ) { 
+			examAnimation[count] = examSprite.divideImage( 1, i, 95, 113 ); // saving each sub-image as a single image onto the array
+			count++;
+			if( count >= 18 )
+				break;
+		}
+		count = 0;
+		for( int i = 1; i <= 18; i++ ) { 
+			examAnimationM[count] = examSpriteM.divideImage( 1, i, 95, 113 ); // saving each sub-image as a single image onto the array
+			count++;
+			if( count >= 18 )
+				break;
+		}
 	}
 }

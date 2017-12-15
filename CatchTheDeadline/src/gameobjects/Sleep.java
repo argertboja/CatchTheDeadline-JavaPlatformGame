@@ -6,13 +6,12 @@ import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
-public class Sleep extends PowerUps {
+public class Sleep extends GameObject {
 	
 ImageIcon sleep = new ImageIcon(getClass().getResource("/images/sleep.png"));
 	
-    public Sleep( float x, float y, ObjectType type, int value ){
-          super( x, y, type, value );
-          this.value = value;
+    public Sleep( float x, float y, ObjectType type ){
+          super( x, y, type );
     }
       
     @Override

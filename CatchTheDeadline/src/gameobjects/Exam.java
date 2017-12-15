@@ -9,30 +9,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;
 
-public class Exam extends  GameObject{
+public class Exam extends GameObject {
       
    // properties
-	private Animation playerWalk, playerWalkM, playerJump, playerJumpM;
-	private int powerUp = 3;
+	private Animation examWalk, examWalkM;
 
 	private final float MAX_SPEED = 10;
 	private Handler handler;
 	Texture texture = GameEngine.getInstance();
 
-	ImageIcon player = new ImageIcon(getClass().getResource("/images/player.png"));
-	ImageIcon playerLeftLooking = new ImageIcon(getClass().getResource("/images/playerLeftLooking.png"));
+	ImageIcon exam = new ImageIcon(getClass().getResource("/images/exam.png"));
+	ImageIcon examLeftLooking = new ImageIcon(getClass().getResource("/images/examLeftLooking.png"));
 
 	private float gravity = 0.15f;
-	private float width = player.getIconWidth(), height = player.getIconHeight();
+	private float width = exam.getIconWidth(), height = exam.getIconHeight();
 
 	// constructor
 	public Exam( float x, float y, Handler handler, ObjectType type ) {
 		super(x, y, type);
 		this.handler = handler;
-		playerWalk = new Animation( 1, texture.playerRun );
-		playerWalkM = new Animation( 1, texture.playerRunM );
-		playerJump = new Animation( 1, texture.playerJump );
-		playerJumpM = new Animation( 1, texture.playerJumpM );
+		examWalk = new Animation( 1, texture.examAnimation );
+		examWalkM = new Animation( 1, texture.examAnimationM );
 		setVelocityX(5);
 	}
 
@@ -67,8 +64,6 @@ public class Exam extends  GameObject{
 				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
 					posX = temp.getPosX() + 40;
 					setVelocityX(5);
-					// DEBUG
-					//System.out.println(width);
 				}
 			}
             if( temp.getType() == ObjectType.Player )
@@ -85,20 +80,9 @@ public class Exam extends  GameObject{
                 if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
                     handler.objectLinkedList.remove(temp);
                 }
+                // end level here
             }
 		}
-	}
-
-	public void walkAnimation( Animation anim ) {
-
-	}
-
-	public void runAnimation( Animation anim ) {
-
-	}
-
-	public void shootAnimation( Animation shoot ) {
-
 	}
 
 	public float getGravity() {
@@ -126,43 +110,22 @@ public class Exam extends  GameObject{
 				velocityY = MAX_SPEED;
 		}
 		collisions( objects );
-		playerWalk.runAnimation(); // generate animation for player running towards right
-		playerWalkM.runAnimation(); // generate animation for player running towards left
-		playerJump.runAnimation(); // generate animation for player jumping towards right
-		playerJumpM.runAnimation(); // generate animation for player jumping towards left
+		examWalk.runAnimation(); // generate animation for player running towards right
+		examWalkM.runAnimation(); // generate animation for player running towards left
 	}
 
 	@Override
 	public void render(Graphics graphics) {
 
 
-		if( ( velocityY < 0 || jumping == true ) && facing == 1 )
-			playerJump.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) 115 );
-		else if( ( velocityY < 0 || jumping == true ) && facing == -1 )
-			playerJumpM.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) 100 );
-		else if( velocityX > 0 )
-			playerWalk.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) height);
+		if( velocityX > 0 )
+			examWalk.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) height);
 		else if( velocityX < 0 )
-			playerWalkM.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) height);
+			examWalkM.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) height);
 		else if ( facing == 1 )
-			graphics.drawImage( player.getImage(), (int) posX, (int) posY, (int) width, (int) height, null );
+			graphics.drawImage( exam.getImage(), (int) posX, (int) posY, (int) width, (int) height, null );
 		else
-			graphics.drawImage( playerLeftLooking.getImage(), (int) posX, (int) posY, (int) width, (int) height, null );
-
-		//graphics.fillRect((int)posX, (int)posY, (int)width, (int)height );
-		//graphics2d.drawImage( RunSlowGIF.getImage(), (int) posX, (int) posY, null );// gif animation
-		//graphics2d.drawImage( player.getImage(), (int) posX+10, (int) posY+10, null );
-
-		///////////~FOR CHECKING BOUNDS ON DEBUG MODE~///////////////////////////
-		//Graphics2D graphics2d = (Graphics2D) graphics;
-		//graphics2d.setColor(Color.red);
-		//Color myColour = new Color(255, 0, 0, 0); // for making the lines transparent
-        //graphics.setColor(myColour);
-		//graphics2d.draw(objectBounds());
-		//graphics2d.draw(objectBoundsRight());
-		//graphics2d.draw(objectBoundsLeft());
-		//graphics2d.draw(objectBoundsTop());
-		////////////////////////////////////////
+			graphics.drawImage( examLeftLooking.getImage(), (int) posX, (int) posY, (int) width, (int) height, null );
 	}
 
 	@Override

@@ -64,6 +64,12 @@ public class InputManager extends KeyAdapter {
 					else
 						handler.addObject(new Eraser(temp.getPosX(), temp.getPosY() + 88, ObjectType.Eraser, temp.getFacing() * 5));
 				}	
+				if (key == KeyEvent.VK_D) {
+					if (temp.getFacing() == 1)
+						handler.addObject(new PaintSpray(temp.getPosX() +38, temp.getPosY() + 88, ObjectType.PaintSpray, temp.getFacing() * 5));
+					else
+						handler.addObject(new PaintSpray(temp.getPosX(), temp.getPosY() + 88, ObjectType.PaintSpray, temp.getFacing() * 5));
+				}	
 			}
 		}
 		if( key == KeyEvent.VK_ESCAPE ) {

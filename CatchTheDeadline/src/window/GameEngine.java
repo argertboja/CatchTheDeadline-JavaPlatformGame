@@ -2,7 +2,6 @@ package window;
 
 import gameManager.*;
 import gameobjects.*;
-import userinterface.MainMenu;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -23,24 +22,21 @@ public class GameEngine extends Canvas implements Runnable {
     static Texture texture;
     public static int WIDTH, HEIGHT;
     private String countDown = "Time Left: 1:30";
-    private Font font1 = new Font("Cooper Black", Font.BOLD, 24);
-    private Font font2 = new Font("Cooper Black", Font.BOLD, 28);
-    private static int lives = 3, oldLives = 3;
-    private Window window;
-
+    Font font1 = new Font("Cooper Black", Font.BOLD, 24);
+    Font font2 = new Font("Cooper Black", Font.BOLD, 28);
     
     private BufferedImage level1 = null, level2 = null, level3 = null;
 
     private ImageIcon level = new ImageIcon(getClass().getResource("/images/level.png"));
     private ImageIcon clouds = new ImageIcon(getClass().getResource("/images/clouds.png"));
-    private ImageIcon life = new ImageIcon(getClass().getResource("/images/life.gif"));
+    private ImageIcon food = new ImageIcon(getClass().getResource("/images/food.png"));
     
     private int levelNo = 1;
     //SoundManager sound = new SoundManager();
     
     public GameEngine(int levelNo) {
         this.levelNo = levelNo;
-        //sound.start();
+      //  sound.start();
     }
     
     public void init(){
@@ -87,19 +83,19 @@ public class GameEngine extends Canvas implements Runnable {
                     handler.addObject( new Block( i * 32 - 400, j * 32 + 72, 2, ObjectType.Block, handler) );
                 }
                 if (red == 237 && green == 28 && blue == 36) { // if the pixel is red 
-                    handler.addObject( new Food( i * 32 - 400, j * 32 + 72, ObjectType.Food, 3) );
+                    handler.addObject( new Food( i * 32 - 400, j * 32 + 72, ObjectType.Food ) );
                 }
                 if (red == 255 && green == 127 && blue == 39) { // if the pixel is orange 
-                    handler.addObject( new Sleep( i * 32 - 400, j * 32 + 72, ObjectType.Sleep, 3) );
+                    handler.addObject( new Sleep( i * 32 - 400, j * 32 + 72, ObjectType.Sleep ) );
                 }
                 if (red == 255 && green == 201 && blue == 14) { // if the pixel is yellow 
-                    handler.addObject( new Coin( i * 32 - 400, j * 32 + 72, ObjectType.Coin, 3) );
+                    handler.addObject( new Coin( i * 32 - 400, j * 32 + 72, ObjectType.Coin ) );
                 }
-                if (red == 34 && green == 177 && blue == 76) { // if the pixel is green 
+                if (red == 34 && green == 177 && blue == 76) { // if the pixel is dark green 
                     handler.addObject( new Block( i * 32 - 400, j * 32 + 72, 3, ObjectType.Block, handler) );
                 }
                 if (red == 0 && green == 255 && blue == 0) { // if the pixel is green
-                    handler.addObject( new Exam( i*32-400, j + 100,handler, ObjectType.Exam) );
+                    handler.addObject( new Exam( i * 32 - 400, j + 100, handler, ObjectType.Exam ) );
                 }
             }
         }
@@ -136,7 +132,6 @@ public class GameEngine extends Canvas implements Runnable {
                // updates++;
                 delta--;
             }
-            
             //frames++;
             if(System.currentTimeMillis() - timer > 1000){
                 timer += 1000;
@@ -148,7 +143,6 @@ public class GameEngine extends Canvas implements Runnable {
                 if( min == 0 && sec == 0 ) {
                 	JOptionPane.showMessageDialog(null, "The Deadline Has Passed, \nBetter Luck Next Time!", "You Fail!", JOptionPane.PLAIN_MESSAGE);
                 	//exit from level here
-                    lives--;
                 }
                 if( sec == 0 ){
                 	min--;
@@ -156,11 +150,8 @@ public class GameEngine extends Canvas implements Runnable {
                 }
                 if( count == 5 ) {
                 	player.setFoodCount( player.getFoodCount()-1 );
-                	if( player.getFoodCount() == 0 ) {
-                        JOptionPane.showMessageDialog(null, "You haven't eaten in a long time, \nYou don't have the strength to continue!", "You Lost!", JOptionPane.PLAIN_MESSAGE);
-                        //exit from level here
-                        lives--;
-                    }
+                	
+                	//sound.stop();
                 	count = 0;
                 }
                 if (playing) {
@@ -171,9 +162,10 @@ public class GameEngine extends Canvas implements Runnable {
                 //updates = 0;
             }
             render();
-
+            if( player.getFoodCount() < 0 )
+        		JOptionPane.showMessageDialog(null, "You haven't eaten in a long time, \nYou don't have the strength to continue!", "You Lost!", JOptionPane.PLAIN_MESSAGE);
+        		//exit from level here
         }
-        //window.dispose();
     }
 
     // Update frames
@@ -187,11 +179,6 @@ public class GameEngine extends Canvas implements Runnable {
 
     // Render Images as fast as a computer can
     private void render() {
-
-        if (lives != oldLives) {
-            init();
-            oldLives--;
-        }
         BufferStrategy bufferStrategy = this.getBufferStrategy();
         if (bufferStrategy == null) {
             // 3 is the most efficient number of buffers. A value larger than this
@@ -207,22 +194,6 @@ public class GameEngine extends Canvas implements Runnable {
         //graphics.setColor(Color.BLACK);
         //graphics.fillRect(0,0, getWidth(), getHeight());
     	graphics.drawImage(level.getImage(), 0, 0, null);
-        if (lives >= 3) {
-            graphics.drawImage(life.getImage(), 200, 5, null);
-        }
-        if (lives >= 2) {
-            graphics.drawImage(life.getImage(), 150, 5, null);
-        }
-        if (lives >= 1) {
-            graphics.drawImage(life.getImage(), 100, 5, null);
-        }
-        if (lives == 0) {
-            JOptionPane.showMessageDialog(null, "You don't have anymore lives", "GAME OVER", JOptionPane.PLAIN_MESSAGE);
-            //window = new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
-            isRunning = false;
-            new MainMenu();
-            return;
-        }
         g2d.translate(cam.getXPos(), cam.getYPos() ); // begin of cam
         for (int i = 0; i < clouds.getImage().getWidth(null) * 10; i += clouds.getImage().getWidth(null)) {
         	 graphics.drawImage(clouds.getImage(), i*3, 0, this);
@@ -232,8 +203,7 @@ public class GameEngine extends Canvas implements Runnable {
         //graphics.fillRoundRect((int) (-cam.getXPos())+40, 25, 75, 35, 20, 20);
         //graphics.setColor(Color.BLACK);
         //graphics.drawRoundRect((int) (-cam.getXPos())+40, 25, 75, 35, 20, 20);
-        g2d.setColor(new Color(192, 3, 3));
-        g2d.drawString( "Lives: ", -cam.getXPos()+18, 28 );
+
         g2d.setColor(new Color(53, 159, 196));
         g2d.drawString( countDown, -cam.getXPos()+80, 500 );
         g2d.setFont(font2);
@@ -254,7 +224,7 @@ public class GameEngine extends Canvas implements Runnable {
     }
     
     public void startTheGame() {
-    	window = new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
+    	new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
     }
 
     public void setPlaying(boolean playing) {

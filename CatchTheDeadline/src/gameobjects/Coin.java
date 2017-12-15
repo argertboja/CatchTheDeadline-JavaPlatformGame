@@ -6,13 +6,12 @@ import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
-public class Coin extends PowerUps {
+public class Coin extends GameObject {
 	
 ImageIcon coin = new ImageIcon(getClass().getResource("/images/coin.png"));
 	
-    public Coin( float x, float y, ObjectType type, int value ){
-          super( x, y, type, value );
-          this.value = value;
+    public Coin( float x, float y, ObjectType type ){
+          super( x, y, type );
     }
       
     @Override
