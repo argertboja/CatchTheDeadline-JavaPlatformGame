@@ -75,6 +75,10 @@ public class Window extends JFrame{
         setVisible(true);
     }
 
+    public void quitGame() {
+        dispose();
+    }
+
     // Private class for Mouse Handler
     private class MyMouseHandler extends MouseAdapter {
         @Override

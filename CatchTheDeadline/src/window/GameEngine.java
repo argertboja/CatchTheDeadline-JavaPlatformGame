@@ -2,6 +2,7 @@ package window;
 
 import gameManager.*;
 import gameobjects.*;
+import userinterface.MainMenu;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -25,6 +26,7 @@ public class GameEngine extends Canvas implements Runnable {
     private Font font1 = new Font("Cooper Black", Font.BOLD, 24);
     private Font font2 = new Font("Cooper Black", Font.BOLD, 28);
     private static int lives = 3, oldLives = 3;
+    private Window window;
 
     
     private BufferedImage level1 = null, level2 = null, level3 = null;
@@ -169,7 +171,9 @@ public class GameEngine extends Canvas implements Runnable {
                 //updates = 0;
             }
             render();
+
         }
+        //window.dispose();
     }
 
     // Update frames
@@ -212,6 +216,13 @@ public class GameEngine extends Canvas implements Runnable {
         if (lives >= 1) {
             graphics.drawImage(life.getImage(), 100, 5, null);
         }
+        if (lives == 0) {
+            JOptionPane.showMessageDialog(null, "You don't have anymore lives", "GAME OVER", JOptionPane.PLAIN_MESSAGE);
+            //window = new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
+            isRunning = false;
+            new MainMenu();
+            return;
+        }
         g2d.translate(cam.getXPos(), cam.getYPos() ); // begin of cam
         for (int i = 0; i < clouds.getImage().getWidth(null) * 10; i += clouds.getImage().getWidth(null)) {
         	 graphics.drawImage(clouds.getImage(), i*3, 0, this);
@@ -243,7 +254,7 @@ public class GameEngine extends Canvas implements Runnable {
     }
     
     public void startTheGame() {
-    	new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
+    	window = new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
     }
 
     public void setPlaying(boolean playing) {
