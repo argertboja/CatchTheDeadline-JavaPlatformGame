@@ -1,6 +1,6 @@
 package gameManager;
 
-import java.io.FileInputStream;
+/*import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -8,6 +8,7 @@ import sun.audio.AudioData;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 import sun.audio.ContinuousAudioDataStream;
+
 
 public class SoundManager {
 	
@@ -28,7 +29,7 @@ public class SoundManager {
 	}
 	public void stop() {
 		AudioPlayer.player.stop(cas);	
-	}*/
+	}
 	
 	private Thread sound;
 	private boolean play = true;
@@ -58,4 +59,4 @@ public class SoundManager {
 		play = false;
 	}
 }
-
+*/

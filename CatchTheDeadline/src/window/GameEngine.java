@@ -22,21 +22,23 @@ public class GameEngine extends Canvas implements Runnable {
     static Texture texture;
     public static int WIDTH, HEIGHT;
     private String countDown = "Time Left: 1:30";
-    Font font1 = new Font("Cooper Black", Font.BOLD, 24);
-    Font font2 = new Font("Cooper Black", Font.BOLD, 28);
+    private Font font1 = new Font("Cooper Black", Font.BOLD, 24);
+    private Font font2 = new Font("Cooper Black", Font.BOLD, 28);
+    private static int lives = 3, oldLives = 3;
+
     
     private BufferedImage level1 = null, level2 = null, level3 = null;
 
     private ImageIcon level = new ImageIcon(getClass().getResource("/images/level.png"));
     private ImageIcon clouds = new ImageIcon(getClass().getResource("/images/clouds.png"));
-    private ImageIcon food = new ImageIcon(getClass().getResource("/images/food.png"));
+    private ImageIcon life = new ImageIcon(getClass().getResource("/images/life.gif"));
     
     private int levelNo = 1;
-    SoundManager sound = new SoundManager();
+    //SoundManager sound = new SoundManager();
     
     public GameEngine(int levelNo) {
         this.levelNo = levelNo;
-        sound.start();
+        //sound.start();
     }
     
     public void init(){
@@ -144,6 +146,7 @@ public class GameEngine extends Canvas implements Runnable {
                 if( min == 0 && sec == 0 ) {
                 	JOptionPane.showMessageDialog(null, "The Deadline Has Passed, \nBetter Luck Next Time!", "You Fail!", JOptionPane.PLAIN_MESSAGE);
                 	//exit from level here
+                    lives--;
                 }
                 if( sec == 0 ){
                 	min--;
@@ -151,9 +154,11 @@ public class GameEngine extends Canvas implements Runnable {
                 }
                 if( count == 5 ) {
                 	player.setFoodCount( player.getFoodCount()-1 );
-                	if( player.getFoodCount() == 0 )
-                		JOptionPane.showMessageDialog(null, "You haven't eaten in a long time, \nYou don't have the strength to continue!", "You Lost!", JOptionPane.PLAIN_MESSAGE);
-                		//exit from level here
+                	if( player.getFoodCount() == 0 ) {
+                        JOptionPane.showMessageDialog(null, "You haven't eaten in a long time, \nYou don't have the strength to continue!", "You Lost!", JOptionPane.PLAIN_MESSAGE);
+                        //exit from level here
+                        lives--;
+                    }
                 	count = 0;
                 }
                 if (playing) {
@@ -178,6 +183,11 @@ public class GameEngine extends Canvas implements Runnable {
 
     // Render Images as fast as a computer can
     private void render() {
+
+        if (lives != oldLives) {
+            init();
+            oldLives--;
+        }
         BufferStrategy bufferStrategy = this.getBufferStrategy();
         if (bufferStrategy == null) {
             // 3 is the most efficient number of buffers. A value larger than this
@@ -193,6 +203,15 @@ public class GameEngine extends Canvas implements Runnable {
         //graphics.setColor(Color.BLACK);
         //graphics.fillRect(0,0, getWidth(), getHeight());
     	graphics.drawImage(level.getImage(), 0, 0, null);
+        if (lives >= 3) {
+            graphics.drawImage(life.getImage(), 200, 5, null);
+        }
+        if (lives >= 2) {
+            graphics.drawImage(life.getImage(), 150, 5, null);
+        }
+        if (lives >= 1) {
+            graphics.drawImage(life.getImage(), 100, 5, null);
+        }
         g2d.translate(cam.getXPos(), cam.getYPos() ); // begin of cam
         for (int i = 0; i < clouds.getImage().getWidth(null) * 10; i += clouds.getImage().getWidth(null)) {
         	 graphics.drawImage(clouds.getImage(), i*3, 0, this);
@@ -202,7 +221,8 @@ public class GameEngine extends Canvas implements Runnable {
         //graphics.fillRoundRect((int) (-cam.getXPos())+40, 25, 75, 35, 20, 20);
         //graphics.setColor(Color.BLACK);
         //graphics.drawRoundRect((int) (-cam.getXPos())+40, 25, 75, 35, 20, 20);
-
+        g2d.setColor(new Color(192, 3, 3));
+        g2d.drawString( "Lives: ", -cam.getXPos()+18, 28 );
         g2d.setColor(new Color(53, 159, 196));
         g2d.drawString( countDown, -cam.getXPos()+80, 500 );
         g2d.setFont(font2);
