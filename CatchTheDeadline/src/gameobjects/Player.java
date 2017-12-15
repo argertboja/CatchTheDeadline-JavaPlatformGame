@@ -25,6 +25,7 @@ public class Player extends GameObject {
 	
 	ImageIcon player = new ImageIcon(getClass().getResource("/images/player.png"));
 	ImageIcon playerLeftLooking = new ImageIcon(getClass().getResource("/images/playerLeftLooking.png"));
+	private int enemyId = -1;
 	
 	private float gravity = 0.15f;
 	private float width = player.getIconWidth(), height = player.getIconHeight();
@@ -248,5 +249,13 @@ public class Player extends GameObject {
 
 	public void setCoinCount(int coinCount) {
 		this.coinCount = coinCount;
+	}
+
+	public void setEnemyId(int id) {
+		enemyId = id;
+	}
+
+	public int getEnemyId() {
+		return enemyId;
 	}
 }

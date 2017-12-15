@@ -26,7 +26,8 @@ public class GameEngine extends Canvas implements Runnable {
     private Font font1 = new Font("Cooper Black", Font.BOLD, 24);
     private Font font2 = new Font("Cooper Black", Font.BOLD, 28);
     private static int lives = 3, oldLives = 3;
-    private int scores = 0;
+    private int scores = 0, min = 1, sec = 30;
+    private int enemyId = 0;
     
     private BufferedImage level1 = null, level2 = null, level3 = null;
 
@@ -81,7 +82,7 @@ public class GameEngine extends Canvas implements Runnable {
                     handler.addObject( new Block( i * 32 - 400, j * 32 + 72, 1, ObjectType.Block, handler) );
                 }
                 if (red == 0 && green == 0 && blue == 255) { // if the pixel is blue
-                	player = new Player(i + 200, j + 100, handler,ObjectType.Player);
+                	player = new Player(i + 100, j + 100, handler,ObjectType.Player);
                     handler.addObject( player );
                 }
                 if (red == 127 && green == 127 && blue == 127) { // if the pixel is grey 
@@ -100,10 +101,12 @@ public class GameEngine extends Canvas implements Runnable {
                     handler.addObject( new Block( i * 32 - 400, j * 32 + 72, 3, ObjectType.Block, handler) );
                 }
                 if (red == 0 && green == 255 && blue == 0) { // if the pixel is green
-                    handler.addObject( new Exam( i * 32 - 400, j + 100, handler, ObjectType.Exam ) );
+                    handler.addObject( new Exam( i * 32 - 400, j + 100, handler, ObjectType.Exam, enemyId ) );
+                    enemyId++;
                 }
                 if (red == 255 && green == 242 && blue == 0) { // if the pixel is bright yellow
-                    handler.addObject( new BlankSheet( i * 32 - 400, j * 32, handler, ObjectType.BlankSheet ) );
+                    handler.addObject( new BlankSheet( i * 32 - 400, j * 32, handler, ObjectType.BlankSheet, enemyId ) );
+                    enemyId++;
                 }
             }
         }
@@ -113,7 +116,6 @@ public class GameEngine extends Canvas implements Runnable {
         if(isRunning) {
             return;
         }
-
         isRunning = true;
         thread = new Thread(this);
         thread.start();
@@ -128,7 +130,6 @@ public class GameEngine extends Canvas implements Runnable {
         double ns = 1000000000 / fps;
         double delta = 0;
         long timer = System.currentTimeMillis();
-        int min = 1, sec = 30;
        // int updates = 0;
        // int frames = 0;
         while(isRunning){
@@ -186,12 +187,33 @@ public class GameEngine extends Canvas implements Runnable {
         	if( handler.objectLinkedList.get(i).getType() == ObjectType.Player )
         		cam.updateFrame( handler.objectLinkedList.get(i));
         }
+        for( int i = 0; i < handler.objectLinkedList.size(); i++ ) {
+            if (handler.objectLinkedList.get(i).getType() == ObjectType.Exam) {
+                Exam exam = (Exam) handler.objectLinkedList.get(i);
+                if (exam.getId() ==  player.getEnemyId()) {
+                    handler.objectLinkedList.remove(exam);
+                }
+            }
+        }
+        for( int i = 0; i < handler.objectLinkedList.size(); i++ ) {
+            if (handler.objectLinkedList.get(i).getType() == ObjectType.BlankSheet) {
+                BlankSheet blankSheet = (BlankSheet) handler.objectLinkedList.get(i);
+                if (blankSheet.getId() ==  player.getEnemyId()) {
+                    handler.objectLinkedList.remove(blankSheet);
+                }
+            }
+        }
     }
 
     // Render Images as fast as a computer can
     private void render() {
         if (lives != oldLives) {
+            int prevCoins = player.getCoinCount();
+            for( int i = 0; i < handler.objectLinkedList.size(); i++ ) {
+                handler.objectLinkedList.remove(i);
+            }
             init();
+            player.setCoinCount(prevCoins);
             oldLives--;
         }
         BufferStrategy bufferStrategy = this.getBufferStrategy();
@@ -219,9 +241,19 @@ public class GameEngine extends Canvas implements Runnable {
             graphics.drawImage(life.getImage(), 100, 5, null);
         }
         if (lives == 0) {
-            JOptionPane.showMessageDialog(null, "You don't have anymore lives", "GAME OVER", JOptionPane.PLAIN_MESSAGE);
+            scores = player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
+            JOptionPane.showMessageDialog(null, "You don't have anymore lives", "GAME OVER\n Your scores: " + scores, JOptionPane.PLAIN_MESSAGE);
             //window = new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
-
+            // Save scores
+            scores = player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
+            player.setCoinCount(0);
+            player.setFoodCount(3);
+            player.setSleepCount(3);
+            min = 1;
+            sec = 30;
+            lives = 3;
+            oldLives = 3;
+            init();
         }
         g2d.translate(cam.getXPos(), cam.getYPos() ); // begin of cam
         for (int i = 0; i < clouds.getImage().getWidth(null) * 10; i += clouds.getImage().getWidth(null)) {

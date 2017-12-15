@@ -16,21 +16,32 @@ public class Exam extends GameObject {
 
 	private final float MAX_SPEED = 10;
 	private Handler handler;
+	private int id;
 	Texture texture = GameEngine.getInstance();
+	private int lives = 8;
 
 	ImageIcon exam = new ImageIcon(getClass().getResource("/images/exam.png"));
 	ImageIcon examLeftLooking = new ImageIcon(getClass().getResource("/images/examLeftLooking.png"));
 
 	private float gravity = 0.15f;
 	private float width = exam.getIconWidth(), height = exam.getIconHeight();
+	private Player player;
 
 	// constructor
-	public Exam( float x, float y, Handler handler, ObjectType type ) {
+	public Exam( float x, float y, Handler handler, ObjectType type, int id ) {
 		super(x, y, type);
 		this.handler = handler;
 		examWalk = new Animation( 1, texture.examAnimation );
 		examWalkM = new Animation( 1, texture.examAnimationM );
 		setVelocityX(5);
+		this.id = id;
+		for (int i =0; i < handler.objectLinkedList.size(); i++) {
+			GameObject temp = null;
+			temp = handler.objectLinkedList.get(i);
+			if (temp.getType() ==ObjectType.Player) {
+				player = (Player) temp;
+			}
+		}
 	}
 
 	// methods
@@ -45,7 +56,7 @@ public class Exam extends GameObject {
 			 }
 			 if( temp.getType() == ObjectType.Block )
 			 {
-				/*if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
+				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
 					posY = temp.getPosY() + (height/2);
 					velocityY = 0;
 				}
@@ -56,7 +67,7 @@ public class Exam extends GameObject {
 					jumping = false;
 				}
 				else
-					falling = true;*/
+					falling = true;
 				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
 					posX = temp.getPosX() - width;
 					setVelocityX(-5);
@@ -82,6 +93,72 @@ public class Exam extends GameObject {
                 }
                 // end level here
             }
+			if( temp.getType() == ObjectType.Pen )
+			{
+				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+				}
+				if( objectBounds().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+				}
+				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+					lives -= 4;
+					if (lives <= 0)
+						player.setEnemyId(id);
+				}
+				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+					lives -= 4;
+					if (lives <= 0)
+						player.setEnemyId(id);
+				}
+				// end level here
+			}
+			if( temp.getType() == ObjectType.Eraser )
+			{
+				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+				}
+				if( objectBounds().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+				}
+				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+					lives -= 1;
+					if (lives <= 0)
+						player.setEnemyId(id);
+				}
+				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+					lives -= 1;
+					if (lives <= 0)
+						player.setEnemyId(id);
+				}
+				// end level here
+			}
+			if( temp.getType() == ObjectType.PaintSpray )
+			{
+				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+				}
+				if( objectBounds().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+				}
+				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+					lives -= 3;
+					if (lives <= 0)
+						player.setEnemyId(id);
+				}
+				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+					lives -= 3;
+					if (lives <= 0)
+						player.setEnemyId(id);
+				}
+				// end level here
+			}
 		}
 	}
 
@@ -147,5 +224,9 @@ public class Exam extends GameObject {
 
 	public Handler getHandler() {
 		 return handler;
+	}
+
+	public int getId () {
+		return id;
 	}
 }

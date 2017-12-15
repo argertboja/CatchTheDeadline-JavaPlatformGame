@@ -16,19 +16,31 @@ public class BlankSheet extends GameObject {
 
 	private final float MAX_SPEED = 10;
 	private Handler handler;
-	Texture texture = GameEngine.getInstance();
+	private Texture texture = GameEngine.getInstance();
 
-	ImageIcon blankSheet = new ImageIcon(getClass().getResource("/images/blankSheet.png"));
+	private ImageIcon blankSheet = new ImageIcon(getClass().getResource("/images/blankSheet.png"));
 
 	private float gravity = 0.15f;
 	private float width = blankSheet.getIconWidth(), height = blankSheet.getIconHeight();
 
+	private Player player;
+	private int lives = 3;
+	private int id;
+
 	// constructor
-	public BlankSheet( float x, float y, Handler handler, ObjectType type ) {
+	public BlankSheet( float x, float y, Handler handler, ObjectType type, int id ) {
 		super(x, y, type);
 		this.handler = handler;
 		blankSheetFlip = new Animation( 1, texture.blankSheetFlipping );
 		setVelocityX(5);
+		this.id = id;
+		for (int i =0; i < handler.objectLinkedList.size(); i++) {
+			GameObject temp = null;
+			temp = handler.objectLinkedList.get(i);
+			if (temp.getType() ==ObjectType.Player) {
+				player = (Player) temp;
+			}
+		}
 	}
 
 	// methods
@@ -40,17 +52,6 @@ public class BlankSheet extends GameObject {
 			 temp = handler.objectLinkedList.get(i);
 			}
 			catch (Exception e) {}
-			/*if( temp.getType() == ObjectType.Block )
-			{
-				if( objectBounds().intersects( temp.objectBounds() ) ) {
-					posY = temp.getPosY() - height;
-					velocityY = 0;
-					falling = false;
-					jumping = false;
-				}
-				else
-					falling = true;
-			}*/
 			if( temp.getType() == ObjectType.Player )
 			{
 			    if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
@@ -66,6 +67,72 @@ public class BlankSheet extends GameObject {
 			        handler.objectLinkedList.remove(temp);
 			    }
 			    // end level here
+			}
+			if( temp.getType() == ObjectType.Pen )
+			{
+				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+				}
+				if( objectBounds().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+				}
+				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+					lives -= 4;
+					if (lives <= 0)
+						player.setEnemyId(id);
+				}
+				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+					lives -= 4;
+					if (lives <= 0)
+						player.setEnemyId(id);
+				}
+				// end level here
+			}
+			if( temp.getType() == ObjectType.Eraser )
+			{
+				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+				}
+				if( objectBounds().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+				}
+				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+					lives -= 1;
+					if (lives <= 0)
+						player.setEnemyId(id);
+				}
+				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+					lives -= 1;
+					if (lives <= 0)
+						player.setEnemyId(id);
+				}
+				// end level here
+			}
+			if( temp.getType() == ObjectType.PaintSpray )
+			{
+				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+				}
+				if( objectBounds().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+				}
+				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+					lives -= 3;
+					if (lives <= 0)
+						player.setEnemyId(id);
+				}
+				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
+					handler.objectLinkedList.remove(temp);
+					lives -= 3;
+					if (lives <= 0)
+						player.setEnemyId(id);
+				}
+				// end level here
 			}
 		}
 	}
@@ -109,4 +176,10 @@ public class BlankSheet extends GameObject {
 	public Handler getHandler() {
 		 return handler;
 	}
+
+	public int getId () {
+		return id;
+	}
+
+
 }
