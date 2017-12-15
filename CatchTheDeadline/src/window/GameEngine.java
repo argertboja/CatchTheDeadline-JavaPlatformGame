@@ -26,6 +26,7 @@ public class GameEngine extends Canvas implements Runnable {
     private Font font1 = new Font("Cooper Black", Font.BOLD, 24);
     private Font font2 = new Font("Cooper Black", Font.BOLD, 28);
     private static int lives = 3, oldLives = 3;
+    private int scores = 0;
     
     private BufferedImage level1 = null, level2 = null, level3 = null;
 
@@ -220,9 +221,7 @@ public class GameEngine extends Canvas implements Runnable {
         if (lives == 0) {
             JOptionPane.showMessageDialog(null, "You don't have anymore lives", "GAME OVER", JOptionPane.PLAIN_MESSAGE);
             //window = new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
-            isRunning = false;
-            new MainMenu();
-            return;
+
         }
         g2d.translate(cam.getXPos(), cam.getYPos() ); // begin of cam
         for (int i = 0; i < clouds.getImage().getWidth(null) * 10; i += clouds.getImage().getWidth(null)) {
