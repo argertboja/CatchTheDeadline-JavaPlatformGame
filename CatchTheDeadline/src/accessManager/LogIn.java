@@ -23,6 +23,7 @@ public class LogIn extends JFrame implements ActionListener {
     private DBInterface db;
     private GameEngine gameEngine;
     private MainMenu mainMenu;
+    public static String usernameValue;
 
     // Constructor
     public LogIn() {
@@ -33,7 +34,6 @@ public class LogIn extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
         db= new DBInterface();
-
         // Set Frame Icon
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/icon.png"));
         this.setIconImage(imageIcon.getImage());
@@ -62,6 +62,7 @@ public class LogIn extends JFrame implements ActionListener {
         username.setText("Username");
         username.setBounds(200, 290, 150, 30);
         username.setForeground(Color.GRAY);
+
 
         // Place holder hide effect
         username.addFocusListener(new FocusListener() {
@@ -159,9 +160,10 @@ public class LogIn extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(login)) {
+            usernameValue = username.getText();
             try {
                 if (checkPasw()){
-                    gameEngine = new GameEngine(1);
+                    gameEngine = new GameEngine(1, username.getText());
                     gameEngine.startTheGame();
                     dispose();
                 }
@@ -179,13 +181,14 @@ public class LogIn extends JFrame implements ActionListener {
         }
         if (e.getSource().equals(register)) {
             try {
+                usernameValue = username.getText();
                 addUser();
             } catch (SQLException e1) {
                 e1.printStackTrace();
             } catch (ClassNotFoundException e1) {
                 e1.printStackTrace();
             }
-            gameEngine = new GameEngine(1);
+            gameEngine = new GameEngine(1, username.getText());
             gameEngine.startTheGame();
             dispose();
         }
@@ -197,6 +200,7 @@ public class LogIn extends JFrame implements ActionListener {
             } catch (ClassNotFoundException e1) {
                 e1.printStackTrace();
             }*/
+            usernameValue = username.getText();
             mainMenu = new MainMenu();
             dispose();
         }

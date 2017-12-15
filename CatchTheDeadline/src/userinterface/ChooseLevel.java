@@ -1,5 +1,6 @@
 package userinterface;
 
+import accessManager.LogIn;
 import window.GameEngine;
 
 import javax.swing.*;
@@ -89,17 +90,17 @@ public class ChooseLevel extends JFrame {
                 dispose();
             }
             else if (source == primary) {
-                gameEngine = new GameEngine(1);
+                gameEngine = new GameEngine(1, LogIn.usernameValue);
                 gameEngine.startTheGame();
                 dispose();
             }
             else if (source == high) {
-                gameEngine = new GameEngine(2);
+                gameEngine = new GameEngine(2,LogIn.usernameValue);
                 gameEngine.startTheGame();
                 dispose();
             }
             else if (source == univer) {
-                gameEngine = new GameEngine(3);
+                gameEngine = new GameEngine(3, LogIn.usernameValue);
                 gameEngine.startTheGame();
                 dispose();
             }

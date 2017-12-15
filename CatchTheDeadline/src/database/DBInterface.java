@@ -15,16 +15,16 @@ public class DBInterface {
 
     // Getting connection to the database and create it
     private void getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("org.sqlite.JDBC");
-        con = DriverManager.getConnection("jdbc:sqlite:scores.db");
+        Class.forName("com.mysql.jdbc.Driver");
+        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ctd", "root", "");
         initializeAccounts();
     }
 
     // Initialize Accounts' Table
     private void initializeAccounts() throws SQLException {
         Statement statement = con.createStatement();
-        statement.execute("CREATE TABLE IF NOT EXISTS accounts ( id integer,"
-                +"username varchar(48), pasw varchar(48), scores integer,"
+        statement.execute("CREATE TABLE IF NOT EXISTS ctdtable ( id integer,"
+                +"username varchar(28), pasw varchar(28), scores integer, coins integer, eraser integer, paintSpray integer,"
                 + "primary key (id));");
         //Statement state3 = con.createStatement();
         //state3.execute("INSERT INTO accounts (id, username, pasw) VALUES (1, 'admin', 'admin1')");
@@ -35,9 +35,7 @@ public class DBInterface {
         if (con == null) {
             getConnection();
         }
-        PreparedStatement prep = con.prepareStatement("INSERT INTO accounts (id, username, pasw) VALUES(?,?,?);");
-        prep.setString(2, username);
-        prep.setString(3, pasw);
+        PreparedStatement prep = con.prepareStatement("INSERT INTO ctdtable (username, pasw) VALUES ('"+username+"' , '" + pasw +"');");
         prep.executeUpdate();
         prep.close();
     }
@@ -48,7 +46,7 @@ public class DBInterface {
             getConnection();
         }
         Statement state = con.createStatement();
-        ResultSet res = state.executeQuery("SELECT username, pasw FROM accounts WHERE username = '" + username + "';");
+        ResultSet res = state.executeQuery("SELECT username, pasw FROM ctdtable WHERE username = '" + username + "';");
         return res;
     }
 

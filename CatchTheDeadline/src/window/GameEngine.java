@@ -17,7 +17,7 @@ public class GameEngine extends Canvas implements Runnable {
 
     private Thread thread, timer;
     private Player player;
-    private boolean isRunning = false, playing = true;
+    private boolean isRunning = false, playing = true, endgame = false;
     private Handler handler;
     private Camera cam;
     static Texture texture;
@@ -28,6 +28,8 @@ public class GameEngine extends Canvas implements Runnable {
     private static int lives = 3, oldLives = 3;
     private int scores = 0, min = 1, sec = 30;
     private int enemyId = 0;
+    private static Window window;
+    private static String username;
     
     private BufferedImage level1 = null, level2 = null, level3 = null;
 
@@ -39,8 +41,9 @@ public class GameEngine extends Canvas implements Runnable {
     private int levelNo = 1;
     //SoundManager sound = new SoundManager();
     
-    public GameEngine(int levelNo) {
+    public GameEngine(int levelNo, String username) {
         this.levelNo = levelNo;
+        this.username = username;
       //  sound.start();
     }
     
@@ -132,7 +135,7 @@ public class GameEngine extends Canvas implements Runnable {
         long timer = System.currentTimeMillis();
        // int updates = 0;
        // int frames = 0;
-        while(isRunning){
+        while(isRunning && !endgame){
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -171,7 +174,11 @@ public class GameEngine extends Canvas implements Runnable {
                 //frames = 0;
                 //updates = 0;
             }
-            render();
+            try {
+                render();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             if( player.getFoodCount() < 0 ) {
                 JOptionPane.showMessageDialog(null, "You haven't eaten in a long time, \nYou don't have the strength to continue!", "You Lost!", JOptionPane.PLAIN_MESSAGE);
                 //exit from level here
@@ -206,7 +213,7 @@ public class GameEngine extends Canvas implements Runnable {
     }
 
     // Render Images as fast as a computer can
-    private void render() {
+    private void render() throws InterruptedException {
         if (lives != oldLives) {
             int prevCoins = player.getCoinCount();
             for( int i = 0; i < handler.objectLinkedList.size(); i++ ) {
@@ -234,13 +241,13 @@ public class GameEngine extends Canvas implements Runnable {
         if (lives >= 3) {
             graphics.drawImage(life.getImage(), 200, 5, null);
         }
-        if (lives >= 2) {
+        /*if (lives >= 2) {
             graphics.drawImage(life.getImage(), 150, 5, null);
         }
         if (lives >= 1) {
             graphics.drawImage(life.getImage(), 100, 5, null);
-        }
-        if (lives == 0) {
+        }*/
+        if (lives == 2) {
             scores = player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
             JOptionPane.showMessageDialog(null, "You don't have anymore lives", "GAME OVER\n Your scores: " + scores, JOptionPane.PLAIN_MESSAGE);
             //window = new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
@@ -253,7 +260,11 @@ public class GameEngine extends Canvas implements Runnable {
             sec = 30;
             lives = 3;
             oldLives = 3;
-            init();
+            //init();
+
+            window.quitGame();
+            endgame = true;
+            thread.join();
         }
         g2d.translate(cam.getXPos(), cam.getYPos() ); // begin of cam
         for (int i = 0; i < clouds.getImage().getWidth(null) * 10; i += clouds.getImage().getWidth(null)) {
@@ -286,7 +297,7 @@ public class GameEngine extends Canvas implements Runnable {
     }
     
     public void startTheGame() {
-    	new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
+    	window = new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo, username));
     }
 
     public void setPlaying(boolean playing) {

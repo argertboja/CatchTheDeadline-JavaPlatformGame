@@ -76,7 +76,9 @@ public class Window extends JFrame{
     }
 
     public void quitGame() {
-        dispose();
+        remove(gameEngine);
+        remove(iconHolder);
+        add (new MainMenu());
     }
 
     // Private class for Mouse Handler
