@@ -1,5 +1,7 @@
 package window;
 
+import accessManager.LogIn;
+import database.DBInterface;
 import gameManager.*;
 import gameobjects.*;
 import userinterface.MainMenu;
@@ -7,6 +9,7 @@ import userinterface.MainMenu;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.sql.SQLException;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -30,6 +33,7 @@ public class GameEngine extends Canvas implements Runnable {
     private int enemyId = 0;
     private static Window window;
     private static String username;
+    private DBInterface db;
     
     private BufferedImage level1 = null, level2 = null, level3 = null;
 
@@ -45,6 +49,7 @@ public class GameEngine extends Canvas implements Runnable {
         this.levelNo = levelNo;
         this.username = username;
       //  sound.start();
+        db = new DBInterface();
     }
     
     public void init(){
@@ -261,7 +266,13 @@ public class GameEngine extends Canvas implements Runnable {
             lives = 3;
             oldLives = 3;
             //init();
-
+            try {
+                db.saveHighScores(LogIn.usernameValue, scores, player.getCoinCount());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             window.quitGame();
             endgame = true;
             thread.join();

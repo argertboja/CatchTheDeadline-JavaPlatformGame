@@ -51,11 +51,11 @@ public class DBInterface {
     }
 
     // Save High Scores
-    public void saveHighScores (String username, int scores) throws ClassNotFoundException, SQLException {
+    public void saveHighScores (String username, int scores, int coins) throws ClassNotFoundException, SQLException {
         if (con == null) {
             getConnection();
         }
-        String query = "UPDATE accounts set scores = " + scores + " WHERE username = '" + username + "';";
+        String query = "UPDATE ctdtable set scores = " + scores + ", coins = " + coins + " WHERE username = '" + username + "';";
         try (PreparedStatement prep = con.prepareStatement( query)) {
             prep.executeUpdate();
             prep.close();
@@ -68,7 +68,7 @@ public class DBInterface {
             getConnection();
         }
         Statement state = con.createStatement();
-        ResultSet res = state.executeQuery("SELECT scores FROM accounts WHERE (username = '" + username + "' COLLATE NOCASE);");
+        ResultSet res = state.executeQuery("SELECT scores FROM ctdtable WHERE (username = '" + username + "' COLLATE NOCASE);");
         return res;
     }
 
@@ -77,7 +77,7 @@ public class DBInterface {
         if (con == null) {
             getConnection();
         }
-        String query = "UPDATE accounts set scores = " + 0 + " WHERE username = '" + username + "';";
+        String query = "UPDATE ctdtable set scores = " + 0 + " WHERE username = '" + username + "';";
         try (PreparedStatement prep = con.prepareStatement( query)) {
             prep.executeUpdate();
             prep.close();

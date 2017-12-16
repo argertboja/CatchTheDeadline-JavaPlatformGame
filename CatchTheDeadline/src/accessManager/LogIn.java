@@ -140,7 +140,10 @@ public class LogIn extends JFrame implements ActionListener {
         String userValue = username.getText();
         String paswValue = new String (pasw.getPassword());
         ResultSet rs = db.checkPasw(userValue);
-        return rs.getString(1).equalsIgnoreCase(userValue) && rs.getString(2).equals(paswValue);
+        if (rs.next()) {
+            return rs.getString(1).equalsIgnoreCase(userValue) && rs.getString(2).equals(paswValue);
+        }
+        return false;
     }
 
     // Register a new user
@@ -163,8 +166,7 @@ public class LogIn extends JFrame implements ActionListener {
             usernameValue = username.getText();
             try {
                 if (checkPasw()){
-                    gameEngine = new GameEngine(1, username.getText());
-                    gameEngine.startTheGame();
+                    mainMenu = new MainMenu();
                     dispose();
                 }
                 else {
@@ -181,26 +183,18 @@ public class LogIn extends JFrame implements ActionListener {
         }
         if (e.getSource().equals(register)) {
             try {
-                usernameValue = username.getText();
                 addUser();
             } catch (SQLException e1) {
                 e1.printStackTrace();
             } catch (ClassNotFoundException e1) {
                 e1.printStackTrace();
             }
-            gameEngine = new GameEngine(1, username.getText());
-            gameEngine.startTheGame();
+            usernameValue = username.getText();
+            mainMenu = new MainMenu();
             dispose();
         }
         if (e.getSource().equals(playAsGuest)) {
-            /*try {
-                guestGame();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            } catch (ClassNotFoundException e1) {
-                e1.printStackTrace();
-            }*/
-            usernameValue = username.getText();
+            usernameValue = "guest";
             mainMenu = new MainMenu();
             dispose();
         }
