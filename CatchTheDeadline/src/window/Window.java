@@ -9,8 +9,9 @@ import java.awt.event.MouseEvent;
 
 public class Window extends JFrame{
 
-    private ImageIcon iconHolderIcon, helpIcon, helpIconHover, settingsIcon, settingsIconHover, pauseIcon, pauseIconHover ;
-    private JLabel iconHolder, help, settings, pause, pauseOpacity;
+    private ImageIcon iconHolderIcon, helpIcon, helpIconHover, settingsIcon, settingsIconHover, 
+    pauseIcon, pauseIconHover, cartIcon, cartIconHover;
+    private JLabel iconHolder, help, settings, pause, pauseOpacity, cart;
     private MyMouseHandler mouseHandler;
     private GameEngine gameEngine;
 
@@ -36,7 +37,7 @@ public class Window extends JFrame{
         helpIconHover = new ImageIcon(getClass().getResource("/images/helpIconHover.png"));
         help = new JLabel ();
         help.setIcon(helpIcon);
-        help.setBounds(30, 10, 32, 38);
+        help.setBounds(50, 10, 32, 38);
         help.addMouseListener(mouseHandler);
         iconHolder.add(help);
 
@@ -44,7 +45,7 @@ public class Window extends JFrame{
         settingsIconHover = new ImageIcon(getClass().getResource("/images/settingsIconHover.png"));
         settings = new JLabel ();
         settings.setIcon(settingsIcon);
-        settings.setBounds(100, 10, 40, 38);
+        settings.setBounds(150, 10, 40, 38);
         settings.addMouseListener(mouseHandler);
         iconHolder.add(settings);
 
@@ -52,10 +53,18 @@ public class Window extends JFrame{
         pauseIconHover = new ImageIcon(getClass().getResource("/images/pauseIconHover.png"));
         pause = new JLabel ();
         pause.setIcon(pauseIcon);
-        pause.setBounds(180, 10, 32, 38);
+        pause.setBounds(200, 10, 32, 38);
         pause.addMouseListener(mouseHandler);
         iconHolder.add(pause);
 
+        cartIcon = new ImageIcon(getClass().getResource("/images/cartIcon.png"));		
+        cartIconHover = new ImageIcon(getClass().getResource("/images/cartIconHover.png"));		
+        cart = new JLabel ();		
+        cart.setIcon(cartIcon);		
+        cart.setBounds(100, 13, 32, 32);		
+        cart.addMouseListener(mouseHandler);		
+        iconHolder.add(cart);
+        
         add(iconHolder);
         add(gameEngine);
         pack();
@@ -95,6 +104,9 @@ public class Window extends JFrame{
             else if (source == settings) {
                 settings.setIcon(settingsIconHover);
             }
+            else if (source == cart) {		
+            	cart.setIcon(cartIconHover);		
+            }
         }
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -109,6 +121,9 @@ public class Window extends JFrame{
             else if (source == pause) {
                 new PauseMenu();
             }
+            else if (source == cart) {		
+            	WeaponStore w = new WeaponStore("game", gameEngine );		
+            }
         }
 
         @Override
@@ -122,6 +137,9 @@ public class Window extends JFrame{
             }
             else if (source == settings) {
                 settings.setIcon(settingsIcon);
+            }
+            else if (source == cart) {		
+            	cart.setIcon(cartIcon);
             }
         }
     }

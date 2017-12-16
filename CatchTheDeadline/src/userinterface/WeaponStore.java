@@ -2,6 +2,8 @@ package userinterface;
 
 import javax.swing.*;
 
+import window.GameEngine;
+
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,8 +15,11 @@ public class WeaponStore extends JFrame {
     private ImageIcon buy, buy20, buy30, backImg, hoverBackImg;
     private String from;
     private int coins;
+    private GameEngine gm;
+    private boolean eraserAct;
+    private boolean psAct;
 
-    public WeaponStore( String from, int coins ) {
+	public WeaponStore( String from, GameEngine gm ) {
         setTitle("Catch The Deadline - Weapon Store");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -22,7 +27,10 @@ public class WeaponStore extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         this.from = from;
-        this.coins = coins;
+        this.coins = gm.getTotalCoins();
+        this.eraserAct = gm.isEraserAct();
+        this.psAct = gm.isPsAct();
+        this.gm = gm;
         
         if (from.equalsIgnoreCase("game")) {
             setUndecorated(true);
@@ -79,21 +87,37 @@ public class WeaponStore extends JFrame {
         setVisible(true);
     }
 
-    // Private class for Mouse Handler
+    public boolean isEraserAct() {
+		return eraserAct;
+	}
+
+	public boolean isPsAct() {
+		return psAct;
+	}
+	
+    public int getCoins() {
+		return coins;
+	}
+    
+
+	// Private class for Mouse Handler
     private class MyMouseHandler extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
             JLabel source = (JLabel) e.getSource();
-            if (source == buyPaintSpray && coins >= 30 ) {
+            if (source == buyPaintSpray && coins >= 30 && !psAct) {
             	coins = coins - 30;   // decrement coins
             	coinCount.setText( String.valueOf(coins) );
-            	//activate paintSpray
-            } else if (source == buyEraser && coins >= 20 ) {
+            	psAct = true;
+            	gm.setPsAct(true);
+            	gm.setTotalCoins(coins);
+            } else if (source == buyEraser && coins >= 20 && !eraserAct) {
             	coins = coins - 20;   // decrement coins
             	coinCount.setText( String.valueOf(coins) );
-            	//activate eraser
+            	eraserAct = true;
+            	gm.setEraserAct(true);
+            	gm.setTotalCoins(coins);
             } else if (source == back) {
-                new MainMenu();
                 dispose();
             }
         }
@@ -104,10 +128,10 @@ public class WeaponStore extends JFrame {
             if (source == back) {
                 back.setIcon(hoverBackImg);
             }
-            if (source == buyEraser) {
+            if (source == buyEraser && !eraserAct) {
             	buyEraser.setIcon(buy20);
             }
-            if (source == buyPaintSpray) {
+            if (source == buyPaintSpray && !psAct) {
             	buyPaintSpray.setIcon(buy30);
             }
         }

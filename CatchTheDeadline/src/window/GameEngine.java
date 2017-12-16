@@ -34,6 +34,8 @@ public class GameEngine extends Canvas implements Runnable {
     private static Window window;
     private static String username;
     private DBInterface db;
+    private static int totalCoins = 0;
+    private boolean eraserAct = false, psAct = false;
     
     private BufferedImage level1 = null, level2 = null, level3 = null;
 
@@ -73,7 +75,7 @@ public class GameEngine extends Canvas implements Runnable {
         else if (levelNo == 3)
         	createLevel(level3);
         
-        this.addKeyListener( new InputManager(handler) );    
+        this.addKeyListener( new InputManager(handler, this) );    
     }
 
     public void createLevel( BufferedImage img ) {
@@ -215,6 +217,7 @@ public class GameEngine extends Canvas implements Runnable {
                 }
             }
         }
+        totalCoins = player.getCoinCount();
     }
 
     // Render Images as fast as a computer can
@@ -303,6 +306,33 @@ public class GameEngine extends Canvas implements Runnable {
         bufferStrategy.show();
     }
 
+    public int getTotalCoins() {		
+    	totalCoins = player.getCoinCount();		
+    	return totalCoins;		
+    }		
+
+    public void setTotalCoins( int totalCoins ) {	
+    	player.setCoinCount(totalCoins);		
+    	this.totalCoins = totalCoins;		
+    }	
+    
+    public boolean isEraserAct() {		
+    	return eraserAct;		
+    }		
+    
+    public void setEraserAct(boolean eraserAct) {		
+    	this.eraserAct = eraserAct;		
+    	System.out.println( isEraserAct() + " in SetEraser");		
+    }		
+
+    public boolean isPsAct() {		
+    	return psAct;		
+    }		
+
+    public void setPsAct(boolean psAct) {		
+    	this.psAct = psAct;		
+    }	
+    
     public static Texture getInstance() {
     	return texture;
     }

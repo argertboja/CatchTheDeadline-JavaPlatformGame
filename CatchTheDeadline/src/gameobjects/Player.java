@@ -17,7 +17,7 @@ public class Player extends GameObject {
 
 	// properties
 	private Animation playerWalk, playerWalkM, playerJump, playerJumpM;
-	private int foodCount = 3, sleepCount = 3, coinCount = 0;
+	private int foodCount = 3, sleepCount = 3, coinCount = 50;
 
 	private final float MAX_SPEED = 10;
 	private Handler handler;
