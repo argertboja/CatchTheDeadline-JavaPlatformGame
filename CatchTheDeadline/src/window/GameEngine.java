@@ -261,8 +261,6 @@ public class GameEngine extends Canvas implements Runnable {
         g2d.setFont(font1);
         /////////////////////////////////////////////////////////////////////////////
         // Graphics of the game
-        //graphics.setColor(Color.BLACK);
-        //graphics.fillRect(0,0, getWidth(), getHeight());
     	graphics.drawImage(level.getImage(), 0, 0, null);
         if (lives >= 3) {
             graphics.drawImage(life.getImage(), 200, 5, null);
@@ -273,12 +271,18 @@ public class GameEngine extends Canvas implements Runnable {
         if (lives >= 1) {
             graphics.drawImage(life.getImage(), 100, 5, null);
         }
-        if (lives == 0) {
-            scores = player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
-            JOptionPane.showMessageDialog(null, "You don't have anymore lives", "GAME OVER\n Your scores: " + scores, JOptionPane.PLAIN_MESSAGE);
-            //window = new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
+        if (lives == 0 || player.isLevelComplete() ) {
+        	if( lives == 0 ) {
+        		scores = player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
+        		JOptionPane.showMessageDialog(null, "You don't have anymore lives \nYour score: " + scores, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
+        	}
+        	if( player.isLevelComplete() ) {
+        		scores = player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
+        		JOptionPane.showMessageDialog(null, "You have finished this level! \nKeep up the good work \nYour score: " + scores, "Congratulations", JOptionPane.PLAIN_MESSAGE);
+        	}
+        	//window = new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
             // Save scores
-            scores = player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
+            //scores = player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
             player.setCoinCount(0);
             player.setFoodCount(3);
             player.setSleepCount(3);

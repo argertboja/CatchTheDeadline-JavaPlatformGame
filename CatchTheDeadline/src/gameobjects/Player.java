@@ -30,6 +30,8 @@ public class Player extends GameObject {
 	private float gravity = 0.15f;
 	private float width = player.getIconWidth(), height = player.getIconHeight();
 	
+	private boolean levelComplete = false;
+	
 	// constructor
 	public Player( float x, float y, Handler handler, ObjectType type ) {
 		super(x, y, type);
@@ -67,8 +69,9 @@ public class Player extends GameObject {
 				if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
 					posX = temp.getPosX() - width;
 					if( ((Block) temp).getBlockType() == 3 ) {
+						levelComplete = true;
 						// exit from level here	
-						JOptionPane.showMessageDialog(null, "You have finished this level! \nKeep up the good work", "Congratulations", JOptionPane.PLAIN_MESSAGE);
+						//JOptionPane.showMessageDialog(null, "You have finished this level! \nKeep up the good work", "Congratulations", JOptionPane.PLAIN_MESSAGE);
 						// return back to level menu ????
 					}
 				}
@@ -228,5 +231,9 @@ public class Player extends GameObject {
 
 	public int getEnemyId() {
 		return enemyId;
+	}
+
+	public boolean isLevelComplete() {
+		return levelComplete;
 	}
 }
