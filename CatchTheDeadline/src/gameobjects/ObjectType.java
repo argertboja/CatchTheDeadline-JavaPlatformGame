@@ -5,6 +5,7 @@ public enum ObjectType {
     Block(),
     Exam(),
     BlankSheet(),
+    Homework(),
     Pen(),
     Eraser(),
     PaintSpray(),

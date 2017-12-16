@@ -74,8 +74,6 @@ public class Player extends GameObject {
 				}
 				if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
 					posX = temp.getPosX() + 40;
-					// DEBUG
-					//System.out.println(width);
 				}
 			}
 			if( temp.getType() == ObjectType.Food )
@@ -131,19 +129,7 @@ public class Player extends GameObject {
 			}
 		}
 	}
-
-	public void walkAnimation( Animation anim ) {
-		
-	}
 	
-	public void runAnimation( Animation anim ) {
-		
-	}
-	
-	public void shootAnimation( Animation shoot ) {
-		
-	}
-
 	public float getGravity() {
 		return gravity;
 	}
@@ -189,21 +175,6 @@ public class Player extends GameObject {
 			graphics.drawImage( player.getImage(), (int) posX, (int) posY, (int) width, (int) height, null );
 		else
 			graphics.drawImage( playerLeftLooking.getImage(), (int) posX, (int) posY, (int) width, (int) height, null );
-		
-		//graphics.fillRect((int)posX, (int)posY, (int)width, (int)height );
-		//graphics2d.drawImage( RunSlowGIF.getImage(), (int) posX, (int) posY, null );// gif animation
-		//graphics2d.drawImage( player.getImage(), (int) posX+10, (int) posY+10, null );
-		
-		///////////~FOR CHECKING BOUNDS ON DEBUG MODE~///////////////////////////
-		//Graphics2D graphics2d = (Graphics2D) graphics; 
-		//graphics2d.setColor(Color.red);
-		//Color myColour = new Color(255, 0, 0, 0); // for making the lines transparent
-        //graphics.setColor(myColour);
-		//graphics2d.draw(objectBounds());
-		//graphics2d.draw(objectBoundsRight());
-		//graphics2d.draw(objectBoundsLeft());
-		//graphics2d.draw(objectBoundsTop());
-		////////////////////////////////////////
 	}
 
 	@Override

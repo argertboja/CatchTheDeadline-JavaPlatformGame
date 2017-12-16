@@ -26,15 +26,17 @@ public class Exam extends GameObject {
 	private float gravity = 0.15f;
 	private float width = exam.getIconWidth(), height = exam.getIconHeight();
 	private Player player;
+	private GameEngine gm;
 
 	// constructor
-	public Exam( float x, float y, Handler handler, ObjectType type, int id ) {
+	public Exam( float x, float y, Handler handler, ObjectType type, int id, GameEngine gm ) {
 		super(x, y, type);
 		this.handler = handler;
 		examWalk = new Animation( 1, texture.examAnimation );
 		examWalkM = new Animation( 1, texture.examAnimationM );
 		setVelocityX(5);
 		this.id = id;
+		this.gm = gm;
 		for (int i =0; i < handler.objectLinkedList.size(); i++) {
 			GameObject temp = null;
 			temp = handler.objectLinkedList.get(i);
@@ -81,15 +83,19 @@ public class Exam extends GameObject {
             {
                 if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
                     handler.objectLinkedList.remove(temp);
+                    gm.setLives( gm.getLives() - 1 );
                 }
                 if( objectBounds().intersects( temp.objectBounds() ) ) {
                     handler.objectLinkedList.remove(temp);
+                    gm.setLives( gm.getLives() - 1 );
                 }
                 if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
                     handler.objectLinkedList.remove(temp);
+                    gm.setLives( gm.getLives() - 1 );
                 }
                 if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
                     handler.objectLinkedList.remove(temp);
+                    gm.setLives( gm.getLives() - 1 );
                 }
                 // end level here
             }
@@ -193,7 +199,6 @@ public class Exam extends GameObject {
 
 	@Override
 	public void render(Graphics graphics) {
-
 
 		if( velocityX > 0 )
 			examWalk.drawAnimation(graphics, (int) posX, (int) posY, (int) width, (int) height);

@@ -111,11 +111,15 @@ public class GameEngine extends Canvas implements Runnable {
                     handler.addObject( new Block( i * 32 - 400, j * 32 + 72, 3, ObjectType.Block, handler) );
                 }
                 if (red == 0 && green == 255 && blue == 0) { // if the pixel is green
-                    handler.addObject( new Exam( i * 32 - 400, j + 100, handler, ObjectType.Exam, enemyId ) );
+                    handler.addObject( new Exam( i * 32 - 400, j + 100, handler, ObjectType.Exam, enemyId, this ) );
                     enemyId++;
                 }
                 if (red == 255 && green == 242 && blue == 0) { // if the pixel is bright yellow
-                    handler.addObject( new BlankSheet( i * 32 - 400, j * 32, handler, ObjectType.BlankSheet, enemyId ) );
+                    handler.addObject( new BlankSheet( i * 32 - 400, j * 32, handler, ObjectType.BlankSheet, enemyId, this ) );
+                    enemyId++;
+                }
+                if (red == 163 && green == 73 && blue == 164) { // if the pixel is purple
+                    handler.addObject( new Homework( i * 32 - 400, j * 32, handler, ObjectType.Homework, enemyId, this ) );
                     enemyId++;
                 }
             }
@@ -132,7 +136,7 @@ public class GameEngine extends Canvas implements Runnable {
     }
 
     public void run() {
-    	int count = 0;
+    	int count = 0, count2 = 0;
         init();
         this.requestFocus();
         long lastTime = System.nanoTime();
@@ -161,7 +165,6 @@ public class GameEngine extends Canvas implements Runnable {
                 } 
                 if( min == 0 && sec == 0 ) {
                 	JOptionPane.showMessageDialog(null, "The Deadline Has Passed, \nBetter Luck Next Time!", "You Fail!", JOptionPane.PLAIN_MESSAGE);
-                	//exit from level here
                     lives--;
                 }
                 if( sec == 0 ){
@@ -170,14 +173,18 @@ public class GameEngine extends Canvas implements Runnable {
                 }
                 if( count == 5 ) {
                 	player.setFoodCount( player.getFoodCount()-1 );
-                	
                 	//sound.stop();
                 	count = 0;
+                }
+                if( count2 == 7  ) {
+                	player.setSleepCount( player.getSleepCount()-1 );
+                	count2 = 0;
                 }
                 if (playing) {
                     sec--;
                 }
                 count++;
+                count2++;
                 //frames = 0;
                 //updates = 0;
             }
@@ -188,7 +195,10 @@ public class GameEngine extends Canvas implements Runnable {
             }
             if( player.getFoodCount() < 0 ) {
                 JOptionPane.showMessageDialog(null, "You haven't eaten in a long time, \nYou don't have the strength to continue!", "You Lost!", JOptionPane.PLAIN_MESSAGE);
-                //exit from level here
+                lives--;
+            }
+            if( player.getSleepCount() < 0 ) {
+                JOptionPane.showMessageDialog(null, "You haven't rested in a long time, \nYou don't have the strength to continue!", "You Lost!", JOptionPane.PLAIN_MESSAGE);
                 lives--;
             }
         }
@@ -214,6 +224,14 @@ public class GameEngine extends Canvas implements Runnable {
                 BlankSheet blankSheet = (BlankSheet) handler.objectLinkedList.get(i);
                 if (blankSheet.getId() ==  player.getEnemyId()) {
                     handler.objectLinkedList.remove(blankSheet);
+                }
+            }
+        }
+        for( int i = 0; i < handler.objectLinkedList.size(); i++ ) {
+            if (handler.objectLinkedList.get(i).getType() == ObjectType.Homework) {
+            	Homework homework = (Homework) handler.objectLinkedList.get(i);
+                if (homework.getId() ==  player.getEnemyId()) {
+                    handler.objectLinkedList.remove(homework);
                 }
             }
         }
@@ -249,13 +267,13 @@ public class GameEngine extends Canvas implements Runnable {
         if (lives >= 3) {
             graphics.drawImage(life.getImage(), 200, 5, null);
         }
-        /*if (lives >= 2) {
+        if (lives >= 2) {
             graphics.drawImage(life.getImage(), 150, 5, null);
         }
         if (lives >= 1) {
             graphics.drawImage(life.getImage(), 100, 5, null);
-        }*/
-        if (lives == 2) {
+        }
+        if (lives == 0) {
             scores = player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
             JOptionPane.showMessageDialog(null, "You don't have anymore lives", "GAME OVER\n Your scores: " + scores, JOptionPane.PLAIN_MESSAGE);
             //window = new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
@@ -285,10 +303,6 @@ public class GameEngine extends Canvas implements Runnable {
         	 graphics.drawImage(clouds.getImage(), i*3, 0, this);
         }
         handler.render(graphics);
-        //graphics.setColor(Color.CYAN);
-        //graphics.fillRoundRect((int) (-cam.getXPos())+40, 25, 75, 35, 20, 20);
-        //graphics.setColor(Color.BLACK);
-        //graphics.drawRoundRect((int) (-cam.getXPos())+40, 25, 75, 35, 20, 20);
         g2d.setColor(new Color(192, 3, 3));
         g2d.drawString( "Lives: ", -cam.getXPos()+18, 28 );
         g2d.setColor(new Color(53, 159, 196));
@@ -299,7 +313,6 @@ public class GameEngine extends Canvas implements Runnable {
         g2d.setColor(new Color(250, 204, 33));
         g2d.drawString( "" + player.getSleepCount(), -cam.getXPos() + 720, 500 );
         g2d.drawString( "" + player.getCoinCount(), -cam.getXPos() + 390, 500 );
-        //graphics.drawImage(food.getImage(), (int) (-cam.getXPos()+30), 40, null);  
         g2d.translate(cam.getXPos(), -cam.getYPos() ); //end of cam
         /////////////////////////////////////////////////////////////////////////////
         graphics.dispose();
@@ -343,5 +356,15 @@ public class GameEngine extends Canvas implements Runnable {
 
     public void setPlaying(boolean playing) {
         this.playing = playing;
+    }
+    
+    public void setLives( int lives )
+    {
+    	this.lives = lives;
+    }
+    
+    public int getLives()
+    {
+    	return lives;
     }
 }

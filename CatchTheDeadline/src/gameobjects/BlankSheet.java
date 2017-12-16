@@ -26,14 +26,17 @@ public class BlankSheet extends GameObject {
 	private Player player;
 	private int lives = 3;
 	private int id;
+	
+	private GameEngine gm;
 
 	// constructor
-	public BlankSheet( float x, float y, Handler handler, ObjectType type, int id ) {
+	public BlankSheet( float x, float y, Handler handler, ObjectType type, int id, GameEngine gm ) {
 		super(x, y, type);
 		this.handler = handler;
 		blankSheetFlip = new Animation( 1, texture.blankSheetFlipping );
 		setVelocityX(5);
 		this.id = id;
+		this.gm = gm;
 		for (int i =0; i < handler.objectLinkedList.size(); i++) {
 			GameObject temp = null;
 			temp = handler.objectLinkedList.get(i);
@@ -56,17 +59,16 @@ public class BlankSheet extends GameObject {
 			{
 			    if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
 			        handler.objectLinkedList.remove(temp);
-			    }
-			    if( objectBounds().intersects( temp.objectBounds() ) ) {
-			        handler.objectLinkedList.remove(temp);
+			        gm.setLives( gm.getLives() - 1 );
 			    }
 			    if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
 			        handler.objectLinkedList.remove(temp);
+			        gm.setLives( gm.getLives() - 1 );
 			    }
 			    if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
 			        handler.objectLinkedList.remove(temp);
+			        gm.setLives( gm.getLives() - 1 );
 			    }
-			    // end level here
 			}
 			if( temp.getType() == ObjectType.Pen )
 			{
