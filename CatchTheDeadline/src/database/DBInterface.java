@@ -50,8 +50,19 @@ public class DBInterface {
         return res;
     }
 
+    // Get scores and coins
+    // Password checker
+    public ResultSet getScoresAndCoins(String username) throws ClassNotFoundException, SQLException {
+        if (con == null) {
+            getConnection();
+        }
+        Statement state = con.createStatement();
+        ResultSet res = state.executeQuery("SELECT scores, coins FROM ctdtable WHERE username = '" + username + "';");
+        return res;
+    }
+
     // Save High Scores
-    public void saveHighScores (String username, int scores, int coins) throws ClassNotFoundException, SQLException {
+    public void saveHighScoresAndCoins (String username, int scores, int coins) throws ClassNotFoundException, SQLException {
         if (con == null) {
             getConnection();
         }

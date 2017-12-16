@@ -9,6 +9,7 @@ import userinterface.MainMenu;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
 
@@ -29,12 +30,12 @@ public class GameEngine extends Canvas implements Runnable {
     private Font font1 = new Font("Cooper Black", Font.BOLD, 24);
     private Font font2 = new Font("Cooper Black", Font.BOLD, 28);
     private static int lives = 3, oldLives = 3;
-    private int scores = 0, min = 1, sec = 30;
+    public static int scores = 0, min = 1, sec = 30;
     private int enemyId = 0;
     private static Window window;
     private static String username;
     private DBInterface db;
-    private static int totalCoins = 0;
+    public static int totalCoins = 0;
     private boolean eraserAct = false, psAct = false;
     
     private BufferedImage level1 = null, level2 = null, level3 = null;
@@ -52,6 +53,23 @@ public class GameEngine extends Canvas implements Runnable {
         this.username = username;
       //  sound.start();
         db = new DBInterface();
+        if (!username.equalsIgnoreCase("guest")) {
+            ResultSet rs = null;
+            try {
+                rs = db.getScoresAndCoins(username);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (rs.next()) {
+                    scores =  rs.getInt("scores");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
     
     public void init(){
@@ -93,6 +111,23 @@ public class GameEngine extends Canvas implements Runnable {
                 }
                 if (red == 0 && green == 0 && blue == 255) { // if the pixel is blue
                 	player = new Player(i + 100, j + 100, handler,ObjectType.Player);
+                    if (!username.equalsIgnoreCase("guest")) {
+                        ResultSet rs = null;
+                        try {
+                            rs = db.getScoresAndCoins(username);
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            if (rs.next()) {
+                                player.setCoinCount(rs.getInt("coins"));
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     handler.addObject( player );
                 }
                 if (red == 127 && green == 127 && blue == 127) { // if the pixel is grey 
@@ -242,12 +277,21 @@ public class GameEngine extends Canvas implements Runnable {
     private void render() throws InterruptedException {
         if (lives != oldLives) {
             int prevCoins = player.getCoinCount();
+            totalCoins = prevCoins;
             for( int i = 0; i < handler.objectLinkedList.size(); i++ ) {
                 handler.objectLinkedList.remove(i);
             }
             init();
             player.setCoinCount(prevCoins);
             oldLives--;
+            scores += player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
+            try {
+                db.saveHighScoresAndCoins(username, scores, prevCoins);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         BufferStrategy bufferStrategy = this.getBufferStrategy();
         if (bufferStrategy == null) {
@@ -273,11 +317,11 @@ public class GameEngine extends Canvas implements Runnable {
         }
         if (lives == 0 || player.isLevelComplete() ) {
         	if( lives == 0 ) {
-        		scores = player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
+        		scores += player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
         		JOptionPane.showMessageDialog(null, "You don't have anymore lives \nYour score: " + scores, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
         	}
         	if( player.isLevelComplete() ) {
-        		scores = player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
+        		scores += player.getCoinCount() + 5 * player.getFoodCount() + 5 * player.getSleepCount() + min * 60 + sec;
         		JOptionPane.showMessageDialog(null, "You have finished this level! \nKeep up the good work \nYour score: " + scores, "Congratulations", JOptionPane.PLAIN_MESSAGE);
         	}
         	//window = new Window(1000, 510, "Catch The Deadline", new GameEngine(levelNo));
@@ -292,7 +336,7 @@ public class GameEngine extends Canvas implements Runnable {
             oldLives = 3;
             //init();
             try {
-                db.saveHighScores(LogIn.usernameValue, scores, player.getCoinCount());
+                db.saveHighScoresAndCoins(LogIn.usernameValue, scores, player.getCoinCount());
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
@@ -371,4 +415,10 @@ public class GameEngine extends Canvas implements Runnable {
     {
     	return lives;
     }
+
+    public int getScores() {
+        return scores;
+    }
+
+
 }

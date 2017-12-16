@@ -1,5 +1,7 @@
 package gameobjects;
 
+import accessManager.LogIn;
+import database.DBInterface;
 import gameManager.Animation;
 import gameManager.Handler;
 import gameManager.Texture;
@@ -7,6 +9,7 @@ import window.GameEngine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class Exam extends GameObject {
@@ -20,13 +23,15 @@ public class Exam extends GameObject {
 	Texture texture = GameEngine.getInstance();
 	private int lives = 8;
 
-	ImageIcon exam = new ImageIcon(getClass().getResource("/images/exam.png"));
-	ImageIcon examLeftLooking = new ImageIcon(getClass().getResource("/images/examLeftLooking.png"));
-
+	private ImageIcon exam = new ImageIcon(getClass().getResource("/images/exam.png"));
+	private ImageIcon examLeftLooking = new ImageIcon(getClass().getResource("/images/examLeftLooking.png"));
+	private DBInterface db;
 	private float gravity = 0.15f;
 	private float width = exam.getIconWidth(), height = exam.getIconHeight();
 	private Player player;
 	private GameEngine gm;
+	private String username;
+	private int scores, prevCoins;
 
 	// constructor
 	public Exam( float x, float y, Handler handler, ObjectType type, int id, GameEngine gm ) {
@@ -44,6 +49,10 @@ public class Exam extends GameObject {
 				player = (Player) temp;
 			}
 		}
+		db = new DBInterface();
+		username = LogIn.usernameValue;
+		scores = gm.getScores();
+		prevCoins = gm.getTotalCoins();
 	}
 
 	// methods
@@ -84,18 +93,46 @@ public class Exam extends GameObject {
                 if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
                     handler.objectLinkedList.remove(temp);
                     gm.setLives( gm.getLives() - 1 );
+					try {
+						db.saveHighScoresAndCoins(username, scores, prevCoins);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
                 }
                 if( objectBounds().intersects( temp.objectBounds() ) ) {
                     handler.objectLinkedList.remove(temp);
                     gm.setLives( gm.getLives() - 1 );
+					try {
+						db.saveHighScoresAndCoins(username, scores, prevCoins);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
                 }
                 if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
                     handler.objectLinkedList.remove(temp);
                     gm.setLives( gm.getLives() - 1 );
+					try {
+						db.saveHighScoresAndCoins(username, scores, prevCoins);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
                 }
                 if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
                     handler.objectLinkedList.remove(temp);
                     gm.setLives( gm.getLives() - 1 );
+					try {
+						db.saveHighScoresAndCoins(username, scores, prevCoins);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
                 }
                 // end level here
             }
