@@ -36,7 +36,8 @@ public class GameEngine extends Canvas implements Runnable {
     private static String username;
     private DBInterface db;
     public static int totalCoins = 0;
-    private boolean eraserAct = false, psAct = false;
+    private boolean eraserAct = false, psAct = false, updateWeapons = false;
+
     
     private BufferedImage level1 = null, level2 = null, level3 = null;
 
@@ -55,8 +56,10 @@ public class GameEngine extends Canvas implements Runnable {
         db = new DBInterface();
         if (!username.equalsIgnoreCase("guest")) {
             ResultSet rs = null;
+            ResultSet rs2 = null;
             try {
                 rs = db.getScoresAndCoins(username);
+                rs2 = db.getWeapons(username);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
@@ -64,7 +67,16 @@ public class GameEngine extends Canvas implements Runnable {
             }
             try {
                 if (rs.next()) {
-                    scores =  rs.getInt("scores");
+                    scores = rs.getInt("scores");
+                    totalCoins = rs.getInt("coins");
+                }
+                if (rs2.next()) {
+                    if (rs2.getInt("eraser") == 1) {
+                        eraserAct = true;
+                    }
+                    if (rs2.getInt("paintSpray") == 1) {
+                        psAct = true;
+                    }
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -251,6 +263,7 @@ public class GameEngine extends Canvas implements Runnable {
                 Exam exam = (Exam) handler.objectLinkedList.get(i);
                 if (exam.getId() ==  player.getEnemyId()) {
                     handler.objectLinkedList.remove(exam);
+                    player.setCoinCount(player.getCoinCount()+10);
                 }
             }
         }
@@ -267,6 +280,7 @@ public class GameEngine extends Canvas implements Runnable {
             	Homework homework = (Homework) handler.objectLinkedList.get(i);
                 if (homework.getId() ==  player.getEnemyId()) {
                     handler.objectLinkedList.remove(homework);
+                    player.setCoinCount(player.getCoinCount() + 1);
                 }
             }
         }
@@ -275,6 +289,29 @@ public class GameEngine extends Canvas implements Runnable {
 
     // Render Images as fast as a computer can
     private void render() throws InterruptedException {
+
+        if (updateWeapons) {
+            if (eraserAct) {
+                try {
+                    db.saveEraser(username, 1);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if (psAct) {
+                try {
+                    db.savePaintSpray(username, 1);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            updateWeapons = false;
+        }
+
         if (lives != oldLives) {
             int prevCoins = player.getCoinCount();
             totalCoins = prevCoins;
@@ -420,5 +457,7 @@ public class GameEngine extends Canvas implements Runnable {
         return scores;
     }
 
-
+    public void setUpdateWeapons(boolean set) {
+        updateWeapons = set;
+    }
 }

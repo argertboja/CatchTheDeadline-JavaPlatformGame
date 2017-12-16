@@ -14,6 +14,7 @@ public class Eraser extends GameObject {
 	private Animation animation;
 	private Texture texture = GameEngine.getInstance();
 	public boolean touched = false;
+
 	
 	public Eraser( float x, float y, ObjectType type, int velX ) {
   		super(x, y, type);

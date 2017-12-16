@@ -31,7 +31,7 @@ public class WeaponStore extends JFrame {
         this.eraserAct = gm.isEraserAct();
         this.psAct = gm.isPsAct();
         this.gm = gm;
-        
+
         if (from.equalsIgnoreCase("game")) {
             setUndecorated(true);
         }
@@ -111,12 +111,14 @@ public class WeaponStore extends JFrame {
             	psAct = true;
             	gm.setPsAct(true);
             	gm.setTotalCoins(coins);
+            	gm.setUpdateWeapons(true);
             } else if (source == buyEraser && coins >= 20 && !eraserAct) {
             	coins = coins - 20;   // decrement coins
             	coinCount.setText( String.valueOf(coins) );
             	eraserAct = true;
             	gm.setEraserAct(true);
             	gm.setTotalCoins(coins);
+                gm.setUpdateWeapons(true);
             } else if (source == back) {
                 dispose();
             }

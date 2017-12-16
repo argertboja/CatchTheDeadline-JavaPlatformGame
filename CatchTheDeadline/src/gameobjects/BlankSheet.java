@@ -1,5 +1,7 @@
 package gameobjects;
 
+import accessManager.LogIn;
+import database.DBInterface;
 import gameManager.Animation;
 import gameManager.Handler;
 import gameManager.Texture;
@@ -7,6 +9,7 @@ import window.GameEngine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class BlankSheet extends GameObject {
@@ -28,6 +31,9 @@ public class BlankSheet extends GameObject {
 	private int id;
 	
 	private GameEngine gm;
+	private DBInterface db;
+	private String username;
+	private int scores, prevCoins;
 
 	// constructor
 	public BlankSheet( float x, float y, Handler handler, ObjectType type, int id, GameEngine gm ) {
@@ -44,6 +50,10 @@ public class BlankSheet extends GameObject {
 				player = (Player) temp;
 			}
 		}
+		db = new DBInterface();
+		username = LogIn.usernameValue;
+		scores = gm.getScores();
+		prevCoins = gm.getTotalCoins();
 	}
 
 	// methods
@@ -60,14 +70,35 @@ public class BlankSheet extends GameObject {
 			    if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
 			        handler.objectLinkedList.remove(temp);
 			        gm.setLives( gm.getLives() - 1 );
+					try {
+						db.saveHighScoresAndCoins(username, scores, prevCoins);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 			    }
 			    if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
 			        handler.objectLinkedList.remove(temp);
 			        gm.setLives( gm.getLives() - 1 );
+					try {
+						db.saveHighScoresAndCoins(username, scores, prevCoins);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 			    }
 			    if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
 			        handler.objectLinkedList.remove(temp);
 			        gm.setLives( gm.getLives() - 1 );
+					try {
+						db.saveHighScoresAndCoins(username, scores, prevCoins);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 			    }
 			}
 			if( temp.getType() == ObjectType.Pen )

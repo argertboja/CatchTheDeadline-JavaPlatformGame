@@ -16,7 +16,7 @@ public class DBInterface {
     // Getting connection to the database and create it
     private void getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ctd", "root", "");
+        con = DriverManager.getConnection("jdbc:mysql://160.153.75.104:3306/ctd", "catchthedeadline", "MustFindABetter1");
         initializeAccounts();
     }
 
@@ -61,12 +61,45 @@ public class DBInterface {
         return res;
     }
 
+    // Weapon checker
+    public ResultSet getWeapons(String username) throws ClassNotFoundException, SQLException {
+        if (con == null) {
+            getConnection();
+        }
+        Statement state = con.createStatement();
+        ResultSet res = state.executeQuery("SELECT eraser, paintSpray FROM ctdtable WHERE username = '" + username + "';");
+        return res;
+    }
+
     // Save High Scores
     public void saveHighScoresAndCoins (String username, int scores, int coins) throws ClassNotFoundException, SQLException {
         if (con == null) {
             getConnection();
         }
         String query = "UPDATE ctdtable set scores = " + scores + ", coins = " + coins + " WHERE username = '" + username + "';";
+        try (PreparedStatement prep = con.prepareStatement( query)) {
+            prep.executeUpdate();
+            prep.close();
+        }
+    }
+    // Save Eraser
+    public void saveEraser (String username, int eraser) throws ClassNotFoundException, SQLException {
+        if (con == null) {
+            getConnection();
+        }
+        String query = "UPDATE ctdtable set eraser = " + eraser + " WHERE username = '" + username + "';";
+        try (PreparedStatement prep = con.prepareStatement( query)) {
+            prep.executeUpdate();
+            prep.close();
+        }
+    }
+
+    // Save Paint Spray
+    public void savePaintSpray (String username, int ps) throws ClassNotFoundException, SQLException {
+        if (con == null) {
+            getConnection();
+        }
+        String query = "UPDATE ctdtable set paintSpray = " + ps + " WHERE username = '" + username + "';";
         try (PreparedStatement prep = con.prepareStatement( query)) {
             prep.executeUpdate();
             prep.close();

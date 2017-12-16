@@ -2,10 +2,13 @@ package gameobjects;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
+import accessManager.LogIn;
+import database.DBInterface;
 import gameManager.Animation;
 import gameManager.Handler;
 import gameManager.Texture;
@@ -18,12 +21,15 @@ public class Homework extends GameObject {
 	private int id;
 	private int lives = 8;
 
-	ImageIcon homework = new ImageIcon(getClass().getResource("/images/homework.gif"));
+	private ImageIcon homework = new ImageIcon(getClass().getResource("/images/homework.gif"));
 
 	private float gravity = 0.15f;
 	private float width = homework.getIconWidth(), height = homework.getIconHeight();
 	private Player player;
 	private GameEngine gm;
+	private DBInterface db;
+	private String username;
+	private int scores, prevCoins;
 
 	// constructor
 	public Homework( float x, float y, Handler handler, ObjectType type, int id, GameEngine gm ) {
@@ -39,6 +45,10 @@ public class Homework extends GameObject {
 				player = (Player) temp;
 			}
 		}
+		db = new DBInterface();
+		username = LogIn.usernameValue;
+		scores = gm.getScores();
+		prevCoins = gm.getTotalCoins();
 	}
 
 	// methods
@@ -55,14 +65,35 @@ public class Homework extends GameObject {
 			    if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
 			        handler.objectLinkedList.remove(temp);
 			        gm.setLives( gm.getLives() - 1 );
+					try {
+						db.saveHighScoresAndCoins(username, scores, prevCoins);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 			    }
 			    if( objectBoundsRight().intersects( temp.objectBounds() ) ) {
 			        handler.objectLinkedList.remove(temp);
 			        gm.setLives( gm.getLives() - 1 );
+					try {
+						db.saveHighScoresAndCoins(username, scores, prevCoins);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 			    }
 			    if( objectBoundsLeft().intersects( temp.objectBounds() ) ) {
 			        handler.objectLinkedList.remove(temp);
 			        gm.setLives( gm.getLives() - 1 );
+					try {
+						db.saveHighScoresAndCoins(username, scores, prevCoins);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 			    }
 			}
 			if( temp.getType() == ObjectType.Pen )
