@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="catchthedeadline" default="all">
+  
+  
+  <property file="catchthedeadline.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+    <include name="*.swc"/>
+    <include name="*.war"/>
+    <include name="*.ane"/>
+    <include name="*.zip"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.9" value="${jdk.home.9}/bin"/>
+  <path id="jdk.classpath.9">
+    <fileset dir="${jdk.home.9}">
+      <include name="../jdk-9!/java.activation"/>
+      <include name="../jdk-9!/java.base"/>
+      <include name="../jdk-9!/java.compiler"/>
+      <include name="../jdk-9!/java.corba"/>
+      <include name="../jdk-9!/java.datatransfer"/>
+      <include name="../jdk-9!/java.desktop"/>
+      <include name="../jdk-9!/java.instrument"/>
+      <include name="../jdk-9!/java.jnlp"/>
+      <include name="../jdk-9!/java.logging"/>
+      <include name="../jdk-9!/java.management"/>
+      <include name="../jdk-9!/java.management.rmi"/>
+      <include name="../jdk-9!/java.naming"/>
+      <include name="../jdk-9!/java.prefs"/>
+      <include name="../jdk-9!/java.rmi"/>
+      <include name="../jdk-9!/java.scripting"/>
+      <include name="../jdk-9!/java.se"/>
+      <include name="../jdk-9!/java.se.ee"/>
+      <include name="../jdk-9!/java.security.jgss"/>
+      <include name="../jdk-9!/java.security.sasl"/>
+      <include name="../jdk-9!/java.smartcardio"/>
+      <include name="../jdk-9!/java.sql"/>
+      <include name="../jdk-9!/java.sql.rowset"/>
+      <include name="../jdk-9!/java.transaction"/>
+      <include name="../jdk-9!/java.xml"/>
+      <include name="../jdk-9!/java.xml.bind"/>
+      <include name="../jdk-9!/java.xml.crypto"/>
+      <include name="../jdk-9!/java.xml.ws"/>
+      <include name="../jdk-9!/java.xml.ws.annotation"/>
+      <include name="../jdk-9!/javafx.base"/>
+      <include name="../jdk-9!/javafx.controls"/>
+      <include name="../jdk-9!/javafx.deploy"/>
+      <include name="../jdk-9!/javafx.fxml"/>
+      <include name="../jdk-9!/javafx.graphics"/>
+      <include name="../jdk-9!/javafx.media"/>
+      <include name="../jdk-9!/javafx.swing"/>
+      <include name="../jdk-9!/javafx.web"/>
+      <include name="../jdk-9!/jdk.accessibility"/>
+      <include name="../jdk-9!/jdk.attach"/>
+      <include name="../jdk-9!/jdk.charsets"/>
+      <include name="../jdk-9!/jdk.compiler"/>
+      <include name="../jdk-9!/jdk.crypto.cryptoki"/>
+      <include name="../jdk-9!/jdk.crypto.ec"/>
+      <include name="../jdk-9!/jdk.crypto.mscapi"/>
+      <include name="../jdk-9!/jdk.deploy"/>
+      <include name="../jdk-9!/jdk.deploy.controlpanel"/>
+      <include name="../jdk-9!/jdk.dynalink"/>
+      <include name="../jdk-9!/jdk.editpad"/>
+      <include name="../jdk-9!/jdk.hotspot.agent"/>
+      <include name="../jdk-9!/jdk.httpserver"/>
+      <include name="../jdk-9!/jdk.incubator.httpclient"/>
+      <include name="../jdk-9!/jdk.internal.ed"/>
+      <include name="../jdk-9!/jdk.internal.jvmstat"/>
+      <include name="../jdk-9!/jdk.internal.le"/>
+      <include name="../jdk-9!/jdk.internal.opt"/>
+      <include name="../jdk-9!/jdk.internal.vm.ci"/>
+      <include name="../jdk-9!/jdk.jartool"/>
+      <include name="../jdk-9!/jdk.javadoc"/>
+      <include name="../jdk-9!/jdk.javaws"/>
+      <include name="../jdk-9!/jdk.jcmd"/>
+      <include name="../jdk-9!/jdk.jconsole"/>
+      <include name="../jdk-9!/jdk.jdeps"/>
+      <include name="../jdk-9!/jdk.jdi"/>
+      <include name="../jdk-9!/jdk.jdwp.agent"/>
+      <include name="../jdk-9!/jdk.jfr"/>
+      <include name="../jdk-9!/jdk.jlink"/>
+      <include name="../jdk-9!/jdk.jshell"/>
+      <include name="../jdk-9!/jdk.jsobject"/>
+      <include name="../jdk-9!/jdk.jstatd"/>
+      <include name="../jdk-9!/jdk.localedata"/>
+      <include name="../jdk-9!/jdk.management"/>
+      <include name="../jdk-9!/jdk.management.agent"/>
+      <include name="../jdk-9!/jdk.management.cmm"/>
+      <include name="../jdk-9!/jdk.management.jfr"/>
+      <include name="../jdk-9!/jdk.management.resource"/>
+      <include name="../jdk-9!/jdk.naming.dns"/>
+      <include name="../jdk-9!/jdk.naming.rmi"/>
+      <include name="../jdk-9!/jdk.net"/>
+      <include name="../jdk-9!/jdk.pack"/>
+      <include name="../jdk-9!/jdk.packager"/>
+      <include name="../jdk-9!/jdk.packager.services"/>
+      <include name="../jdk-9!/jdk.plugin"/>
+      <include name="../jdk-9!/jdk.plugin.dom"/>
+      <include name="../jdk-9!/jdk.plugin.server"/>
+      <include name="../jdk-9!/jdk.policytool"/>
+      <include name="../jdk-9!/jdk.rmic"/>
+      <include name="../jdk-9!/jdk.scripting.nashorn"/>
+      <include name="../jdk-9!/jdk.scripting.nashorn.shell"/>
+      <include name="../jdk-9!/jdk.sctp"/>
+      <include name="../jdk-9!/jdk.security.auth"/>
+      <include name="../jdk-9!/jdk.security.jgss"/>
+      <include name="../jdk-9!/jdk.snmp"/>
+      <include name="../jdk-9!/jdk.unsupported"/>
+      <include name="../jdk-9!/jdk.xml.bind"/>
+      <include name="../jdk-9!/jdk.xml.dom"/>
+      <include name="../jdk-9!/jdk.xml.ws"/>
+      <include name="../jdk-9!/jdk.zipfs"/>
+      <include name="../jdk-9!/oracle.desktop"/>
+      <include name="../jdk-9!/oracle.net"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.9}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.9}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.9"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.org.wisdom-framework:sqlite-jdbc:3.8.7_1.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/apache/felix/org.apache.felix.ipojo.annotations/1.12.1/org.apache.felix.ipojo.annotations-1.12.1.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/wisdom-framework/abstract-jdbc-driver/0.5/abstract-jdbc-driver-0.5.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/wisdom-framework/sqlite-jdbc/3.8.7_1/sqlite-jdbc-3.8.7_1.jar"/>
+    <pathelement location="${basedir}/../../../../Desktop/mysql-connector-java-5.1.45/mysql-connector-java-5.1.45-bin.jar"/>
+  </path>
+  
+  <path id="library.org.xerial:sqlite-jdbc:3.8.11.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/xerial/sqlite-jdbc/3.8.11.1/sqlite-jdbc-3.8.11.1.jar"/>
+    <pathelement location="${basedir}/../../../../Desktop/mysql-connector-java-5.1.45/mysql-connector-java-5.1.45-bin.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module CatchTheDeadline -->
+  
+  <dirname property="module.catchthedeadline.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.catchthedeadline" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.catchthedeadline" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.catchthedeadline" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.catchthedeadline" value="-encoding UTF-8 -source 9 -target 9 ${compiler.args}"/>
+  
+  <property name="catchthedeadline.output.dir" value="${module.catchthedeadline.basedir}/out/production/CatchTheDeadline"/>
+  <property name="catchthedeadline.testoutput.dir" value="${module.catchthedeadline.basedir}/out/test/CatchTheDeadline"/>
+  
+  <path id="catchthedeadline.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="catchthedeadline.module.production.classpath">
+    <path refid="${module.jdk.classpath.catchthedeadline}"/>
+  </path>
+  
+  <path id="catchthedeadline.runtime.production.module.classpath">
+    <pathelement location="${catchthedeadline.output.dir}"/>
+    <path refid="library.org.wisdom-framework:sqlite-jdbc:3.8.7_1.classpath"/>
+    <path refid="library.org.xerial:sqlite-jdbc:3.8.11.1.classpath"/>
+    <pathelement location="${basedir}/../../../../Desktop/mysql-connector-java-5.1.45/mysql-connector-java-5.1.45-bin.jar"/>
+  </path>
+  
+  <path id="catchthedeadline.module.classpath">
+    <path refid="${module.jdk.classpath.catchthedeadline}"/>
+    <pathelement location="${catchthedeadline.output.dir}"/>
+  </path>
+  
+  <path id="catchthedeadline.runtime.module.classpath">
+    <pathelement location="${catchthedeadline.testoutput.dir}"/>
+    <pathelement location="${catchthedeadline.output.dir}"/>
+    <path refid="library.org.wisdom-framework:sqlite-jdbc:3.8.7_1.classpath"/>
+    <path refid="library.org.xerial:sqlite-jdbc:3.8.11.1.classpath"/>
+    <pathelement location="${basedir}/../../../../Desktop/mysql-connector-java-5.1.45/mysql-connector-java-5.1.45-bin.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.catchthedeadline">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.catchthedeadline">
+    <patternset refid="excluded.from.module.catchthedeadline"/>
+  </patternset>
+  
+  <path id="catchthedeadline.module.sourcepath">
+    <dirset dir="${module.catchthedeadline.basedir}">
+      <include name="src"/>
+      <include name="src/images"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.catchthedeadline" depends="compile.module.catchthedeadline.production,compile.module.catchthedeadline.tests" description="Compile module CatchTheDeadline"/>
+  
+  <target name="compile.module.catchthedeadline.production" depends="register.custom.compilers" description="Compile module CatchTheDeadline; production classes">
+    <mkdir dir="${catchthedeadline.output.dir}"/>
+    <javac2 destdir="${catchthedeadline.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.catchthedeadline}/javac">
+      <compilerarg line="${compiler.args.catchthedeadline}"/>
+      <bootclasspath refid="catchthedeadline.module.bootclasspath"/>
+      <classpath refid="catchthedeadline.module.production.classpath"/>
+      <src refid="catchthedeadline.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.catchthedeadline"/>
+    </javac2>
+    
+    <copy todir="${catchthedeadline.output.dir}">
+      <fileset dir="${module.catchthedeadline.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.catchthedeadline.basedir}/src/images">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.catchthedeadline.tests" depends="register.custom.compilers,compile.module.catchthedeadline.production" description="compile module CatchTheDeadline; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.catchthedeadline" description="cleanup module">
+    <delete dir="${catchthedeadline.output.dir}"/>
+    <delete dir="${catchthedeadline.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.catchthedeadline" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.catchthedeadline" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.catchthedeadline:jar" value="${basedir}/out/artifacts/CatchTheDeadline_jar"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.CatchTheDeadline.jar" value="${artifacts.temp.dir}/CatchTheDeadline.jar"/>
+  </target>
+  
+  <target name="artifact.catchthedeadline:jar" depends="init.artifacts, compile.module.catchthedeadline" description="Build &#39;CatchTheDeadline:jar&#39; artifact">
+    <property name="artifact.temp.output.catchthedeadline:jar" value="${artifacts.temp.dir}/CatchTheDeadline_jar"/>
+    <mkdir dir="${artifact.temp.output.catchthedeadline:jar}"/>
+    <jar destfile="${temp.jar.path.CatchTheDeadline.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset file="${basedir}/../../../../Desktop/mysql-connector-java-5.1.45/mysql-connector-java-5.1.45-bin.jar"/>
+      <zipfileset file="${path.variable.maven_repository}/org/wisdom-framework/sqlite-jdbc/3.8.7_1/sqlite-jdbc-3.8.7_1.jar"/>
+      <zipfileset file="${path.variable.maven_repository}/org/apache/felix/org.apache.felix.ipojo.annotations/1.12.1/org.apache.felix.ipojo.annotations-1.12.1.jar"/>
+      <zipfileset file="${path.variable.maven_repository}/org/wisdom-framework/abstract-jdbc-driver/0.5/abstract-jdbc-driver-0.5.jar"/>
+      <zipfileset file="${basedir}/../../../../Desktop/mysql-connector-java-5.1.45/mysql-connector-java-5.1.45-bin.jar"/>
+      <zipfileset file="${path.variable.maven_repository}/org/xerial/sqlite-jdbc/3.8.11.1/sqlite-jdbc-3.8.11.1.jar"/>
+      <zipfileset dir="${catchthedeadline.output.dir}"/>
+    </jar>
+    <copy file="${temp.jar.path.CatchTheDeadline.jar}" tofile="${artifact.temp.output.catchthedeadline:jar}/CatchTheDeadline.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.catchthedeadline:jar" description="Build all artifacts">
+    <mkdir dir="${artifact.output.catchthedeadline:jar}"/>
+    <copy todir="${artifact.output.catchthedeadline:jar}">
+      <fileset dir="${artifact.temp.output.catchthedeadline:jar}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>

@@ -46,7 +46,6 @@ public class CatchTheDeadline extends Frame implements ActionListener {
     public CatchTheDeadline() {
         final SplashScreen splash = SplashScreen.getSplashScreen();
         if (splash == null) {
-            System.out.println("SplashScreen.getSplashScreen() returned null");
 
             // remove this part before building the artifact
             LogIn logIn = new LogIn();

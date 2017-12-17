@@ -14,6 +14,10 @@ Object-Oriented Software Engineering Fall 2017. <hr />
 
 ### Meetings held
 
+## In order to run the game double click " game_loader.bat "
+
+### Meetings held
+
 1- Meeting 1 added in wiki.
 <br/>
 2- Meeting 2 added in wiki.

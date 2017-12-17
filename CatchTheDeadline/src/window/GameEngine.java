@@ -47,12 +47,12 @@ public class GameEngine extends Canvas implements Runnable {
     private ImageIcon life = new ImageIcon(getClass().getResource("/images/life.gif"));
     
     private int levelNo = 1;
-    SoundManager sound = new SoundManager();
+    //SoundManager sound = new SoundManager();
     
     public GameEngine(int levelNo, String username) {
         this.levelNo = levelNo;
         this.username = username;
-        sound.start();
+        //sound.start();
         db = new DBInterface();
         if (!username.equalsIgnoreCase("guest")) {
             ResultSet rs = null;
