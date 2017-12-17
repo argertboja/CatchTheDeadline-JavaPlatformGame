@@ -127,4 +127,13 @@ public class DBInterface {
             prep.close();
         }
     }
+
+    // Get High Scores
+    public ResultSet getHighScores() throws Exception {
+        if (con == null) {
+            getConnection();
+        }
+        Statement state = con.createStatement();
+        return state.executeQuery("SELECT username, scores FROM  ctdtable ORDER BY scores DESC LIMIT 4");
+    }
 }
