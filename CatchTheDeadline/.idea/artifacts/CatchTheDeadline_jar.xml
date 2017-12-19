@@ -3,6 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/CatchTheDeadline_jar</output-path>
     <root id="archive" name="CatchTheDeadline.jar">
       <element id="module-output" name="CatchTheDeadline" />
+      <element id="file-copy" path="$USER_HOME$/Desktop/mysql-connector-java-5.1.45-bin.jar" />
     </root>
   </artifact>
 </component>

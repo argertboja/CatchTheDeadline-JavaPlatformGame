@@ -65,7 +65,7 @@ public class Exam extends GameObject {
 			 }
 			 catch (Exception e) {
 			 }
-			 if( temp.getType() == ObjectType.Block )
+			 if( temp.getType() == ObjectType.Block && temp!= null )
 			 {
 				if( objectBoundsTop().intersects( temp.objectBounds() ) ) {
 					posY = temp.getPosY() + (height/2);

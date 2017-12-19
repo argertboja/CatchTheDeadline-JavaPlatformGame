@@ -15,7 +15,7 @@ public class DBInterface {
 
     // Getting connection to the database and create it
     private void getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
+        DriverManager.registerDriver (new com.mysql.jdbc.Driver());
         con = DriverManager.getConnection("jdbc:mysql://160.153.75.104:3306/ctd", "catchthedeadline", "MustFindABetter1");
         initializeAccounts();
     }
@@ -126,5 +126,14 @@ public class DBInterface {
             prep.executeUpdate();
             prep.close();
         }
+    }
+
+    // Get High Scores
+    public ResultSet getHighScores() throws Exception {
+        if (con == null) {
+            getConnection();
+        }
+        Statement state = con.createStatement();
+        return state.executeQuery("SELECT username, scores FROM  ctdtable ORDER BY scores DESC LIMIT 4");
     }
 }
