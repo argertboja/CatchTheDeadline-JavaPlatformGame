@@ -16,7 +16,7 @@ public class DBInterface {
     // Getting connection to the database and create it
     private void getConnection() throws ClassNotFoundException, SQLException {
         DriverManager.registerDriver (new com.mysql.jdbc.Driver());
-        con = DriverManager.getConnection("jdbc:mysql://160.153.75.104:3306/ctd", "catchthedeadline", "MustFindABetter1");
+        con = DriverManager.getConnection("jdbc:mysql://localhost/ctd", "catchthedeadline", "MustFindABetter1");
         initializeAccounts();
     }
 

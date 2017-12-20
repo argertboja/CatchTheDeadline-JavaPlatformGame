@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: CatchTheDeadline
+SplashScreen-Image: images/splash.gif
+
